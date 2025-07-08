@@ -1,0 +1,10 @@
+{
+  "name": "zest-demo-app",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "zest"
+  },
+  "devDependencies": {
+    "@heritage/zest": "file:../zest/"
+  }
+}

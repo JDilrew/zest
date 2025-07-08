@@ -1,0 +1,17 @@
+{
+  "name": "@heritage/zest",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A simple test runner for JavaScript projects",
+  "exports": {
+    ".": "./src/runner.js",
+    "./finder": "./src/finder.js"
+  },
+  "bin": {
+    "zest": "bin/cli.js"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "glob": "^11.0.3"
+  }
+}
