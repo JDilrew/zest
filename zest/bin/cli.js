@@ -13,27 +13,33 @@ applyMocks();
 
 // Parse CLI arguments
 const args = process.argv.slice(2);
-const command = args[0];
+let command = null;
 let pathArg = null;
 let silent = false;
 
-for (let i = 1; i < args.length; i++) {
+for (let i = 0; i < args.length; i++) {
   if (args[i] === "--silent") {
     silent = true;
-  } else if (!pathArg) {
+  } else if (!command && args[i] === "test") {
+    command = "test";
+  } else if (!pathArg && !args[i].startsWith("--") && args[i] !== "test") {
     pathArg = args[i];
   }
 }
+if (!command) command = "test";
 
 let testFiles;
 if (pathArg) {
   // If a path is provided, only run tests in that file or directory
-  const fs = require("fs");
-  const path = require("path");
-  const absPath = path.resolve(process.cwd(), pathArg);
-  if (fs.existsSync(absPath) && fs.statSync(absPath).isDirectory()) {
+  const fs = await import("fs");
+  const pathMod = await import("path");
+  const absPath = pathMod.default.resolve(process.cwd(), pathArg);
+  if (
+    fs.default.existsSync(absPath) &&
+    fs.default.statSync(absPath).isDirectory()
+  ) {
     testFiles = findTestFiles("**/*.test.js", absPath);
-  } else if (fs.existsSync(absPath)) {
+  } else if (fs.default.existsSync(absPath)) {
     testFiles = [absPath];
   } else {
     if (!silent) console.error(chalk.bold.red("Path does not exist:"), pathArg);
@@ -51,7 +57,7 @@ import path from "path";
   }
   delete global.__zestCurrentTestFile;
 
-  if (command === "test" || !command) {
+  if (command === "test") {
     run({ silent });
   } else {
     if (!silent) console.error(chalk.bold.red("Unknown command:"), command);

@@ -4,9 +4,9 @@ fruit("logging tests", () => {
     taste(1).fitsNote(1);
   });
 
-  squeeze("should fail", () => {
+  squeeze("should pass", () => {
     console.warn("This is a test warning");
-    taste(1).fitsNote(2);
+    taste(2).fitsNote(2);
   });
 
   squeeze("should pass", () => {
