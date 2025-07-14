@@ -2,9 +2,11 @@
   "name": "zest-demo-app",
   "version": "1.0.0",
   "scripts": {
-    "test": "zest"
+    "test": "zest",
+    "device": "device"
   },
   "devDependencies": {
-    "@heritage/zest": "file:../zest/"
+    "@heritage/zest": "file:../zest/",
+    "@heritage/device": "file:../packages/device"
   }
 }

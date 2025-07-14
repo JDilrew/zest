@@ -1,0 +1,12 @@
+{
+  "name": "@heritage/device",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A simple device information library",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "device": "bin/cli.js"
+  }
+}
