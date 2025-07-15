@@ -37,6 +37,9 @@ async function run(testFiles, silent = false) {
           const icon =
             result.status === "passed" ? chalk.green("✓") : chalk.red("✗");
           let msg = `    ${icon} ${result.matcher}`;
+          if (result.testName) {
+            msg += ` ${chalk.cyan(result.testName)}`;
+          }
           if (result.status === "failed" && result.error) {
             msg += `: ${chalk.red(result.error)}`;
           }

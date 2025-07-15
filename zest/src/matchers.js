@@ -8,12 +8,17 @@ const matchers = function (received) {
         if (received !== expected) {
           throw new Error(`Expected ${received} to be ${expected}`);
         }
-        globalThis.__zestResults__.push({ matcher: "toBe", status: "passed" });
+        globalThis.__zestResults__.push({
+          matcher: "toBe",
+          status: "passed",
+          testName: globalThis.__zestCurrentTestName__,
+        });
       } catch (e) {
         globalThis.__zestResults__.push({
           matcher: "toBe",
           status: "failed",
           error: e.message,
+          testName: globalThis.__zestCurrentTestName__,
         });
         throw e;
       }
@@ -30,12 +35,14 @@ const matchers = function (received) {
         globalThis.__zestResults__.push({
           matcher: "toEqual",
           status: "passed",
+          testName: globalThis.__zestCurrentTestName__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
           matcher: "toEqual",
           status: "failed",
           error: e.message,
+          testName: globalThis.__zestCurrentTestName__,
         });
         throw e;
       }
@@ -48,12 +55,14 @@ const matchers = function (received) {
         globalThis.__zestResults__.push({
           matcher: "toBeTruthy",
           status: "passed",
+          testName: globalThis.__zestCurrentTestName__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
           matcher: "toBeTruthy",
           status: "failed",
           error: e.message,
+          testName: globalThis.__zestCurrentTestName__,
         });
         throw e;
       }
@@ -69,6 +78,7 @@ const matchers = function (received) {
             matcher: "toThrow",
             status: "failed",
             error: e.message,
+            testName: globalThis.__zestCurrentTestName__,
           });
           throw new Error(
             `Expected error message "${e.message}" to be "${expectedError}"`
@@ -80,10 +90,15 @@ const matchers = function (received) {
           matcher: "toThrow",
           status: "failed",
           error: "No error thrown",
+          testName: globalThis.__zestCurrentTestName__,
         });
         throw new Error(`Expected function to throw an error, but it did not`);
       }
-      globalThis.__zestResults__.push({ matcher: "toThrow", status: "passed" });
+      globalThis.__zestResults__.push({
+        matcher: "toThrow",
+        status: "passed",
+        testName: globalThis.__zestCurrentTestName__,
+      });
     },
     notToThrow(expectedError) {
       let errorThrown = false;
@@ -96,6 +111,7 @@ const matchers = function (received) {
             matcher: "notToThrow",
             status: "failed",
             error: e.message,
+            testName: globalThis.__zestCurrentTestName__,
           });
           throw new Error(
             expectedError
@@ -109,12 +125,14 @@ const matchers = function (received) {
           matcher: "notToThrow",
           status: "failed",
           error: "Function threw an error",
+          testName: globalThis.__zestCurrentTestName__,
         });
         throw new Error(`Expected function not to throw an error, but it did`);
       }
       globalThis.__zestResults__.push({
         matcher: "notToThrow",
         status: "passed",
+        testName: globalThis.__zestCurrentTestName__,
       });
     },
     toHaveProperties(expected) {
@@ -132,12 +150,14 @@ const matchers = function (received) {
         globalThis.__zestResults__.push({
           matcher: "toHaveProperties",
           status: "passed",
+          testName: globalThis.__zestCurrentTestName__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
           matcher: "toHaveProperties",
           status: "failed",
           error: e.message,
+          testName: globalThis.__zestCurrentTestName__,
         });
         throw e;
       }

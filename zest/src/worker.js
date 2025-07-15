@@ -18,22 +18,29 @@ export async function runTest(testFile) {
   };
   try {
     await import(pathToFileURL(testFile).href);
+
     // Run all registered tests
     for (const suite of suites) {
       for (const childSuite of suite.children || []) {
         for (const test of childSuite.tests || []) {
           try {
+            globalThis.__zestCurrentTestName__ = test.testName;
             test.testFn();
           } catch (e) {
             testResult.success = false;
+          } finally {
+            globalThis.__zestCurrentTestName__ = undefined;
           }
         }
       }
       for (const test of suite.tests || []) {
         try {
+          globalThis.__zestCurrentTestName__ = test.testName;
           test.testFn();
         } catch (e) {
           testResult.success = false;
+        } finally {
+          globalThis.__zestCurrentTestName__ = undefined;
         }
       }
     }
