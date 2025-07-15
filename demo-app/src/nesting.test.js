@@ -1,47 +1,47 @@
-squeeze("should pass", () => {
-  taste(1 + 2).fitsNote(3);
+test("should pass", () => {
+  expect(1 + 2).toBe(3);
 });
 
-squeeze("should fail", () => {
-  taste(1 + 2).fitsNote(4);
+test("should fail", () => {
+  expect(1 + 2).toBe(4);
 });
 
-fruit("singular nesting", () => {
-  squeeze("should pass", () => {
-    taste(1 + 2).fitsNote(3);
+suite("singular nesting", () => {
+  test("should pass", () => {
+    expect(1 + 2).toBe(3);
   });
 
-  squeeze("should fail", () => {
-    taste(1 + 2).fitsNote(4);
+  test("should fail", () => {
+    expect(1 + 2).toBe(4);
   });
 });
 
-basket("basket of fruit", () => {
-  squeeze("should pass", () => {
-    taste(1 + 2).fitsNote(3);
+suite("suite of suite", () => {
+  test("should pass", () => {
+    expect(1 + 2).toBe(3);
   });
 
-  squeeze("should fail", () => {
-    taste(1 + 2).fitsNote(4);
+  test("should fail", () => {
+    expect(1 + 2).toBe(4);
   });
 
-  fruit("lime", () => {
-    squeeze("should pass", () => {
-      taste(1 + 2).fitsNote(3);
+  suite("lime", () => {
+    test("should pass", () => {
+      expect(1 + 2).toBe(3);
     });
 
-    squeeze("should fail", () => {
-      taste(1 + 2).fitsNote(4);
+    test("should fail", () => {
+      expect(1 + 2).toBe(4);
     });
   });
 
-  fruit("orange", () => {
-    squeeze("should pass", () => {
-      taste(1 + 2).fitsNote(3);
+  suite("orange", () => {
+    test("should pass", () => {
+      expect(1 + 2).toBe(3);
     });
 
-    squeeze("should fail", () => {
-      taste(1 + 2).fitsNote(4);
+    test("should fail", () => {
+      expect(1 + 2).toBe(4);
     });
   });
 });

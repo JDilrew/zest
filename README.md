@@ -24,3 +24,4 @@ The functionality of a test framework:
 - create our own global context and module require to allow imports to work..
 
 spying?
+As a bonus, could we cover browser - visual tests like playwright?

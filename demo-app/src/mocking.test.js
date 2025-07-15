@@ -3,11 +3,11 @@ zest.mock("./example.js", {
   subtract: (a, b) => a - b - 5,
 });
 
-const { add, subtract } = require("./example.js");
+import { add, subtract } from "./example.js";
 
-squeeze("should pass when mocked", () => {
+test("should pass when mocked", () => {
   const addResult = add(2, 3);
-  taste(addResult).fitsNote(10); // 2 + 3 + 5 from mock
+  expect(addResult).toBe(10); // 2 + 3 + 5 from mock
   const subtractResult = subtract(10, 3);
-  taste(subtractResult).fitsNote(2); // 10 - 3 -
+  expect(subtractResult).toBe(2); // 10 - 3 -
 });

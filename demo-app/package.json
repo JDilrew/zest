@@ -1,12 +1,15 @@
 {
   "name": "zest-demo-app",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "test": "zest",
-    "device": "device"
+    "device": "device",
+    "test:worker": "node ./src/worker-tests/childProcesses.js"
   },
   "devDependencies": {
     "@heritage/zest": "file:../zest/",
-    "@heritage/device": "file:../packages/device"
+    "@heritage/device": "file:../packages/device",
+    "@heritage/worker": "file:../packages/worker"
   }
 }

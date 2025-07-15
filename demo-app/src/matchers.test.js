@@ -1,103 +1,99 @@
-const { add, subtract } = require("./example.js");
+import { add, subtract } from "./example.js";
 
-fruit("fitsNote", () => {
-  squeeze("should pass", () => {
-    taste(add(1, 2)).fitsNote(3);
+suite("toBe", () => {
+  test("should pass", () => {
+    expect(add(1, 2)).toBe(3);
   });
 
-  squeeze("should fail", () => {
-    taste(subtract(5, 2)).fitsNote(4); // This will fail
+  test("should fail", () => {
+    expect(subtract(5, 2)).toBe(4); // This will fail
   });
 });
 
-fruit("fitsProfile", () => {
-  squeeze("should pass", () => {
-    taste({ name: "apple", color: "red" }).fitsProfile({
+suite("toEqual", () => {
+  test("should pass", () => {
+    expect({ name: "apple", color: "red" }).toEqual({
       name: "apple",
       color: "red",
     });
   });
 
-  squeeze("should fail", () => {
-    taste({ name: "banana", color: "yellow" }).fitsProfile({
+  test("should fail", () => {
+    expect({ name: "banana", color: "yellow" }).toEqual({
       name: "apple",
       color: "red",
     }); // This will fail
   });
 });
 
-fruit("isJuicy", () => {
-  squeeze("should pass", () => {
-    taste(true).isJuicy(); // This will pass
+suite("toBeTruthy", () => {
+  test("should pass", () => {
+    expect(true).toBeTruthy(); // This will pass
   });
 
-  squeeze("should fail", () => {
-    taste(false).isJuicy(); // This will fail
-  });
-});
-
-fruit("isSour", () => {
-  squeeze("should pass", () => {
-    taste(() => {
-      throw new Error("Sour taste!");
-    }).isSour("Sour taste!");
-  });
-
-  squeeze("should fail", () => {
-    taste(() => {}).isSour("Expected sour taste but got none"); // This will fail
+  test("should fail", () => {
+    expect(false).toBeTruthy(); // This will fail
   });
 });
 
-fruit("isSweet", () => {
-  squeeze("should pass", () => {
-    taste(() => {}).isSweet("Expected no error but got one"); // This will pass
+suite("toThrow", () => {
+  test("should pass", () => {
+    expect(() => {
+      throw new Error("Sour expect!");
+    }).toThrow("Sour expect!");
   });
 
-  squeeze("should fail", () => {
-    taste(() => {
-      throw new Error("Sweet taste!");
-    }).isSweet("Sweet taste!"); // This will fail
-  });
-});
-
-fruit("hasNotesOf", () => {
-  squeeze("should pass", () => {
-    const obj = { notes: ["fresh", "crisp"] };
-    taste(obj).hasNotesOf("fresh"); // This will pass
+  test("should fail", () => {
+    expect(() => {}).toThrow("Expected sour expect but got none"); // This will fail
   });
 
-  squeeze("should fail", () => {
-    const obj = { notes: ["fresh", "crisp"] };
-    taste(obj).hasNotesOf("rotten"); // This will fail
+  test("should fail on dif err", () => {
+    expect(() => {
+      throw new Error("A different error!");
+    }).toThrow("Sour expect!");
   });
 });
 
-fruit("hasProfileOf", () => {
-  squeeze("should pass", () => {
-    const fruit = {
-      profile: {
-        sweetness: "high",
-        acidity: "medium",
-        aroma: "citrus",
-      },
+suite("notToThrow", () => {
+  test("should pass", () => {
+    expect(() => {}).notToThrow("Expected no error but got one"); // This will pass
+  });
+
+  test("should fail", () => {
+    expect(() => {
+      throw new Error("Sweet expect!");
+    }).notToThrow("Sweet expect!"); // This will fail
+  });
+
+  test("should fail on dif error", () => {
+    expect(() => {
+      throw new Error("A different error!");
+    }).notToThrow("Sour expect!");
+  });
+});
+
+suite("toHaveProperties", () => {
+  test("should pass", () => {
+    const suite = {
+      sweetness: "high",
+      acidity: "medium",
+      aroma: "citrus",
     };
 
-    taste(fruit).hasProfileOf({
+    expect(suite).toHaveProperties({
       sweetness: "high",
       aroma: "citrus",
     }); // This will pass
   });
 
-  squeeze("should fail", () => {
-    const fruit = {
-      profile: {
-        sweetness: "high",
-        acidity: "medium",
-        aroma: "citrus",
-      },
+  test("should fail", () => {
+    const suite = {
+      sweetness: "high",
+      acidity: "medium",
+      aroma: "citrus",
     };
 
-    taste(fruit).hasProfileOf({
+    expect(suite).toHaveProperties({
       aroma: "berry",
     }); // This will fail
   });

@@ -1,16 +1,16 @@
-fruit("logging tests", () => {
-  squeeze("should pass", () => {
+suite("logging tests", () => {
+  test("should pass", () => {
     console.log("This is a test log");
-    taste(1).fitsNote(1);
+    expect(1).toBe(1);
   });
 
-  squeeze("should pass", () => {
+  test("should pass", () => {
     console.warn("This is a test warning");
-    taste(2).fitsNote(2);
+    expect(2).toBe(2);
   });
 
-  squeeze("should pass", () => {
+  test("should pass", () => {
     console.error("This is a test error");
-    taste(3).fitsNote(3);
+    expect(3).toBe(3);
   });
 });
