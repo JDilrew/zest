@@ -12,6 +12,7 @@ const matchers = function (received) {
           matcher: "toBe",
           status: "passed",
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
@@ -19,6 +20,7 @@ const matchers = function (received) {
           status: "failed",
           error: e.message,
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
         throw e;
       }
@@ -36,6 +38,7 @@ const matchers = function (received) {
           matcher: "toEqual",
           status: "passed",
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
@@ -43,6 +46,7 @@ const matchers = function (received) {
           status: "failed",
           error: e.message,
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
         throw e;
       }
@@ -56,6 +60,7 @@ const matchers = function (received) {
           matcher: "toBeTruthy",
           status: "passed",
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
@@ -63,6 +68,7 @@ const matchers = function (received) {
           status: "failed",
           error: e.message,
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
         throw e;
       }
@@ -79,6 +85,7 @@ const matchers = function (received) {
             status: "failed",
             error: e.message,
             testName: globalThis.__zestCurrentTestName__,
+            suiteNames: globalThis.__zestCurrentSuiteNames__,
           });
           throw new Error(
             `Expected error message "${e.message}" to be "${expectedError}"`
@@ -91,6 +98,7 @@ const matchers = function (received) {
           status: "failed",
           error: "No error thrown",
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
         throw new Error(`Expected function to throw an error, but it did not`);
       }
@@ -98,6 +106,7 @@ const matchers = function (received) {
         matcher: "toThrow",
         status: "passed",
         testName: globalThis.__zestCurrentTestName__,
+        suiteNames: globalThis.__zestCurrentSuiteNames__,
       });
     },
     notToThrow(expectedError) {
@@ -112,6 +121,7 @@ const matchers = function (received) {
             status: "failed",
             error: e.message,
             testName: globalThis.__zestCurrentTestName__,
+            suiteNames: globalThis.__zestCurrentSuiteNames__,
           });
           throw new Error(
             expectedError
@@ -126,6 +136,7 @@ const matchers = function (received) {
           status: "failed",
           error: "Function threw an error",
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
         throw new Error(`Expected function not to throw an error, but it did`);
       }
@@ -133,6 +144,7 @@ const matchers = function (received) {
         matcher: "notToThrow",
         status: "passed",
         testName: globalThis.__zestCurrentTestName__,
+        suiteNames: globalThis.__zestCurrentSuiteNames__,
       });
     },
     toHaveProperties(expected) {
@@ -151,6 +163,7 @@ const matchers = function (received) {
           matcher: "toHaveProperties",
           status: "passed",
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
       } catch (e) {
         globalThis.__zestResults__.push({
@@ -158,6 +171,7 @@ const matchers = function (received) {
           status: "failed",
           error: e.message,
           testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
         });
         throw e;
       }

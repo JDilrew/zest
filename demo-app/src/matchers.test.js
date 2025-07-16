@@ -98,3 +98,16 @@ suite("toHaveProperties", () => {
     }); // This will fail
   });
 });
+
+suite("multiple expectations", () => {
+  test("should pass all expectations", () => {
+    expect(add(1, 2)).toBe(3);
+    expect(subtract(5, 2)).toEqual(3); // This will pass
+  });
+
+  test("should exit after one fails", () => {
+    expect(add(1, 1)).toBe(3);
+    expect(add(2, 2)).toEqual(4); // This will fail and exit
+    expect(subtract(5, 5)).toEqual(3); // This will pass
+  });
+});
