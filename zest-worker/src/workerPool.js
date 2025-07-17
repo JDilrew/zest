@@ -13,9 +13,9 @@ class WorkerPool {
     throw new Error("Method not implemented.");
   }
 
-  terminateWorker(workerId) {
-    this._workers = this._workers.filter((worker) => worker.id !== workerId);
-  }
+  // terminateWorker(workerId) {
+  //   this._workers = this._workers.filter((worker) => worker.id !== workerId);
+  // }
 
   run(task) {
     if (this._workers.length === 0) {
@@ -25,7 +25,10 @@ class WorkerPool {
     const worker = this._workers.shift();
 
     return worker.run(task).finally(() => {
-      this._workers.push(worker);
+      if (typeof worker.close === "function") {
+        worker.close();
+      }
+      // Do NOT push the worker back into the pool
     });
   }
 }

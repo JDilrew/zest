@@ -70,13 +70,21 @@ class ChildProcessWorker extends BaseWorker {
 
       this.#childProcess.once("exit", (code) => {
         if (code !== 0) {
-          console.error(`Child process exited with code ${code}`);
+          // console.error(`Child process exited with code ${code}`);
           reject(new Error(`Child process exited with code ${code}`));
-        } else {
-          console.log("Child process exited successfully.");
         }
+        // else {
+        //   console.log("Child process exited successfully.");
+        // }
       });
     });
+  }
+
+  close() {
+    if (this.#childProcess) {
+      this.#childProcess.kill();
+      this.#childProcess = null;
+    }
   }
 }
 
