@@ -34,6 +34,7 @@ export async function runTest(testFile) {
         try {
           globalThis.__zestCurrentTestName__ = test.testName;
           globalThis.__zestCurrentSuiteNames__ = suiteNames;
+
           test.testFn();
         } catch (e) {
           testResult.success = false;

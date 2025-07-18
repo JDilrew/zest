@@ -4,7 +4,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug Zest CLI",
+            "name": "Debug Zest",
             "program": "${workspaceFolder}/zest/bin/cli.js",
             "args": [],
             "cwd": "${workspaceFolder}",

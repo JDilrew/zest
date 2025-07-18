@@ -1,0 +1,9 @@
+{
+  "name": "@heritage/zest-finder",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A module for finding test files in JavaScript projects",
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "test": "zest",
-    "device": "device",
-    "test:worker": "node ./src/worker-tests/childProcesses.js"
+    "test": "zest"
   },
   "devDependencies": {
-    "@heritage/zest": "file:../zest/",
-    "@heritage/device": "file:../packages/device",
-    "@heritage/worker": "file:../packages/worker"
+    "@heritage/zest": "file:../zest/"
   }
 }

@@ -2,6 +2,13 @@ import { suites } from "./index.js";
 import { formatTime } from "./utils.js";
 import chalk from "chalk";
 
+// Keeping the core of "runTest" as a separate function (as "runTestInternal")
+// is key to be able to detect memory leaks. Since all variables are local to
+// the function, when "runTestInternal" finishes its execution, they can all be
+// freed, UNLESS something else is leaking them (and that's why we can detect
+// the leak!).
+function runTestInternal() {}
+
 function run({ silent = false } = {}) {
   console.log(chalk.bold.yellow("---\n"));
   console.log(chalk.bold.yellow("🍋 Running tests...\n"));
