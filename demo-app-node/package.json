@@ -1,0 +1,11 @@
+{
+  "name": "demo-app-node",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "zest"
+  },
+  "devDependencies": {
+    "@heritage/zest": "file:../zest/"
+  }
+}

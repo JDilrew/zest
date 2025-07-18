@@ -1,5 +1,5 @@
 {
-  "name": "zest-demo-app",
+  "name": "demo-app-dom",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
