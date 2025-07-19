@@ -17,3 +17,17 @@ We have to pipe the logging back, do we merge streams here?
 Farm - Is responsible for orchestrating everything
 Pools - Houses the workers
 Worker - Runs the jobs
+
+
+# Functionality
+
+- Create a pool of workers, thread or child process based
+- Run jobs/tasks in parallel using the worker pool
+- Optionally pre-spawn workers for performance
+- Dynamically scale the number of workers based on workload
+- Pipe and merge logging/output from all workers
+- Expose an API to submit jobs and receive results
+- Support graceful shutdown: close all workers when done
+- Isolate jobs so state and mocks do not leak between tasks
+- Optionally allow configuration of max workers, worker type, and logging behavior
+- Track and report job status, errors, and results

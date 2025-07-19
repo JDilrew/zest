@@ -10,6 +10,7 @@
 6. Detect file changes and track previously failed tests (for watch mode and prioritization)
 7. Create a test runner instance (`jest-runner`)
 8. For each test file:
+   - Create a runtime environment (`jest-runtime`) for isolation, mocking, and transformation
    - Use `jest-circus` (the test execution engine) to:
      - Register and organize tests and `describe` blocks
      - Run global setup/teardown (`beforeAll`, `afterAll`)
@@ -31,7 +32,7 @@
 
 > Jest orchestrates the entire test lifecycle: from file discovery and environment setup,
 > through test execution, mocking, coverage collection, file change detection, prioritization, logging interception, leak detection, snapshot testing, parallelization, and reporting.
-> The CLI, runner, and circus engine work together to provide isolation,
+> The CLI, runner, runtime, and circus engine work together to provide isolation,
 > reliability, coverage, prioritization, leak detection, parallel execution, and rich reporting.
 
 ## Stripped back MVP (to learn Jest's architecture)
@@ -41,6 +42,7 @@
 3. Discover test files (using globs and config)
 4. Create a test runner instance (jest-runner)
 5. For each test file:
+   - Create a runtime environment (jest-runtime) for isolation and mocking
    - Implement a minimal test execution engine (jest-circus) to handle:
      - Running tests, hooks, and describe blocks
      - Managing async and sync test execution
