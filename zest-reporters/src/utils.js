@@ -1,3 +1,5 @@
+//TODO: Currently unused.
+
 function formatTime(ms) {
   if (ms < 1000) {
     return `${ms}ms`;

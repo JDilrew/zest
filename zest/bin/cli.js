@@ -1,19 +1,21 @@
 #!/usr/bin/env node
-import { run } from "@heritage/zest-runner/runner";
-import { resolveTestFiles } from "@heritage/zest-finder";
-import { applyMocks } from "@heritage/zest-mock";
-import { parseArgs } from "@heritage/zest-cli/args";
+import "@heritage/zest-cli/bin/cli";
 
-// Apply mocks before loading test files
-applyMocks();
+// import { run } from "@heritage/zest-runner/runner";
+// import { resolveTestFiles } from "@heritage/zest-finder";
+// import { applyMocks } from "@heritage/zest-mock";
+// import { parseArgs } from "@heritage/zest-cli/args";
 
-// Parse CLI arguments
-const { command, pathArg, silent } = parseArgs(process.argv.slice(2));
+// // Apply mocks before loading test files
+// applyMocks();
 
-const testFiles = await resolveTestFiles(pathArg, silent);
+// // Parse CLI arguments
+// const { command, pathArg, silent } = parseArgs(process.argv.slice(2));
 
-if (command === "test") {
-  run(testFiles, silent);
-} else {
-  console.error(chalk.bold.red("Unknown command:"), command);
-}
+// const testFiles = await resolveTestFiles(pathArg, silent);
+
+// if (command === "test") {
+//   run(testFiles, silent);
+// } else {
+//   console.error(chalk.bold.red("Unknown command:"), command);
+// }

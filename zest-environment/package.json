@@ -1,0 +1,14 @@
+{
+  "name": "@heritage/zest-environment",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A minimal test environment manager for JavaScript projects",
+  "exports": {
+    ".": "./src/index.js",
+    "./nodeEnvironment": "./src/nodeEnvironment.js",
+    "./jsdomEnvironment": "./src/jsdomEnvironment.js"
+  },
+  "peerDependencies": {
+    "jsdom": "^26.1.0"
+  }
+}

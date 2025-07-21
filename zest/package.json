@@ -3,20 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A simple test runner for JavaScript projects",
-  "exports": {
-    ".": "./src/runner.js",
-    "./finder": "./src/finder.js"
-  },
   "bin": {
     "zest": "bin/cli.js"
   },
   "dependencies": {
-    "chalk": "^5.4.1",
-    "@heritage/zest-cli": "file:../zest-cli",
-    "@heritage/zest-finder": "file:../zest-finder",
-    "@heritage/zest-matchers": "file:../zest-matchers",
-    "@heritage/zest-mock": "file:../zest-mock",
-    "@heritage/zest-runner": "file:../zest-runner",
-    "@heritage/zest-worker": "file:../zest-worker"
+    "@heritage/zest-cli": "file:../zest-cli"
   }
 }
