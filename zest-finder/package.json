@@ -5,5 +5,8 @@
   "description": "A module for finding test files in JavaScript projects",
   "exports": {
     ".": "./src/index.js"
+  },
+  "dependencies": {
+    "glob": "^11.0.3"
   }
 }

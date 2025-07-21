@@ -4,6 +4,13 @@ import { dirname, join } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { relative } from "path";
 
+// Keeping the core of "runTest" as a separate function (as "runTestInternal")
+// is key to be able to detect memory leaks. Since all variables are local to
+// the function, when "runTestInternal" finishes its execution, they can all be
+// freed, UNLESS something else is leaking them (and that's why we can detect
+// the leak!).
+function runTestInternal() {}
+
 async function run(testFiles, silent = false) {
   const root = dirname(fileURLToPath(import.meta.url));
 

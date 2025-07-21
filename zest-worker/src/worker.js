@@ -67,22 +67,7 @@ class Worker {
 
   #callBoundFunction(method, args) {
     return this.#workerPool.run({ method, args });
-    // return this._farm.doWork(method, ...args);
   }
-
-  // run(task) {
-  //   console.log("Running task in worker pool...", task);
-
-  //   if (!this.#workerPool) {
-  //     throw new Error("Worker pool not initialized.");
-  //   }
-
-  //   // if (typeof task !== "function") {
-  //   //   throw new TypeError("Task must be a function.");
-  //   // }
-
-  //   return this.#workerPool.run(task);
-  // }
 }
 
 export { Worker };

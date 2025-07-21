@@ -1,0 +1,9 @@
+{
+  "name": "@heritage/zest-matchers",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A collection of matchers for Jest tests",
+  "exports": {
+    ".": "./src/matchers.js"
+  }
+}

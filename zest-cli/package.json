@@ -1,0 +1,13 @@
+{
+  "name": "@heritage/zest-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A command-line interface for running tests in JavaScript projects",
+  "bin": {
+    "zest": "bin/cli.js"
+  },
+  "exports": {
+    ".": "./src/",
+    "./args": "./src/args.js"
+  }
+}

@@ -1,9 +1,7 @@
 // zest-worker/src/worker-bootstrap.js
 
 // This file is launched in a child process — probably using Node's child_process.fork() — and acts as a dynamic loader + dispatcher for a "worker module".
-
 // It’s a generic wrapper that loads whatever module it's told to, listens for messages from the parent process, calls functions from that module, and sends the results back.
-
 // This file is launched in the child process. It loads the target worker module and dispatches method calls from the parent.
 
 // Get the worker module URL from process arguments (e.g., process.argv[2])

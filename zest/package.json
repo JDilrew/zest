@@ -12,7 +12,11 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
-    "glob": "^11.0.3",
+    "@heritage/zest-cli": "file:../zest-cli",
+    "@heritage/zest-finder": "file:../zest-finder",
+    "@heritage/zest-matchers": "file:../zest-matchers",
+    "@heritage/zest-mock": "file:../zest-mock",
+    "@heritage/zest-runner": "file:../zest-runner",
     "@heritage/zest-worker": "file:../zest-worker"
   }
 }

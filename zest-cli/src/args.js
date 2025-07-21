@@ -1,5 +1,3 @@
-// Parses CLI arguments for zest CLI
-
 export function parseArgs(argv) {
   let command = null;
   let pathArg = null;

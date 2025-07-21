@@ -1,0 +1,16 @@
+{
+  "name": "@heritage/zest-runner",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Zest test runner",
+  "exports": {
+    ".": "./src/index.js",
+    "./runner": "./src/runner.js",
+    "./worker": "./src/worker.js"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "@heritage/zest-globals": "file:../zest-globals",
+    "@heritage/zest-worker": "file:../zest-worker"
+  }
+}

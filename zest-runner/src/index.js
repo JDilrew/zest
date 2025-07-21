@@ -1,6 +1,3 @@
-import { matchers } from "./matchers.js";
-import { mock } from "./mocking.js";
-
 const suites = [];
 let currentSuite = null;
 let fileSuites = {};
@@ -32,12 +29,4 @@ function test(name, fn) {
   parent.tests.push({ testName: name, testFn: fn });
 }
 
-// Expose globals
-global.suite = suite;
-global.test = test;
-global.expect = matchers;
-global.zest = {
-  mock,
-};
-
-export { suites };
+export { suites, suite, test };

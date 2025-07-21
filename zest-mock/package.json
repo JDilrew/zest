@@ -1,0 +1,9 @@
+{
+  "name": "@heritage/zest-mock",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A mock implementation for Jest tests",
+  "exports": {
+    ".": "./src/mocking.js"
+  }
+}
