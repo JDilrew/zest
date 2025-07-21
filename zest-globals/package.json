@@ -7,7 +7,6 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@heritage/zest-runner": "file:../zest-runner",
     "@heritage/zest-matchers": "file:../zest-matchers",
     "@heritage/zest-mock": "file:../zest-mock"
   }

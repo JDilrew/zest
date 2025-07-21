@@ -1,10 +1,7 @@
 import { pathToFileURL } from "url";
 
-import "./index.js";
-// import "@heritage/zest-matchers";
-import "@heritage/zest-globals";
-
-import { suites } from "./index.js";
+// import "@heritage/zest-globals";
+import { suites } from "@heritage/zest-globals";
 
 export async function runTest(testFile) {
   // Reset results for each test file
