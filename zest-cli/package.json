@@ -12,8 +12,8 @@
     "./bin/cli": "./bin/cli.js"
   },
   "dependencies": {
-    "@heritage/zest-finder": "file:../zest-finder",
-    "@heritage/zest-mock": "file:../zest-mock",
-    "@heritage/zest-runner": "file:../zest-runner"
+    "@heritage/zest-finder": "workspace:*",
+    "@heritage/zest-mock": "workspace:*",
+    "@heritage/zest-runner": "workspace:*"
   }
 }

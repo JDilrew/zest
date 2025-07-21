@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A simple test runner for JavaScript projects",
-  "bin": {
-    "zest": "bin/cli.js"
-  },
+  "bin": "bin/cli.js",
   "dependencies": {
-    "@heritage/zest-cli": "file:../zest-cli"
+    "@heritage/zest-cli": "workspace:*"
   }
 }

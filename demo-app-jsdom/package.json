@@ -1,11 +1,11 @@
 {
-  "name": "demo-app-dom",
+  "name": "demo-app-jsdom",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "test": "zest"
   },
   "devDependencies": {
-    "@heritage/zest": "file:../zest/"
+    "@heritage/zest": "workspace:*"
   }
 }

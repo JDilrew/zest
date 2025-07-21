@@ -1,0 +1,25 @@
+{
+  "name": "zest",
+  "workspaces": [
+    "demo-app-jsdom",
+    "demo-app-node",
+    "zest",
+    "zest-cli",
+    "zest-engine",
+    "zest-environment",
+    "zest-finder",
+    "zest-globals",
+    "zest-matchers",
+    "zest-mock",
+    "zest-reporters",
+    "zest-resolvers",
+    "zest-runner",
+    "zest-transform",
+    "zest-worker"
+  ],
+  "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "test:jsdom": "yarn workspace demo-app-jsdom test",
+    "test:node": "yarn workspace demo-app-node test"
+  }
+}

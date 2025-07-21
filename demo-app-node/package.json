@@ -6,6 +6,6 @@
     "test": "zest"
   },
   "devDependencies": {
-    "@heritage/zest": "file:../zest/"
+    "@heritage/zest": "workspace:*"
   }
 }
