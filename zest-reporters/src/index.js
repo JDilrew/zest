@@ -1,5 +1,11 @@
 import chalk from "chalk";
 
+function reportStart() {
+  console.log(chalk.bold.yellow("---\n"));
+  console.log(chalk.bold.yellow("🍋 Running tests...\n"));
+  console.log(chalk.bold.yellow("---\n"));
+}
+
 function reportResults(results) {
   // Print per-file results
   results.forEach(({ file, success, errorMessage, matcherResults }) => {
@@ -83,7 +89,7 @@ function reportResults(results) {
       passedTests++;
     else failedTests++;
   }
-  console.log(chalk.bold.yellow("\n--- SUMMARY ---"));
+  console.log(chalk.bold.yellow("\n--- SUMMARY ---\n"));
   console.log(
     chalk.bold(`Ran: ${suiteSet.size} suites, ${testSet.size} tests`)
   );
@@ -93,6 +99,7 @@ function reportResults(results) {
   console.log(
     chalk.red.bold(`Failed: ${failedSuites} suites, ${failedTests} tests`)
   );
+  console.log(chalk.bold.yellow("\n---\n"));
 }
 
-export { reportResults };
+export { reportStart, reportResults };

@@ -4,7 +4,7 @@ import { resolveTestFiles } from "@heritage/zest-finder";
 // import { applyMocks } from "@heritage/zest-mock";
 // import { run } from "@heritage/zest-runner";
 import { TestRunner } from "@heritage/zest-runner";
-import { reportResults } from "@heritage/zest-reporters";
+import { reportStart, reportResults } from "@heritage/zest-reporters";
 import { loadConfig } from "@heritage/zest-config";
 
 // Apply mocks before loading test files
@@ -24,9 +24,11 @@ const config = await loadConfig(configInput);
 const testFiles = await resolveTestFiles(pathArg, silent);
 
 if (command === "test") {
+  reportStart();
+
   const runner = new TestRunner();
   const results = await runner.runTests(testFiles, undefined, config);
-  // const results = await run(config, testFiles, silent);
+
   reportResults(results);
 } else {
   console.error(chalk.bold.red("Unknown command:"), command);
