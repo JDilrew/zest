@@ -12,6 +12,8 @@ export function parseArgs(argv) {
       pathArg = argv[i];
     }
   }
+
   if (!command) command = "test";
+
   return { command, pathArg, silent };
 }

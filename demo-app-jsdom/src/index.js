@@ -1,5 +1,4 @@
 // Simple counter demo for jsdom testing and UI interaction
-
 let counter = 0;
 
 function increment() {
