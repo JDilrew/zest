@@ -1,6 +1,20 @@
-import { Worker } from "@heritage/zest-worker";
-import { dirname, join } from "path";
-import { fileURLToPath, pathToFileURL } from "url";
+import { pathToFileURL } from "url";
+
+// Simple event emitter for reporting
+class EventEmitter {
+  constructor() {
+    this.listeners = {};
+  }
+  on(event, fn) {
+    if (!this.listeners[event]) this.listeners[event] = [];
+    this.listeners[event].push(fn);
+  }
+  emit(event, ...args) {
+    if (this.listeners[event]) {
+      for (const fn of this.listeners[event]) fn(...args);
+    }
+  }
+}
 
 // EXCERPT-FROM-JEST; Keeping the core of "runTest" as a separate function (as "runTestInternal")
 // is key to be able to detect memory leaks. Since all variables are local to
@@ -17,45 +31,32 @@ async function runTestInternal(config, testFile) {
         : config.testRunner;
     const { run } = await import(runner);
 
-    // setup environment
-    // let env;
-    // if (config.testEnvironment === "jsdom") {
-    //   const { JsdomEnvironment } = await import(
-    //     "@heritage/zest-environment/jsdomEnvironment"
-    //   );
-    //   env = new JsdomEnvironment();
-    // } else {
-    //   const { NodeEnvironment } = await import(
-    //     "@heritage/zest-environment/nodeEnvironment"
-    //   );
-    //   env = new NodeEnvironment();
-    // }
-    // await env.setup();
+    // Create emitter and attach listeners BEFORE running tests
+    const matcherResults = [];
+    let failed = false;
+    let errorMessage = null;
+    // Use the EventEmitter from the test engine, or fallback
+    const emitter = EventEmitter ? new EventEmitter() : { on: () => {} };
+    emitter.on &&
+      emitter.on("test_success", (testName) => {
+        matcherResults.push({ testName, status: "passed" });
+      });
+    emitter.on &&
+      emitter.on("test_failure", (testName, error) => {
+        matcherResults.push({
+          testName,
+          status: "failed",
+          error: error?.message || error,
+        });
+        failed = true;
+        if (!errorMessage) errorMessage = error?.message || String(error);
+      });
 
     // Import the test file so it registers its suites/tests
     await import(pathToFileURL(testFile).href);
 
-    // Run the test suite using the runner
-    const emitter = await run();
-
-    // await env.teardown();
-
-    // Collect test results from emitter events
-    const matcherResults = [];
-    let failed = false;
-    let errorMessage = null;
-    emitter.on("test_success", (testName) => {
-      matcherResults.push({ testName, status: "passed" });
-    });
-    emitter.on("test_failure", (testName, error) => {
-      matcherResults.push({
-        testName,
-        status: "failed",
-        error: error?.message || error,
-      });
-      failed = true;
-      if (!errorMessage) errorMessage = error?.message || String(error);
-    });
+    // Run the test suite using the runner, passing the emitter
+    await run(emitter);
 
     // Return a simple result object
     return {

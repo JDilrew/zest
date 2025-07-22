@@ -1,21 +1,5 @@
 import { matchers } from "@heritage/zest-matchers";
-import { mock } from "@heritage/zest-mock";
-
-// Simple event emitter for reporting
-class EventEmitter {
-  constructor() {
-    this.listeners = {};
-  }
-  on(event, fn) {
-    if (!this.listeners[event]) this.listeners[event] = [];
-    this.listeners[event].push(fn);
-  }
-  emit(event, ...args) {
-    if (this.listeners[event]) {
-      for (const fn of this.listeners[event]) fn(...args);
-    }
-  }
-}
+import { mock, spyOn } from "@heritage/zest-mock";
 
 // Hierarchical test registry
 const rootSuite = {
@@ -67,6 +51,7 @@ global.expect = matchers;
 
 global.zest = {
   mock,
+  spyOn,
 };
 
 // Recursively run a suite
@@ -88,9 +73,10 @@ async function runSuite(suite, emitter) {
   for (const hook of suite.hooks.afterAll) await hook();
 }
 
-// Main entry
-async function run() {
-  const emitter = new EventEmitter();
+// Main entry: Accepts an optional EventEmitter, or creates one if not provided.
+// Returns a promise that resolves when all tests are done.
+async function run(emitter = null) {
+  emitter = emitter || new EventEmitter();
   emitter.emit("start");
   await runSuite(rootSuite, emitter);
   emitter.emit("end");
@@ -98,13 +84,4 @@ async function run() {
 }
 
 // Export registry for runner
-export {
-  // suite,
-  // test,
-  // beforeAll,
-  // afterAll,
-  // beforeEach,
-  // afterEach,
-  run,
-  // rootSuite,
-};
+export { run };

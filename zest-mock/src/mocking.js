@@ -10,6 +10,25 @@ function mock(moduleName, mockImpl) {
   mocks[moduleName] = mockImpl;
 }
 
+function spyOn(object, methodName) {
+  if (!object || typeof object[methodName] !== "function") {
+    throw new Error(`Cannot spy on ${methodName} of ${object}`);
+  }
+  const originalMethod = object[methodName];
+  const spy = function (...args) {
+    spy.calls.push(args);
+    return originalMethod.apply(this, args);
+  };
+  spy.calls = [];
+  object[methodName] = spy;
+  return {
+    restore: () => {
+      object[methodName] = originalMethod;
+    },
+    getCalls: () => spy.calls,
+  };
+}
+
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
@@ -27,4 +46,4 @@ function applyMocks() {
   };
 }
 
-export { mock, applyMocks };
+export { mock, spyOn, applyMocks };

@@ -8,17 +8,18 @@ test("should pass when un-mocked", () => {
 });
 
 suite("with mock", () => {
+  let addSpy;
+
   beforeEach(() => {
-    zest.spyOn("./example.js", {
-      add: (a, b) => a + b + 5,
-      subtract: (a, b) => a - b - 5,
-    });
+    // TODO: fix spying
+    // addSpy = zest.spyOn("./example.js", "add");
+    console.log("Before each test called!");
   });
 
   test("should pass when mocked", () => {
     const addResult = add(2, 3);
     expect(addResult).toBe(10); // 2 + 3 + 5 from mock
-    const subtractResult = subtract(10, 3);
-    expect(subtractResult).toBe(2); // 10 - 3 -
+
+    expect(addSpy).toHaveBeenCalledWith(2, 3);
   });
 });

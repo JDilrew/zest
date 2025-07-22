@@ -11,7 +11,9 @@ class TestRunner {
       : this.#runTestsInParallel(testFiles, watcher, config);
   }
 
-  async #runTestsInBand(testFiles, watcher, config) {}
+  async #runTestsInBand(testFiles, watcher, config) {
+    throw new Error("Running tests in band is not yet implemented.");
+  }
 
   async #runTestsInParallel(testFiles, watcher, config) {
     const root = dirname(fileURLToPath(import.meta.url));
