@@ -1,61 +1,8 @@
-import { pathToFileURL } from "url";
+import { run } from "./runner.js";
 
 export async function runTest([config, testFile]) {
-  //TODO: This should be inside runner.js and that work should be moved to index.js...
   try {
-    // Import and run the test engine (zest-juice by default)
-    const runner =
-      config.testRunner === "juice"
-        ? "@heritage/zest-juice"
-        : config.testRunner;
-    const { run } = await import(runner);
-
-    // setup environment
-    let env;
-    if (config.testEnvironment === "jsdom") {
-      const { JsdomEnvironment } = await import(
-        "@heritage/zest-environment/jsdomEnvironment"
-      );
-      env = new JsdomEnvironment();
-    } else {
-      const { NodeEnvironment } = await import(
-        "@heritage/zest-environment/nodeEnvironment"
-      );
-      env = new NodeEnvironment();
-    }
-    await env.setup();
-
-    // Import the test file so it registers its suites/tests
-    await import(pathToFileURL(testFile).href);
-
-    // Run the test suite using the runner
-    const emitter = await run();
-
-    await env.teardown();
-
-    // Collect test results from emitter events
-    const matcherResults = [];
-    let failed = false;
-    let errorMessage = null;
-    emitter.on("test_success", (testName) => {
-      matcherResults.push({ testName, status: "passed" });
-    });
-    emitter.on("test_failure", (testName, error) => {
-      matcherResults.push({
-        testName,
-        status: "failed",
-        error: error?.message || error,
-      });
-      failed = true;
-      if (!errorMessage) errorMessage = error?.message || String(error);
-    });
-
-    // Return a simple result object
-    return {
-      success: !failed,
-      errorMessage,
-      matcherResults,
-    };
+    return await run(config, testFile);
   } catch (error) {
     return {
       success: false,

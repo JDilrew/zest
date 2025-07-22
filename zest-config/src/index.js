@@ -53,6 +53,7 @@ async function loadConfig(configInput) {
 
 function applyDefaults(config) {
   return {
+    serial: config.serial || false,
     testRunner: "juice",
     testEnvironment: config.testEnvironment || "node",
     testMatch: config.testMatch || ["**/*.test.js"],
