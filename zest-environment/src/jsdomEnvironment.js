@@ -17,4 +17,4 @@ class JsdomEnvironment extends BaseEnvironment {
   }
 }
 
-export default { JsdomEnvironment };
+export { JsdomEnvironment };

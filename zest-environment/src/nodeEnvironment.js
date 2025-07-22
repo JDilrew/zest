@@ -11,4 +11,4 @@ class NodeEnvironment extends BaseEnvironment {
   }
 }
 
-export default { NodeEnvironment };
+export { NodeEnvironment };

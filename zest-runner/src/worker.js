@@ -1,6 +1,7 @@
 import { pathToFileURL } from "url";
 
 export async function runTest([config, testFile]) {
+  //TODO: This should be inside runner.js and that work should be moved to index.js...
   try {
     // Import and run the test engine (zest-juice by default)
     const runner =
@@ -9,11 +10,28 @@ export async function runTest([config, testFile]) {
         : config.testRunner;
     const { run } = await import(runner);
 
+    // setup environment
+    let env;
+    if (config.testEnvironment === "jsdom") {
+      const { JsdomEnvironment } = await import(
+        "@heritage/zest-environment/jsdomEnvironment"
+      );
+      env = new JsdomEnvironment();
+    } else {
+      const { NodeEnvironment } = await import(
+        "@heritage/zest-environment/nodeEnvironment"
+      );
+      env = new NodeEnvironment();
+    }
+    await env.setup();
+
     // Import the test file so it registers its suites/tests
     await import(pathToFileURL(testFile).href);
 
     // Run the test suite using the runner
     const emitter = await run();
+
+    await env.teardown();
 
     // Collect test results from emitter events
     const matcherResults = [];

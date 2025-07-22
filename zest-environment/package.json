@@ -4,11 +4,14 @@
   "type": "module",
   "description": "A minimal test environment manager for JavaScript projects",
   "exports": {
-    ".": "./src/index.js",
-    "./nodeEnvironment": "./src/nodeEnvironment.js",
-    "./jsdomEnvironment": "./src/jsdomEnvironment.js"
+    ".": "./src/",
+    "./jsdomEnvironment": "./src/jsdomEnvironment.js",
+    "./nodeEnvironment": "./src/nodeEnvironment.js"
   },
-  "peerDependencies": {
+  "dependencies": {
     "jsdom": "^26.1.0"
+  },
+  "scripts": {
+    "build": "node copy-to-dist.js"
   }
 }

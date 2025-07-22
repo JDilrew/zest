@@ -5,6 +5,9 @@
   "scripts": {
     "test": "zest"
   },
+  "dependencies": {
+    "jsdom": "^26.1.0"
+  },
   "devDependencies": {
     "@heritage/zest": "workspace:*"
   }
