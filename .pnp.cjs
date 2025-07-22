@@ -31,6 +31,10 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:zest-cli"\
     },\
     {\
+      "name": "@heritage/zest-config",\
+      "reference": "workspace:zest-config"\
+    },\
+    {\
       "name": "@heritage/zest-environment",\
       "reference": "workspace:zest-environment"\
     },\
@@ -39,8 +43,8 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:zest-finder"\
     },\
     {\
-      "name": "@heritage/zest-globals",\
-      "reference": "workspace:zest-globals"\
+      "name": "@heritage/zest-juice",\
+      "reference": "workspace:zest-juice"\
     },\
     {\
       "name": "@heritage/zest-matchers",\
@@ -49,6 +53,10 @@ const RAW_RUNTIME_STATE =
     {\
       "name": "@heritage/zest-mock",\
       "reference": "workspace:zest-mock"\
+    },\
+    {\
+      "name": "@heritage/zest-reporters",\
+      "reference": "workspace:zest-reporters"\
     },\
     {\
       "name": "@heritage/zest-runner",\
@@ -65,11 +73,13 @@ const RAW_RUNTIME_STATE =
   "fallbackExclusionList": [\
     ["@heritage/zest", ["workspace:zest"]],\
     ["@heritage/zest-cli", ["workspace:zest-cli"]],\
+    ["@heritage/zest-config", ["workspace:zest-config"]],\
     ["@heritage/zest-environment", ["workspace:zest-environment"]],\
     ["@heritage/zest-finder", ["workspace:zest-finder"]],\
-    ["@heritage/zest-globals", ["workspace:zest-globals"]],\
+    ["@heritage/zest-juice", ["workspace:zest-juice"]],\
     ["@heritage/zest-matchers", ["workspace:zest-matchers"]],\
     ["@heritage/zest-mock", ["workspace:zest-mock"]],\
+    ["@heritage/zest-reporters", ["workspace:zest-reporters"]],\
     ["@heritage/zest-runner", ["workspace:zest-runner"]],\
     ["@heritage/zest-worker", ["workspace:zest-worker"]],\
     ["demo-app-jsdom", ["workspace:demo-app-jsdom"]],\
@@ -103,9 +113,20 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./zest-cli/",\
         "packageDependencies": [\
           ["@heritage/zest-cli", "workspace:zest-cli"],\
+          ["@heritage/zest-config", "workspace:zest-config"],\
           ["@heritage/zest-finder", "workspace:zest-finder"],\
           ["@heritage/zest-mock", "workspace:zest-mock"],\
+          ["@heritage/zest-reporters", "workspace:zest-reporters"],\
           ["@heritage/zest-runner", "workspace:zest-runner"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
+    ["@heritage/zest-config", [\
+      ["workspace:zest-config", {\
+        "packageLocation": "./zest-config/",\
+        "packageDependencies": [\
+          ["@heritage/zest-config", "workspace:zest-config"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -129,41 +150,18 @@ const RAW_RUNTIME_STATE =
         "linkType": "SOFT"\
       }]\
     ]],\
-    ["@heritage/zest-globals", [\
-      ["file:../zest-globals#../zest-globals::hash=ddfea4&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner", {\
-        "packageLocation": "../../../../AppData/Local/Yarn/Berry/cache/@heritage-zest-globals-file-46c8f40f57-10c0.zip/node_modules/@heritage/zest-globals/",\
+    ["@heritage/zest-juice", [\
+      ["workspace:zest-juice", {\
+        "packageLocation": "./zest-juice/",\
         "packageDependencies": [\
-          ["@heritage/zest-globals", "file:../zest-globals#../zest-globals::hash=ddfea4&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner"],\
-          ["@heritage/zest-matchers", "file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner"],\
-          ["@heritage/zest-mock", "file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["workspace:zest-globals", {\
-        "packageLocation": "./zest-globals/",\
-        "packageDependencies": [\
-          ["@heritage/zest-globals", "workspace:zest-globals"],\
-          ["@heritage/zest-matchers", "file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals"],\
-          ["@heritage/zest-mock", "file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals"]\
+          ["@heritage/zest-juice", "workspace:zest-juice"],\
+          ["@heritage/zest-matchers", "workspace:zest-matchers"],\
+          ["@heritage/zest-mock", "workspace:zest-mock"]\
         ],\
         "linkType": "SOFT"\
       }]\
     ]],\
     ["@heritage/zest-matchers", [\
-      ["file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner", {\
-        "packageLocation": "../../../../AppData/Local/Yarn/Berry/cache/@heritage-zest-matchers-file-939229b2b6-10c0.zip/node_modules/@heritage/zest-matchers/",\
-        "packageDependencies": [\
-          ["@heritage/zest-matchers", "file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals", {\
-        "packageLocation": "../../../../AppData/Local/Yarn/Berry/cache/@heritage-zest-matchers-file-adda11bfa1-10c0.zip/node_modules/@heritage/zest-matchers/",\
-        "packageDependencies": [\
-          ["@heritage/zest-matchers", "file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["workspace:zest-matchers", {\
         "packageLocation": "./zest-matchers/",\
         "packageDependencies": [\
@@ -173,20 +171,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@heritage/zest-mock", [\
-      ["file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner", {\
-        "packageLocation": "../../../../AppData/Local/Yarn/Berry/cache/@heritage-zest-mock-file-c725c477ed-10c0.zip/node_modules/@heritage/zest-mock/",\
-        "packageDependencies": [\
-          ["@heritage/zest-mock", "file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals", {\
-        "packageLocation": "../../../../AppData/Local/Yarn/Berry/cache/@heritage-zest-mock-file-5f8bfa496f-10c0.zip/node_modules/@heritage/zest-mock/",\
-        "packageDependencies": [\
-          ["@heritage/zest-mock", "file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["workspace:zest-mock", {\
         "packageLocation": "./zest-mock/",\
         "packageDependencies": [\
@@ -195,26 +179,29 @@ const RAW_RUNTIME_STATE =
         "linkType": "SOFT"\
       }]\
     ]],\
+    ["@heritage/zest-reporters", [\
+      ["workspace:zest-reporters", {\
+        "packageLocation": "./zest-reporters/",\
+        "packageDependencies": [\
+          ["@heritage/zest-reporters", "workspace:zest-reporters"],\
+          ["chalk", "npm:5.4.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
     ["@heritage/zest-runner", [\
       ["workspace:zest-runner", {\
         "packageLocation": "./zest-runner/",\
         "packageDependencies": [\
-          ["@heritage/zest-globals", "file:../zest-globals#../zest-globals::hash=ddfea4&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner"],\
+          ["@heritage/zest-juice", "workspace:zest-juice"],\
           ["@heritage/zest-runner", "workspace:zest-runner"],\
-          ["@heritage/zest-worker", "file:../zest-worker#../zest-worker::hash=8bd05f&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner"],\
+          ["@heritage/zest-worker", "workspace:zest-worker"],\
           ["chalk", "npm:5.4.1"]\
         ],\
         "linkType": "SOFT"\
       }]\
     ]],\
     ["@heritage/zest-worker", [\
-      ["file:../zest-worker#../zest-worker::hash=8bd05f&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner", {\
-        "packageLocation": "../../../../AppData/Local/Yarn/Berry/cache/@heritage-zest-worker-file-2b5b7e1404-10c0.zip/node_modules/@heritage/zest-worker/",\
-        "packageDependencies": [\
-          ["@heritage/zest-worker", "file:../zest-worker#../zest-worker::hash=8bd05f&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["workspace:zest-worker", {\
         "packageLocation": "./zest-worker/",\
         "packageDependencies": [\

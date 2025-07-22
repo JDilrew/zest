@@ -9,11 +9,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@heritage/zest-cli@workspace:zest-cli"
   dependencies:
+    "@heritage/zest-config": "workspace:*"
     "@heritage/zest-finder": "workspace:*"
     "@heritage/zest-mock": "workspace:*"
+    "@heritage/zest-reporters": "workspace:*"
     "@heritage/zest-runner": "workspace:*"
   bin:
     zest: bin/cli.js
+  languageName: unknown
+  linkType: soft
+
+"@heritage/zest-config@workspace:*, @heritage/zest-config@workspace:zest-config":
+  version: 0.0.0-use.local
+  resolution: "@heritage/zest-config@workspace:zest-config"
   languageName: unknown
   linkType: soft
 
@@ -33,58 +41,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-globals@file:../zest-globals::locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner":
-  version: 1.0.0
-  resolution: "@heritage/zest-globals@file:../zest-globals#../zest-globals::hash=ddfea4&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner"
-  dependencies:
-    "@heritage/zest-matchers": "file:../zest-matchers"
-    "@heritage/zest-mock": "file:../zest-mock"
-  checksum: 10c0/fb1f46f020f32167693996cc1dc00af69cb177cd77c67652f3078d1c2b106f8dc820822b0cd24e5b6c0f254c1af0cadb9c42e61fa20e66734a38a166e83815f8
-  languageName: node
-  linkType: hard
-
-"@heritage/zest-globals@workspace:zest-globals":
+"@heritage/zest-juice@workspace:*, @heritage/zest-juice@workspace:zest-juice":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-globals@workspace:zest-globals"
+  resolution: "@heritage/zest-juice@workspace:zest-juice"
   dependencies:
-    "@heritage/zest-matchers": "file:../zest-matchers"
-    "@heritage/zest-mock": "file:../zest-mock"
+    "@heritage/zest-matchers": "workspace:*"
+    "@heritage/zest-mock": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-matchers@file:../zest-matchers::locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner":
-  version: 1.0.0
-  resolution: "@heritage/zest-matchers@file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner"
-  checksum: 10c0/b9006539bace85e14832ad1e31a2adbed7054cffe6145f0bc3ca37ce72c95fb2a1ac6374b4fd2ca678493dd855ccb68bb75135efc45e7532f1360ebdaa8fd96c
-  languageName: node
-  linkType: hard
-
-"@heritage/zest-matchers@file:../zest-matchers::locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals":
-  version: 1.0.0
-  resolution: "@heritage/zest-matchers@file:../zest-matchers#../zest-matchers::hash=0ae085&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals"
-  checksum: 10c0/b9006539bace85e14832ad1e31a2adbed7054cffe6145f0bc3ca37ce72c95fb2a1ac6374b4fd2ca678493dd855ccb68bb75135efc45e7532f1360ebdaa8fd96c
-  languageName: node
-  linkType: hard
-
-"@heritage/zest-matchers@workspace:zest-matchers":
+"@heritage/zest-matchers@workspace:*, @heritage/zest-matchers@workspace:zest-matchers":
   version: 0.0.0-use.local
   resolution: "@heritage/zest-matchers@workspace:zest-matchers"
   languageName: unknown
   linkType: soft
-
-"@heritage/zest-mock@file:../zest-mock::locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner":
-  version: 1.0.0
-  resolution: "@heritage/zest-mock@file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40file%3A..%2Fzest-globals%23..%2Fzest-globals%3A%3Ahash%3Dddfea4%26locator%3D%2540heritage%252Fzest-runner%2540workspace%253Azest-runner"
-  checksum: 10c0/dff10083232f79474cc02e9e8a07bbfce04ca0f4deb61f191fd90d00465416849a48c5ddf9da0d242382b1aaad2e0f0c799ffbfcd958303172a6d894a9d78fb4
-  languageName: node
-  linkType: hard
-
-"@heritage/zest-mock@file:../zest-mock::locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals":
-  version: 1.0.0
-  resolution: "@heritage/zest-mock@file:../zest-mock#../zest-mock::hash=dda5ff&locator=%40heritage%2Fzest-globals%40workspace%3Azest-globals"
-  checksum: 10c0/dff10083232f79474cc02e9e8a07bbfce04ca0f4deb61f191fd90d00465416849a48c5ddf9da0d242382b1aaad2e0f0c799ffbfcd958303172a6d894a9d78fb4
-  languageName: node
-  linkType: hard
 
 "@heritage/zest-mock@workspace:*, @heritage/zest-mock@workspace:zest-mock":
   version: 0.0.0-use.local
@@ -92,26 +62,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-runner@workspace:*, @heritage/zest-runner@workspace:zest-runner":
+"@heritage/zest-reporters@workspace:*, @heritage/zest-reporters@workspace:zest-reporters":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-runner@workspace:zest-runner"
+  resolution: "@heritage/zest-reporters@workspace:zest-reporters"
   dependencies:
-    "@heritage/zest-globals": "file:../zest-globals"
-    "@heritage/zest-worker": "file:../zest-worker"
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-worker@file:../zest-worker::locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner":
-  version: 1.0.0
-  resolution: "@heritage/zest-worker@file:../zest-worker#../zest-worker::hash=8bd05f&locator=%40heritage%2Fzest-runner%40workspace%3Azest-runner"
-  bin:
-    worker: bin/cli.js
-  checksum: 10c0/5f44e4d7f39e9d28bab5b9db0c3fa389939ef1fcfd4ae2d9604802925f8ee7404320bc488084cee52d509a5ee01f32538d7a1b2826a62d4ba4274d633ab2823f
-  languageName: node
-  linkType: hard
+"@heritage/zest-runner@workspace:*, @heritage/zest-runner@workspace:zest-runner":
+  version: 0.0.0-use.local
+  resolution: "@heritage/zest-runner@workspace:zest-runner"
+  dependencies:
+    "@heritage/zest-juice": "workspace:*"
+    "@heritage/zest-worker": "workspace:*"
+    chalk: "npm:^5.4.1"
+  languageName: unknown
+  linkType: soft
 
-"@heritage/zest-worker@workspace:zest-worker":
+"@heritage/zest-worker@workspace:*, @heritage/zest-worker@workspace:zest-worker":
   version: 0.0.0-use.local
   resolution: "@heritage/zest-worker@workspace:zest-worker"
   bin:

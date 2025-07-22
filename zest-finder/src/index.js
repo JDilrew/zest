@@ -16,7 +16,7 @@ function findTestFiles(pattern = "**/*.test.js", cwd = process.cwd()) {
  * @param {boolean} silent - If true, suppress error output.
  * @returns {Promise<string[]>} Array of absolute file paths.
  */
-export async function resolveTestFiles(pathArg, silent = false) {
+async function resolveTestFiles(pathArg, silent = false) {
   if (pathArg) {
     const fs = await import("fs");
     const pathMod = await import("path");
@@ -37,4 +37,4 @@ export async function resolveTestFiles(pathArg, silent = false) {
   }
 }
 
-export { findTestFiles };
+export { findTestFiles, resolveTestFiles };

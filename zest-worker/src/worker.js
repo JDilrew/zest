@@ -65,7 +65,7 @@ class Worker {
     }
   }
 
-  #callBoundFunction(method, args) {
+  #callBoundFunction(method, ...args) {
     return this.#workerPool.run({ method, args });
   }
 }

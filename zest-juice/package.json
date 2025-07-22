@@ -1,0 +1,13 @@
+{
+  "name": "@heritage/zest-juice",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The default zest test execution engine",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@heritage/zest-matchers": "workspace:*",
+    "@heritage/zest-mock": "workspace:*"
+  }
+}

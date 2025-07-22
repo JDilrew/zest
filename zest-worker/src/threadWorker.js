@@ -17,7 +17,7 @@ class ThreadWorker extends BaseWorker {
     // Path to the bootstrapper
     const bootstrapPath = path.resolve(
       path.dirname(fileURLToPath(import.meta.url)),
-      "./worker-bootstrap.js"
+      "./thread-bootstrap.js"
     );
     return new NodeWorker(bootstrapPath, {
       workerData: { modulePath: this.#path },

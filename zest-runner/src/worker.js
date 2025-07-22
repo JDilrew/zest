@@ -1,56 +1,48 @@
 import { pathToFileURL } from "url";
 
-// import "@heritage/zest-globals";
-import { suites } from "@heritage/zest-globals";
-
-export async function runTest(testFile) {
-  // Reset results for each test file
-  globalThis.__zestResults__ = [];
-  // Clear suites array for each test file
-  suites.length = 0;
-  const testResult = {
-    success: true,
-    errorMessage: null,
-    matcherResults: [],
-  };
+export async function runTest([config, testFile]) {
   try {
-    global.__zestCurrentTestFile = testFile;
+    // Import and run the test engine (zest-juice by default)
+    const runner =
+      config.testRunner === "juice"
+        ? "@heritage/zest-juice"
+        : config.testRunner;
+    const { run } = await import(runner);
+
+    // Import the test file so it registers its suites/tests
     await import(pathToFileURL(testFile).href);
 
-    // Run all registered tests
-    function runSuite(suite, parentNames = []) {
-      // const suiteNames =
-      //   suite.type !== "file" ? [...parentNames, suite.name] : [];
-      const suiteNames = [...parentNames, suite.name];
+    // Run the test suite using the runner
+    const emitter = await run();
 
-      for (const childSuite of suite.children || []) {
-        runSuite(childSuite, suiteNames);
-      }
+    // Collect test results from emitter events
+    const matcherResults = [];
+    let failed = false;
+    let errorMessage = null;
+    emitter.on("test_success", (testName) => {
+      matcherResults.push({ testName, status: "passed" });
+    });
+    emitter.on("test_failure", (testName, error) => {
+      matcherResults.push({
+        testName,
+        status: "failed",
+        error: error?.message || error,
+      });
+      failed = true;
+      if (!errorMessage) errorMessage = error?.message || String(error);
+    });
 
-      for (const test of suite.tests || []) {
-        try {
-          globalThis.__zestCurrentTestName__ = test.testName;
-          globalThis.__zestCurrentSuiteNames__ = suiteNames;
-
-          test.testFn();
-        } catch (e) {
-          testResult.success = false;
-        } finally {
-          globalThis.__zestCurrentTestName__ = undefined;
-          globalThis.__zestCurrentSuiteNames__ = undefined;
-        }
-      }
-    }
-
-    for (const suite of suites) {
-      runSuite(suite, []);
-    }
-
-    global.__zestCurrentTestFile = undefined;
+    // Return a simple result object
+    return {
+      success: !failed,
+      errorMessage,
+      matcherResults,
+    };
   } catch (error) {
-    testResult.success = false;
-    testResult.errorMessage = error.message;
+    return {
+      success: false,
+      errorMessage: error.message,
+      matcherResults: [],
+    };
   }
-  testResult.matcherResults = globalThis.__zestResults__ || [];
-  return testResult;
 }

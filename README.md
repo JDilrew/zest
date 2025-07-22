@@ -11,7 +11,9 @@ The functionality of a test framework:
 
 # Usage
 
-1. call to the cli with args; test, --silent
+1. Run `yarn install` at the root.
+2. Run `test:jsdom` or `test:node`
+3. call to the cli with args; test, --silent
 
 # Improvements
 

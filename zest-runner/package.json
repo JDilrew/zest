@@ -9,8 +9,8 @@
     "./worker": "./src/worker.js"
   },
   "dependencies": {
-    "@heritage/zest-globals": "file:../zest-globals",
-    "@heritage/zest-worker": "file:../zest-worker",
+    "@heritage/zest-juice": "workspace:*",
+    "@heritage/zest-worker": "workspace:*",
     "chalk": "^5.4.1"
   }
 }

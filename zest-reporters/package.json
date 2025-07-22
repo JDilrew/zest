@@ -1,0 +1,12 @@
+{
+  "name": "@heritage/zest-reporters",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Zest reporters for test results",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
+  }
+}

@@ -17,7 +17,7 @@ class ChildProcessWorker extends BaseWorker {
     // Path to the bootstrapper
     const bootstrapPath = path.resolve(
       path.dirname(fileURLToPath(import.meta.url)),
-      "./worker-bootstrap.js"
+      "./child-bootstrap.js"
     );
     // Pass the actual worker module path as an argument
     const modulePath = this.#path.startsWith("file:")

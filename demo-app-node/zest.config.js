@@ -1,6 +1,6 @@
-module.exports = {
+export default {
   testEnvironment: "node",
   testMatch: ["**/tests/**/*.test.js"],
-  workerThreads: true,
+  useWorkerThreads: true,
   maxWorkers: 3,
 };

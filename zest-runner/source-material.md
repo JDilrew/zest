@@ -1,17 +1,5 @@
-# Understanding Jest's Package
+# Understanding Jest's Runner Package
 
 ## Overview
 
-| File       | Responsibility                                                                  |
-| ---------- | ------------------------------------------------------------------------------- |
-| testWorker | A specialized `Worker` function that calls into the runner as its job           |
-| index      | Create/trigger in-band or parallel test runs                                    |
-| runTest    | Run test in isolation, collect results, setup/teardown, check for memory leaks. |
-
-## Breakdown
-
-### testWorker
-
-### index
-
-### runTest
+The `jest-runner` package is responsible for orchestrating the execution of test files in Jest. It manages the lifecycle of running tests, including scheduling, parallelization, and communication with worker processes. The runner loads each test file, sets up the test environment, invokes the test engine (such as `jest-circus`), and collects results. It also handles reporting, error aggregation, and integration with coverage tools. The runner is designed to be extensible, allowing custom runners for different testing needs.
