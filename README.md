@@ -1,8 +1,6 @@
-# Purpose
+# Intro
 
-Framework agnostic, its a js testing library need a plugin specifically for pulse, besides that it shouldn't matter
-
-The functionality of a test framework:
+The core-functionality of a js testing framework:
 
 1. Efficiently search for test files
 2. Run all the tests in parallel
@@ -14,12 +12,6 @@ The functionality of a test framework:
 1. Run `yarn install` at the root.
 2. Run `test:jsdom` or `test:node`
 3. call to the cli with args; test, --silent
-
-# Improvements
-
-- spying?
-- As a bonus, could we cover browser - visual tests like playwright?
-- top level description of each file and its responsibility
 
 ## Stripped back MVP (to learn Jest's architecture)
 

@@ -1,0 +1,9 @@
+{
+  "name": "@heritage/zest-runtime",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Module loading, mocking and runtime utilities for Zest",
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@heritage/zest-resolvers",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Module resolvers for Zest",
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

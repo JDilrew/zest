@@ -1,4 +1,8 @@
 import { pathToFileURL } from "url";
+import { JsdomEnvironment } from "@heritage/zest-environment/jsdomEnvironment";
+import { NodeEnvironment } from "@heritage/zest-environment/nodeEnvironment";
+import { ZestResolver } from "@heritage/zest-resolvers";
+import { ZestRuntime } from "@heritage/zest-runtime";
 
 // Simple event emitter for reporting
 class EventEmitter {
@@ -29,13 +33,27 @@ async function runTestInternal(config, testFile) {
       config.testRunner === "juice"
         ? "@heritage/zest-juice"
         : config.testRunner;
-    const { run } = await import(runner);
+    const { run, EventEmitter } = await import(runner);
+
+    // Setup environment
+    const environment =
+      config.environment === "jsdom"
+        ? new JsdomEnvironment()
+        : new NodeEnvironment();
+    await environment.setup();
+
+    // Setup resolver (not used in this MVP, but available)
+    const resolver = new ZestResolver(config.rootDir);
+
+    // Setup runtime and inject environment
+    const runtime = new ZestRuntime(config.testRunner);
+    // Runtime sets up globals using the environment
+    await runtime.setupTestGlobals();
 
     // Create emitter and attach listeners BEFORE running tests
     const matcherResults = [];
     let failed = false;
     let errorMessage = null;
-    // Use the EventEmitter from the test engine, or fallback
     const emitter = EventEmitter ? new EventEmitter() : { on: () => {} };
     emitter.on &&
       emitter.on("test_success", (testName) => {
@@ -52,11 +70,14 @@ async function runTestInternal(config, testFile) {
         if (!errorMessage) errorMessage = error?.message || String(error);
       });
 
-    // Import the test file so it registers its suites/tests
-    await import(pathToFileURL(testFile).href);
+    // Runtime loads the test file (with mocks applied)
+    await runtime.loadTestFile(testFile);
 
     // Run the test suite using the runner, passing the emitter
     await run(emitter);
+
+    // Teardown environment
+    await environment.teardown();
 
     // Return a simple result object
     return {
@@ -75,7 +96,7 @@ async function runTestInternal(config, testFile) {
 
 async function run(config, testFile) {
   const result = await runTestInternal(config, testFile);
-  // detect leaks
+  // detect leaks after the fact
 
   return result;
 }

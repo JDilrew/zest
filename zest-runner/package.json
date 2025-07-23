@@ -11,6 +11,8 @@
   "dependencies": {
     "@heritage/zest-environment": "workspace:*",
     "@heritage/zest-juice": "workspace:*",
+    "@heritage/zest-resolvers": "workspace:*",
+    "@heritage/zest-runtime": "workspace:*",
     "@heritage/zest-worker": "workspace:*",
     "chalk": "^5.4.1"
   }
