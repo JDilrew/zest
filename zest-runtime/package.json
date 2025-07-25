@@ -5,5 +5,8 @@
   "description": "Module loading, mocking and runtime utilities for Zest",
   "exports": {
     ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@heritage/zest-juice": "workspace:*"
   }
 }

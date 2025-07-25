@@ -14,11 +14,11 @@ class ThreadWorker extends BaseWorker {
   }
 
   #createThread() {
-    // Path to the bootstrapper
     const bootstrapPath = path.resolve(
       path.dirname(fileURLToPath(import.meta.url)),
       "./thread-bootstrap.js"
     );
+
     return new NodeWorker(bootstrapPath, {
       workerData: { modulePath: this.#path },
     });

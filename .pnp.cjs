@@ -59,8 +59,16 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:zest-reporters"\
     },\
     {\
+      "name": "@heritage/zest-resolvers",\
+      "reference": "workspace:zest-resolvers"\
+    },\
+    {\
       "name": "@heritage/zest-runner",\
       "reference": "workspace:zest-runner"\
+    },\
+    {\
+      "name": "@heritage/zest-runtime",\
+      "reference": "workspace:zest-runtime"\
     },\
     {\
       "name": "@heritage/zest-worker",\
@@ -80,7 +88,9 @@ const RAW_RUNTIME_STATE =
     ["@heritage/zest-matchers", ["workspace:zest-matchers"]],\
     ["@heritage/zest-mock", ["workspace:zest-mock"]],\
     ["@heritage/zest-reporters", ["workspace:zest-reporters"]],\
+    ["@heritage/zest-resolvers", ["workspace:zest-resolvers"]],\
     ["@heritage/zest-runner", ["workspace:zest-runner"]],\
+    ["@heritage/zest-runtime", ["workspace:zest-runtime"]],\
     ["@heritage/zest-worker", ["workspace:zest-worker"]],\
     ["demo-app-jsdom", ["workspace:demo-app-jsdom"]],\
     ["demo-app-node", ["workspace:demo-app-node"]],\
@@ -298,15 +308,36 @@ const RAW_RUNTIME_STATE =
         "linkType": "SOFT"\
       }]\
     ]],\
+    ["@heritage/zest-resolvers", [\
+      ["workspace:zest-resolvers", {\
+        "packageLocation": "./zest-resolvers/",\
+        "packageDependencies": [\
+          ["@heritage/zest-resolvers", "workspace:zest-resolvers"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
     ["@heritage/zest-runner", [\
       ["workspace:zest-runner", {\
         "packageLocation": "./zest-runner/",\
         "packageDependencies": [\
           ["@heritage/zest-environment", "workspace:zest-environment"],\
           ["@heritage/zest-juice", "workspace:zest-juice"],\
+          ["@heritage/zest-resolvers", "workspace:zest-resolvers"],\
           ["@heritage/zest-runner", "workspace:zest-runner"],\
+          ["@heritage/zest-runtime", "workspace:zest-runtime"],\
           ["@heritage/zest-worker", "workspace:zest-worker"],\
           ["chalk", "npm:5.4.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
+    ["@heritage/zest-runtime", [\
+      ["workspace:zest-runtime", {\
+        "packageLocation": "./zest-runtime/",\
+        "packageDependencies": [\
+          ["@heritage/zest-juice", "workspace:zest-juice"],\
+          ["@heritage/zest-runtime", "workspace:zest-runtime"]\
         ],\
         "linkType": "SOFT"\
       }]\

@@ -4,9 +4,7 @@
   "type": "module",
   "description": "A minimal test environment manager for JavaScript projects",
   "exports": {
-    ".": "./src/",
-    "./jsdomEnvironment": "./src/jsdomEnvironment.js",
-    "./nodeEnvironment": "./src/nodeEnvironment.js"
+    ".": "./src/index.js"
   },
   "dependencies": {
     "jsdom": "^26.1.0"

@@ -64,9 +64,9 @@ async function runSuite(suite, emitter) {
     for (const hook of suite.hooks.beforeEach) await hook();
     try {
       await test.fn();
-      emitter.emit("test_success", test.name);
+      emitter.emit("test_success", suite.name, test.name);
     } catch (err) {
-      emitter.emit("test_failure", test.name, err);
+      emitter.emit("test_failure", suite.name, test.name, err);
     }
     for (const hook of suite.hooks.afterEach) await hook();
   }

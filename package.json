@@ -14,6 +14,7 @@
     "zest-mock",
     "zest-reporters",
     "zest-resolvers",
+    "zest-runtime",
     "zest-runner",
     "zest-transform",
     "zest-worker"

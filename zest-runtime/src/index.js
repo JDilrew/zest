@@ -2,13 +2,9 @@
 import { pathToFileURL } from "url";
 
 class ZestRuntime {
-  constructor(testEngine = "@heritage/zest-juice") {
+  constructor(testEngine = "juice") {
     this.testEngine = testEngine;
     this.mocks = new Map(); // Track mocks by module name
-  }
-
-  async setupTestGlobals() {
-    await import(this.testEngine);
   }
 
   registerMock(moduleName, mockImpl) {

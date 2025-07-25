@@ -42,7 +42,7 @@ class Worker {
     this.#path = path;
     this.#options = options || {
       useThreads: false,
-      maxWorkers: 1,
+      maxWorkers: 3,
     };
 
     // TODO: MAYBE: only import the one used???
@@ -67,6 +67,10 @@ class Worker {
 
   #callBoundFunction(method, ...args) {
     return this.#workerPool.run({ method, args });
+  }
+
+  async terminate() {
+    await this.#workerPool.terminate();
   }
 }
 

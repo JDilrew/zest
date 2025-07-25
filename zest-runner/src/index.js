@@ -30,8 +30,11 @@ class TestRunner {
         // ship this off to a parallel worker
         const result = await worker.runTest(config, file);
         allResults.push({ file, ...result });
+        console.error(file, result);
       })
     );
+
+    await worker.terminate();
 
     // Return all results for reporters/cli
     return allResults;

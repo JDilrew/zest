@@ -13,33 +13,73 @@ function reportResults(results) {
       ? chalk.green.inverse.bold(" PASS ")
       : chalk.red.inverse.bold(" FAIL ");
     console.log(status + " " + chalk.dim(file));
+
     if (!success && errorMessage) {
       console.log("  " + errorMessage);
     }
-    // Print matcher results grouped by suite
-    if (matcherResults && matcherResults.length > 0) {
-      let lastSuite = null;
-      matcherResults.forEach((result) => {
-        const suiteLabel = result.suiteNames
-          ? result.suiteNames.join(" > ")
-          : "";
-        if (suiteLabel && suiteLabel !== lastSuite) {
-          console.log(chalk.bold(`  Suite: ${suiteLabel}`));
-          lastSuite = suiteLabel;
-        }
-        const icon =
-          result.status === "passed" ? chalk.green("✓") : chalk.red("✗");
-        let msg = `    ${icon}`;
-        if (result.matcher) msg += ` ${result.matcher}`;
-        if (result.testName) {
-          msg += ` ${chalk.cyan(result.testName)}`;
-        }
-        if (result.status === "failed" && result.error) {
-          msg += `: ${chalk.red(result.error)}`;
-        }
-        console.log(msg);
-      });
-    }
+
+    // matcherResults.forEach((result) => {
+    //   console.log(result);
+    // });
+
+    // Print matcher results grouped by testFile
+    // if (matcherResults && matcherResults.length > 0) {
+    //   const fileGroups = matcherResults.reduce((acc, result) => {
+    //     const key = result.testFile;
+    //     if (!acc[key]) acc[key] = [];
+    //     acc[key].push(result);
+    //     return acc;
+    //   }, {});
+
+    //   Object.entries(fileGroups).forEach(([testFile, results]) => {
+    //     const suiteGroups = results.reduce((acc, result) => {
+    //       const suiteKey = result.suiteName || "";
+    //       if (!acc[suiteKey]) acc[suiteKey] = [];
+    //       acc[suiteKey].push(result);
+    //       return acc;
+    //     }, {});
+
+    //     Object.entries(suiteGroups).forEach(([suiteName, results]) => {
+    //       if (suiteName) {
+    //         console.log(chalk.bold(`\n  > ${suiteName}`));
+    //       }
+
+    //       results.forEach((result) => {
+    //         const icon =
+    //           result.status === "passed" ? chalk.green("✓") : chalk.red("✗");
+    //         let msg = `    ${icon}`;
+    //         if (result.matcher) msg += ` ${result.matcher}`;
+    //         if (result.testName) {
+    //           msg += ` ${chalk.cyan(result.testName)}`;
+    //         }
+    //         if (result.status === "failed" && result.error) {
+    //           msg += `: ${chalk.red(result.error)}`;
+    //         }
+    //         console.log(msg);
+    //       });
+    //     });
+    //   });
+
+    //   // let lastSuite = null;
+    //   // matcherResults.forEach((result) => {
+    //   //   const suiteLabel = result.suiteName ? result.suiteName : "";
+    //   //   if (suiteLabel && suiteLabel !== lastSuite) {
+    //   //     console.log(chalk.bold(`  > ${suiteLabel}`));
+    //   //     lastSuite = suiteLabel;
+    //   //   }
+    //   //   const icon =
+    //   //     result.status === "passed" ? chalk.green("✓") : chalk.red("✗");
+    //   //   let msg = `    ${icon}`;
+    //   //   if (result.matcher) msg += ` ${result.matcher}`;
+    //   //   if (result.testName) {
+    //   //     msg += ` ${chalk.cyan(result.testName)}`;
+    //   //   }
+    //   //   if (result.status === "failed" && result.error) {
+    //   //     msg += `: ${chalk.red(result.error)}`;
+    //   //   }
+    //   //   console.log(msg);
+    //   // });
+    // }
   });
 
   // Summary

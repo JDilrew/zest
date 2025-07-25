@@ -1,6 +1,4 @@
-import { pathToFileURL } from "url";
-import { JsdomEnvironment } from "@heritage/zest-environment/jsdomEnvironment";
-import { NodeEnvironment } from "@heritage/zest-environment/nodeEnvironment";
+import { JsdomEnvironment, NodeEnvironment } from "@heritage/zest-environment";
 import { ZestResolver } from "@heritage/zest-resolvers";
 import { ZestRuntime } from "@heritage/zest-runtime";
 
@@ -18,6 +16,11 @@ class EventEmitter {
       for (const fn of this.listeners[event]) fn(...args);
     }
   }
+
+  // Remove all listeners for all events
+  removeAllListeners() {
+    this.listeners = {};
+  }
 }
 
 // EXCERPT-FROM-JEST; Keeping the core of "runTest" as a separate function (as "runTestInternal")
@@ -33,7 +36,7 @@ async function runTestInternal(config, testFile) {
       config.testRunner === "juice"
         ? "@heritage/zest-juice"
         : config.testRunner;
-    const { run, EventEmitter } = await import(runner);
+    const { run } = await import(runner);
 
     // Setup environment
     const environment =
@@ -47,27 +50,28 @@ async function runTestInternal(config, testFile) {
 
     // Setup runtime and inject environment
     const runtime = new ZestRuntime(config.testRunner);
-    // Runtime sets up globals using the environment
-    await runtime.setupTestGlobals();
 
     // Create emitter and attach listeners BEFORE running tests
     const matcherResults = [];
     let failed = false;
-    let errorMessage = null;
-    const emitter = EventEmitter ? new EventEmitter() : { on: () => {} };
+    const emitter = new EventEmitter();
     emitter.on &&
-      emitter.on("test_success", (testName) => {
-        matcherResults.push({ testName, status: "passed" });
+      emitter.on("test_success", (suiteName, testName) => {
+        matcherResults.push({
+          suiteName,
+          testName,
+          status: "passed",
+        });
       });
     emitter.on &&
-      emitter.on("test_failure", (testName, error) => {
+      emitter.on("test_failure", (suiteName, testName, error) => {
         matcherResults.push({
+          suiteName,
           testName,
           status: "failed",
           error: error?.message || error,
         });
         failed = true;
-        if (!errorMessage) errorMessage = error?.message || String(error);
       });
 
     // Runtime loads the test file (with mocks applied)
@@ -79,10 +83,13 @@ async function runTestInternal(config, testFile) {
     // Teardown environment
     await environment.teardown();
 
+    // Remove all listeners to prevent leaks
+    emitter.removeAllListeners();
+
     // Return a simple result object
     return {
       success: !failed,
-      errorMessage,
+      errorMessage: undefined,
       matcherResults,
     };
   } catch (error) {
