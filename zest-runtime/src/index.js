@@ -1,10 +1,19 @@
 // Minimal Jest-like runtime for zest as a class
 import { pathToFileURL } from "url";
+import { compileFunction } from "vm";
 
 class ZestRuntime {
-  constructor(testEngine = "juice") {
+  constructor(testEngine = "juice", environment, resolver) {
     this.testEngine = testEngine;
+    this.environment = environment; // Environment instance (e.g., JsdomEnvironment)
+    this.resolver = resolver; // Resolver instance
     this.mocks = new Map(); // Track mocks by module name
+  }
+
+  async setupTestGlobals() {
+    const runner =
+      this.testEngine === "juice" ? "@heritage/zest-juice" : this.testEngine;
+    await import(runner);
   }
 
   registerMock(moduleName, mockImpl) {
@@ -35,8 +44,16 @@ class ZestRuntime {
   }
 
   async loadTestFile(testFile) {
-    // For MVP, just call importWithMocks
-    await this.importWithMocks(testFile);
+    const src = await this.importWithMocks(testFile);
+
+    const context = this.environment.getVmContext();
+    return compileFunction(src, [], {
+      filename: "get name",
+      parsingContext: context,
+      importModuleDynamically: (data) => {
+        console.log("Importing module dynamically:", data);
+      },
+    });
   }
 }
 

@@ -3,25 +3,25 @@ import { ZestResolver } from "@heritage/zest-resolvers";
 import { ZestRuntime } from "@heritage/zest-runtime";
 
 // Simple event emitter for reporting
-class EventEmitter {
-  constructor() {
-    this.listeners = {};
-  }
-  on(event, fn) {
-    if (!this.listeners[event]) this.listeners[event] = [];
-    this.listeners[event].push(fn);
-  }
-  emit(event, ...args) {
-    if (this.listeners[event]) {
-      for (const fn of this.listeners[event]) fn(...args);
-    }
-  }
+// class EventEmitter {
+//   constructor() {
+//     this.listeners = {};
+//   }
+//   on(event, fn) {
+//     if (!this.listeners[event]) this.listeners[event] = [];
+//     this.listeners[event].push(fn);
+//   }
+//   emit(event, ...args) {
+//     if (this.listeners[event]) {
+//       for (const fn of this.listeners[event]) fn(...args);
+//     }
+//   }
 
-  // Remove all listeners for all events
-  removeAllListeners() {
-    this.listeners = {};
-  }
-}
+//   // Remove all listeners for all events
+//   removeAllListeners() {
+//     this.listeners = {};
+//   }
+// }
 
 // EXCERPT-FROM-JEST; Keeping the core of "runTest" as a separate function (as "runTestInternal")
 // is key to be able to detect memory leaks. Since all variables are local to
@@ -32,11 +32,11 @@ async function runTestInternal(config, testFile) {
   //TODO: This should be inside runner.js and that work should be moved to index.js...
   try {
     // Import and run the test engine (zest-juice by default)
-    const runner =
-      config.testRunner === "juice"
-        ? "@heritage/zest-juice"
-        : config.testRunner;
-    const { run } = await import(runner);
+    // const runner =
+    //   config.testRunner === "juice"
+    //     ? "@heritage/zest-juice"
+    //     : config.testRunner;
+    // const { run } = await import(runner);
 
     // Setup environment
     const environment =
@@ -49,36 +49,44 @@ async function runTestInternal(config, testFile) {
     const resolver = new ZestResolver(config.rootDir);
 
     // Setup runtime and inject environment
-    const runtime = new ZestRuntime(config.testRunner);
+    const runtime = new ZestRuntime(config.testRunner, environment, resolver);
+    runtime.setupTestGlobals();
+
+    // can import setup files into the runtime if needed here.
 
     // Create emitter and attach listeners BEFORE running tests
-    const matcherResults = [];
-    let failed = false;
-    const emitter = new EventEmitter();
-    emitter.on &&
-      emitter.on("test_success", (suiteName, testName) => {
-        matcherResults.push({
-          suiteName,
-          testName,
-          status: "passed",
-        });
-      });
-    emitter.on &&
-      emitter.on("test_failure", (suiteName, testName, error) => {
-        matcherResults.push({
-          suiteName,
-          testName,
-          status: "failed",
-          error: error?.message || error,
-        });
-        failed = true;
-      });
+    // const matcherResults = [];
+    // let failed = false;
+    // const emitter = new EventEmitter();
+    // emitter.on &&
+    //   emitter.on("test_success", (suiteName, testName) => {
+    //     matcherResults.push({
+    //       suiteName,
+    //       testName,
+    //       status: "passed",
+    //     });
+    //   });
+    // emitter.on &&
+    //   emitter.on("test_failure", (suiteName, testName, error) => {
+    //     matcherResults.push({
+    //       suiteName,
+    //       testName,
+    //       status: "failed",
+    //       error: error?.message || error,
+    //     });
+    //     failed = true;
+    //   });
 
     // Runtime loads the test file (with mocks applied)
     await runtime.loadTestFile(testFile);
 
+    let result;
     // Run the test suite using the runner, passing the emitter
-    await run(emitter);
+    try {
+      result = await run(emitter);
+    } catch (error) {
+      throw error;
+    }
 
     // Teardown environment
     await environment.teardown();
