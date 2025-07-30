@@ -8,7 +8,6 @@
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
                 "test:node",
-                "${workspaceFolder}/zest/bin/cli.js"
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",

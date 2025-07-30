@@ -89,13 +89,14 @@ function reportResults(results) {
   const testSet = new Set();
   results.forEach(({ matcherResults }) => {
     (matcherResults || []).forEach((result) => {
-      const suiteKey = result.suiteNames
-        ? result.suiteNames.join(" > ")
-        : "(no suite)";
+      const suiteKey =
+        result.suiteName && result.suiteName.trim() !== ""
+          ? result.suiteName
+          : null;
       const testKey = result.testName
-        ? `${suiteKey}::${result.testName}`
+        ? `${suiteKey || "(no suite)"}::${result.testName}`
         : undefined;
-      if (result.suiteNames) suiteSet.add(suiteKey);
+      if (suiteKey) suiteSet.add(suiteKey);
       if (result.testName) testSet.add(testKey);
       // Track suite status
       if (suiteKey) {

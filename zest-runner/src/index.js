@@ -30,7 +30,7 @@ class TestRunner {
         // ship this off to a parallel worker
         const result = await worker.runTest(config, file);
         allResults.push({ file, ...result });
-        console.error(file, result);
+        // console.error(file, result);
       })
     );
 

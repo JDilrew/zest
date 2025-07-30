@@ -1,5 +1,4 @@
-// Minimal Jest-like resolver for zest
-import { resolve, dirname, join } from "path";
+import { resolve } from "path";
 
 class ZestResolver {
   constructor(rootDir = process.cwd()) {
