@@ -1,5 +1,4 @@
 import { matchers } from "@heritage/zest-matchers";
-import { mock, spyOn } from "@heritage/zest-mock";
 
 // Hierarchical test registry
 const rootSuite = {
@@ -49,11 +48,6 @@ global.afterEach = afterEach;
 
 global.expect = matchers;
 
-global.zest = {
-  mock,
-  spyOn,
-};
-
 // Recursively run a suite
 async function runSuite(suite, emitter) {
   for (const hook of suite.hooks.beforeAll) await hook();
@@ -76,6 +70,7 @@ async function runSuite(suite, emitter) {
 // Main entry: Requires an EventEmitter
 // Returns a promise that resolves when all tests are done.
 async function run(emitter) {
+  console.log("Running test suite:", rootSuite.name);
   emitter = emitter;
   emitter.emit("start");
   await runSuite(rootSuite, emitter);
@@ -84,4 +79,13 @@ async function run(emitter) {
 }
 
 // Export registry for runner
-export { run };
+export {
+  run,
+  suite,
+  test,
+  beforeAll,
+  afterAll,
+  beforeEach,
+  afterEach,
+  matchers as expect,
+};

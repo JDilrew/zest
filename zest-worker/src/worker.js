@@ -65,8 +65,8 @@ class Worker {
     }
   }
 
-  #callBoundFunction(method, ...args) {
-    return this.#workerPool.run({ method, args });
+  async #callBoundFunction(method, ...args) {
+    return await this.#workerPool.run({ method, args });
   }
 
   async terminate() {

@@ -7,7 +7,24 @@
             "name": "Debug Zest Node",
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
+                "test:node"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Debug Zest Node (mocking.test.js)",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": [
                 "test:node",
+                "test",
+                "./src/mocking.test.js"
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",

@@ -7,7 +7,6 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@heritage/zest-matchers": "workspace:*",
-    "@heritage/zest-mock": "workspace:*"
+    "@heritage/zest-matchers": "workspace:*"
   }
 }

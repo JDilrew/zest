@@ -1,6 +1,6 @@
 // Minimal Jest-like runtime for zest as a class
 import { pathToFileURL } from "url";
-import { compileFunction } from "vm";
+import vm, { compileFunction } from "vm";
 import { transpileToCommonJS } from "@heritage/zest-transform";
 import fs from "fs";
 import path from "path";
@@ -15,10 +15,23 @@ class ZestRuntime {
   }
 
   async setupTestGlobals() {
-    const runner =
-      this.testEngine === "juice" ? "@heritage/zest-juice" : this.testEngine;
-    const { run } = await import(runner);
-    return run;
+    const vmContext = this.environment.getVmContext();
+
+    const zestJuice = await import("@heritage/zest-juice");
+    vmContext.globalThis.suite = zestJuice.suite;
+    vmContext.globalThis.test = zestJuice.test;
+    vmContext.globalThis.beforeAll = zestJuice.beforeAll;
+    vmContext.globalThis.afterAll = zestJuice.afterAll;
+    vmContext.globalThis.beforeEach = zestJuice.beforeEach;
+    vmContext.globalThis.afterEach = zestJuice.afterEach;
+    vmContext.globalThis.expect = zestJuice.expect || zestJuice.matchers;
+    vmContext.globalThis.run = zestJuice.run;
+
+    // Return a function that will call run from the VM context
+    return async (emitter) => {
+      vmContext.globalThis.emitter = emitter;
+      return await vm.runInContext("run(emitter)", vmContext);
+    };
   }
 
   registerMock(moduleName, mockImpl) {
@@ -75,13 +88,17 @@ class ZestRuntime {
       "require",
       "__dirname",
       "__filename",
+      "zest",
       // this._config.injectGlobals ? "jest" : undefined,
       // ...this._config.sandboxInjectedGlobals,
     ];
   }
 
   requireModuleOrMock(moduleName, nodeRequire, testFile) {
+    console.log("Resolving module:", moduleName);
+
     if (this.mocks.has(moduleName)) {
+      console.log("Using mock for module:", moduleName);
       return this.mocks.get(moduleName);
     }
 
@@ -107,11 +124,21 @@ class ZestRuntime {
     // console.log("Transformed source code:", transformedSrc);
 
     const vmContext = this.environment.getVmContext();
+
+    // const zestJuice = await import("@heritage/zest-juice");
+    // vmContext.globalThis.suite = zestJuice.suite;
+    // vmContext.globalThis.test = zestJuice.test;
+    // vmContext.globalThis.beforeAll = zestJuice.beforeAll;
+    // vmContext.globalThis.afterAll = zestJuice.afterAll;
+    // vmContext.globalThis.beforeEach = zestJuice.beforeEach;
+    // vmContext.globalThis.afterEach = zestJuice.afterEach;
+    // vmContext.globalThis.expect = zestJuice.expect;
+
     const fn = compileFunction(
       transformedSrc,
       this.constructInjectedModuleParameters(),
       {
-        filename: "get name",
+        filename: testFile,
         parsingContext: vmContext,
         // support for dynamic imports, e.g., for await import('some-module'):
         // importModuleDynamically: async (data) => {
@@ -131,19 +158,32 @@ class ZestRuntime {
     vmContext.__filename = __filename;
     vmContext.__dirname = __dirname;
 
+    // Inject global zest with mock method
+    const runtime = this;
+    vmContext.zest = {
+      mock: (moduleName, mockImpl) => {
+        console.log("Registering mock for module:", moduleName);
+        runtime.registerMock(moduleName, mockImpl);
+      },
+    };
+    vmContext.globalThis.zest = vmContext.zest;
+
     const module = {
       exports: {},
       require: vmContext.require,
     };
 
+    console.log("Step runtime-1");
     const run = fn(
       module,
       module.exports,
       module.require,
       __dirname,
-      __filename
+      __filename,
+      vmContext.zest
     );
 
+    console.log("Step runtime-2");
     return run;
   }
 }

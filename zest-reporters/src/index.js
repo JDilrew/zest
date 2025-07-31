@@ -19,7 +19,7 @@ function reportResults(results) {
     }
 
     // matcherResults.forEach((result) => {
-    //   console.log(result);
+    //   console.log(file, result);
     // });
 
     // Print matcher results grouped by testFile

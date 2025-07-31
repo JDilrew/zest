@@ -50,6 +50,7 @@ async function runTestInternal(config, testFile) {
     // Setup runtime and inject environment
     const runtime = new ZestRuntime(config.testRunner, environment, resolver);
     const run = await runtime.setupTestGlobals();
+    console.log("Step runner-1");
 
     // can import setup files into the runtime if needed here.
 
@@ -78,10 +79,12 @@ async function runTestInternal(config, testFile) {
 
     // Runtime loads the test file (with mocks applied)
     await runtime.loadTestFile(testFile);
+    console.log("Step runner-2");
 
     let result;
     // Run the test suite using the runner, passing the emitter
     try {
+      console.log("Step runner-3");
       result = await run(emitter);
     } catch (error) {
       throw error;
@@ -113,6 +116,8 @@ async function runTestInternal(config, testFile) {
 async function run(config, testFile) {
   const result = await runTestInternal(config, testFile);
   // detect leaks after the fact
+
+  console.log("Step runner-4");
 
   return result;
 }

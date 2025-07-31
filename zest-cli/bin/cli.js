@@ -29,6 +29,8 @@ if (command === "test") {
   const runner = new TestRunner();
   const results = await runner.runTests(testFiles, undefined, config);
 
+  console.log("Tests finished. Processing results...");
+
   reportResults(results);
 } else {
   console.error(chalk.bold.red("Unknown command:"), command);

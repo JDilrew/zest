@@ -7,8 +7,8 @@ class TestRunner {
 
   async runTests(testFiles, watcher, config) {
     return config.serial
-      ? this.#runTestsInBand(testFiles, watcher, config)
-      : this.#runTestsInParallel(testFiles, watcher, config);
+      ? await this.#runTestsInBand(testFiles, watcher, config)
+      : await this.#runTestsInParallel(testFiles, watcher, config);
   }
 
   async #runTestsInBand(testFiles, watcher, config) {
@@ -24,13 +24,11 @@ class TestRunner {
     await worker.initialize();
 
     // Collect all matcher results for summary
-    const allResults = [];
-    await Promise.all(
+    const allResults = await Promise.all(
       Array.from(testFiles).map(async (file) => {
-        // ship this off to a parallel worker
         const result = await worker.runTest(config, file);
-        allResults.push({ file, ...result });
-        // console.error(file, result);
+        console.log(`Test result for ${file}:`, result);
+        return { file, ...result };
       })
     );
 
