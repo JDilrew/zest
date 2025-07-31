@@ -18,9 +18,9 @@ function reportResults(results) {
       console.log("  " + errorMessage);
     }
 
-    // matcherResults.forEach((result) => {
-    //   console.log(file, result);
-    // });
+    matcherResults.forEach((result) => {
+      console.log(file, result);
+    });
 
     // Print matcher results grouped by testFile
     // if (matcherResults && matcherResults.length > 0) {
@@ -132,7 +132,9 @@ function reportResults(results) {
   }
   console.log(chalk.bold.yellow("\n--- SUMMARY ---\n"));
   console.log(
-    chalk.bold(`Ran: ${suiteSet.size} suites, ${testSet.size} tests`)
+    chalk.bold(
+      `Ran: ${suiteSet.size} suites, ${testSet.size} tests, across ${results.length} files`
+    )
   );
   console.log(
     chalk.green.bold(`Passed: ${passedSuites} suites, ${passedTests} tests`)

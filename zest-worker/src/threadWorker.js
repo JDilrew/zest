@@ -27,7 +27,6 @@ class ThreadWorker extends BaseWorker {
   run(task) {
     return new Promise((resolve, reject) => {
       this.#thread.once("message", (message) => {
-        console.log("Received message from worker:", message);
         if (message.error) {
           reject(new Error(message.error));
         } else {

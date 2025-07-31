@@ -27,7 +27,6 @@ class TestRunner {
     const allResults = await Promise.all(
       Array.from(testFiles).map(async (file) => {
         const result = await worker.runTest(config, file);
-        console.log(`Test result for ${file}:`, result);
         return { file, ...result };
       })
     );

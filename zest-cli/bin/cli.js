@@ -1,14 +1,9 @@
 #!/usr/bin/env node
 import { parseArgs } from "../src/args.js";
 import { resolveTestFiles } from "@heritage/zest-finder";
-// import { applyMocks } from "@heritage/zest-mock";
-// import { run } from "@heritage/zest-runner";
 import { TestRunner } from "@heritage/zest-runner";
 import { reportStart, reportResults } from "@heritage/zest-reporters";
 import { loadConfig } from "@heritage/zest-config";
-
-// Apply mocks before loading test files
-// applyMocks();
 
 // Parse CLI arguments
 const { command, pathArg, silent } = parseArgs(process.argv.slice(2));
@@ -28,8 +23,6 @@ if (command === "test") {
 
   const runner = new TestRunner();
   const results = await runner.runTests(testFiles, undefined, config);
-
-  console.log("Tests finished. Processing results...");
 
   reportResults(results);
 } else {

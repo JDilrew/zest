@@ -70,7 +70,6 @@ async function runSuite(suite, emitter) {
 // Main entry: Requires an EventEmitter
 // Returns a promise that resolves when all tests are done.
 async function run(emitter) {
-  console.log("Running test suite:", rootSuite.name);
   emitter = emitter;
   emitter.emit("start");
   await runSuite(rootSuite, emitter);

@@ -95,10 +95,10 @@ class ZestRuntime {
   }
 
   requireModuleOrMock(moduleName, nodeRequire, testFile) {
-    console.log("Resolving module:", moduleName);
+    // console.log("Resolving module:", moduleName);
 
     if (this.mocks.has(moduleName)) {
-      console.log("Using mock for module:", moduleName);
+      // console.log("Using mock for module:", moduleName);
       return this.mocks.get(moduleName);
     }
 
@@ -159,10 +159,8 @@ class ZestRuntime {
     // Inject global zest with mock method
     const runtime = this;
     vmContext.zest = {
-      mock: (moduleName, mockImpl) => {
-        console.log("Registering mock for module:", moduleName);
-        runtime.registerMock(moduleName, mockImpl);
-      },
+      mock: (moduleName, mockImpl) =>
+        runtime.registerMock(moduleName, mockImpl),
     };
     vmContext.globalThis.zest = vmContext.zest;
 
@@ -171,7 +169,6 @@ class ZestRuntime {
       require: vmContext.require,
     };
 
-    console.log("Step runtime-1");
     const run = fn(
       module,
       module.exports,
@@ -181,7 +178,6 @@ class ZestRuntime {
       vmContext.zest
     );
 
-    console.log("Step runtime-2");
     return run;
   }
 }
