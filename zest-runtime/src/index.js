@@ -121,8 +121,6 @@ class ZestRuntime {
 
     const transformedSrc = transpileToCommonJS(src, testFile);
 
-    // console.log("Transformed source code:", transformedSrc);
-
     const vmContext = this.environment.getVmContext();
 
     // const zestJuice = await import("@heritage/zest-juice");
