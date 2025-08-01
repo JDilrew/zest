@@ -18,10 +18,6 @@ class WorkerPool {
     throw new Error("Method not implemented.");
   }
 
-  // terminateWorker(workerId) {
-  //   this._workers = this._workers.filter((worker) => worker.id !== workerId);
-  // }
-
   async run(task) {
     // Find an idle worker
     let worker = this._workers.find((w) => !this._busyWorkers.has(w));

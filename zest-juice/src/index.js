@@ -1,4 +1,5 @@
 import { matchers } from "@heritage/zest-matchers";
+import { EventEmitter } from "./emitter.js";
 
 // Hierarchical test registry
 const rootSuite = {
@@ -67,17 +68,15 @@ async function runSuite(suite, emitter) {
   for (const hook of suite.hooks.afterAll) await hook();
 }
 
-// Main entry: Requires an EventEmitter
-// Returns a promise that resolves when all tests are done.
-async function run(emitter) {
-  emitter = emitter;
-  emitter.emit("start");
+// Main entry: run the root suite
+async function run() {
+  const emitter = new EventEmitter();
+  emitter.emit("test_start");
   await runSuite(rootSuite, emitter);
-  emitter.emit("end");
-  return emitter;
+  emitter.emit("test_end");
+  emitter.removeAllListeners();
 }
 
-// Export registry for runner
 export {
   run,
   suite,

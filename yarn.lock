@@ -1177,18 +1177,26 @@ __metadata:
   resolution: "@heritage/zest-cli@workspace:zest-cli"
   dependencies:
     "@heritage/zest-config": "workspace:*"
+    "@heritage/zest-core": "workspace:*"
     "@heritage/zest-finder": "workspace:*"
-    "@heritage/zest-mock": "workspace:*"
-    "@heritage/zest-reporters": "workspace:*"
-    "@heritage/zest-runner": "workspace:*"
   bin:
-    zest: bin/cli.js
+    zest: bin/zest.js
   languageName: unknown
   linkType: soft
 
 "@heritage/zest-config@workspace:*, @heritage/zest-config@workspace:zest-config":
   version: 0.0.0-use.local
   resolution: "@heritage/zest-config@workspace:zest-config"
+  languageName: unknown
+  linkType: soft
+
+"@heritage/zest-core@workspace:*, @heritage/zest-core@workspace:zest-core":
+  version: 0.0.0-use.local
+  resolution: "@heritage/zest-core@workspace:zest-core"
+  dependencies:
+    "@heritage/zest-config": "workspace:*"
+    "@heritage/zest-reporters": "workspace:*"
+    "@heritage/zest-runner": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -1213,7 +1221,6 @@ __metadata:
   resolution: "@heritage/zest-juice@workspace:zest-juice"
   dependencies:
     "@heritage/zest-matchers": "workspace:*"
-    "@heritage/zest-mock": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -1223,7 +1230,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-mock@workspace:*, @heritage/zest-mock@workspace:zest-mock":
+"@heritage/zest-mock@workspace:zest-mock":
   version: 0.0.0-use.local
   resolution: "@heritage/zest-mock@workspace:zest-mock"
   languageName: unknown

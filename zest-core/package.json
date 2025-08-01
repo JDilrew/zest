@@ -1,0 +1,14 @@
+{
+  "name": "@heritage/zest-core",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Core functionality for the Zest testing framework",
+  "exports": {
+    ".": "./src/runZest.js"
+  },
+  "dependencies": {
+    "@heritage/zest-config": "workspace:*",
+    "@heritage/zest-reporters": "workspace:*",
+    "@heritage/zest-runner": "workspace:*"
+  }
+}

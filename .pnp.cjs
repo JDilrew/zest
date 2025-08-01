@@ -35,6 +35,10 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:zest-config"\
     },\
     {\
+      "name": "@heritage/zest-core",\
+      "reference": "workspace:zest-core"\
+    },\
+    {\
       "name": "@heritage/zest-environment",\
       "reference": "workspace:zest-environment"\
     },\
@@ -86,6 +90,7 @@ const RAW_RUNTIME_STATE =
     ["@heritage/zest", ["workspace:zest"]],\
     ["@heritage/zest-cli", ["workspace:zest-cli"]],\
     ["@heritage/zest-config", ["workspace:zest-config"]],\
+    ["@heritage/zest-core", ["workspace:zest-core"]],\
     ["@heritage/zest-environment", ["workspace:zest-environment"]],\
     ["@heritage/zest-finder", ["workspace:zest-finder"]],\
     ["@heritage/zest-juice", ["workspace:zest-juice"]],\
@@ -2188,10 +2193,8 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@heritage/zest-cli", "workspace:zest-cli"],\
           ["@heritage/zest-config", "workspace:zest-config"],\
-          ["@heritage/zest-finder", "workspace:zest-finder"],\
-          ["@heritage/zest-mock", "workspace:zest-mock"],\
-          ["@heritage/zest-reporters", "workspace:zest-reporters"],\
-          ["@heritage/zest-runner", "workspace:zest-runner"]\
+          ["@heritage/zest-core", "workspace:zest-core"],\
+          ["@heritage/zest-finder", "workspace:zest-finder"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -2201,6 +2204,18 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./zest-config/",\
         "packageDependencies": [\
           ["@heritage/zest-config", "workspace:zest-config"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
+    ["@heritage/zest-core", [\
+      ["workspace:zest-core", {\
+        "packageLocation": "./zest-core/",\
+        "packageDependencies": [\
+          ["@heritage/zest-config", "workspace:zest-config"],\
+          ["@heritage/zest-core", "workspace:zest-core"],\
+          ["@heritage/zest-reporters", "workspace:zest-reporters"],\
+          ["@heritage/zest-runner", "workspace:zest-runner"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -2230,8 +2245,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./zest-juice/",\
         "packageDependencies": [\
           ["@heritage/zest-juice", "workspace:zest-juice"],\
-          ["@heritage/zest-matchers", "workspace:zest-matchers"],\
-          ["@heritage/zest-mock", "workspace:zest-mock"]\
+          ["@heritage/zest-matchers", "workspace:zest-matchers"]\
         ],\
         "linkType": "SOFT"\
       }]\

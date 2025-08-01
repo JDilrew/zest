@@ -4,18 +4,16 @@
   "type": "module",
   "description": "A command-line interface for running tests in JavaScript projects",
   "bin": {
-    "zest": "bin/cli.js"
+    "zest": "bin/zest.js"
   },
   "exports": {
     ".": "./src/",
     "./args": "./src/args.js",
-    "./bin/cli": "./bin/cli.js"
+    "./bin/zest": "./bin/zest.js"
   },
   "dependencies": {
     "@heritage/zest-config": "workspace:*",
-    "@heritage/zest-finder": "workspace:*",
-    "@heritage/zest-mock": "workspace:*",
-    "@heritage/zest-reporters": "workspace:*",
-    "@heritage/zest-runner": "workspace:*"
+    "@heritage/zest-core": "workspace:*",
+    "@heritage/zest-finder": "workspace:*"
   }
 }

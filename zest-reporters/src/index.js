@@ -1,9 +1,13 @@
 import chalk from "chalk";
 
-function reportStart() {
+function reportGlobalStart() {
   console.log(chalk.bold.yellow("---\n"));
   console.log(chalk.bold.yellow("🍋 Running tests...\n"));
   console.log(chalk.bold.yellow("---\n"));
+}
+
+function reportContextStart(context) {
+  console.log(chalk.bold.inverse.yellow(`${context}\n`));
 }
 
 function reportResults(results) {
@@ -18,9 +22,9 @@ function reportResults(results) {
       console.log("  " + errorMessage);
     }
 
-    matcherResults.forEach((result) => {
-      console.log(file, result);
-    });
+    // matcherResults.forEach((result) => {
+    //   console.log(file, result);
+    // });
 
     // Print matcher results grouped by testFile
     // if (matcherResults && matcherResults.length > 0) {
@@ -145,4 +149,4 @@ function reportResults(results) {
   console.log(chalk.bold.yellow("\n---\n"));
 }
 
-export { reportStart, reportResults };
+export { reportGlobalStart, reportContextStart, reportResults };

@@ -6,6 +6,7 @@
     "zest",
     "zest-cli",
     "zest-config",
+    "zest-core",
     "zest-engine",
     "zest-environment",
     "zest-finder",
