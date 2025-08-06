@@ -7,8 +7,8 @@ class ChildProcessWorker extends BaseWorker {
   #path;
   #childProcess;
 
-  constructor(workerModulePath) {
-    super();
+  constructor(workerModulePath, id) {
+    super(id);
     this.#path = workerModulePath;
     this.#childProcess = this.#createChildProcess();
   }
@@ -43,6 +43,10 @@ class ChildProcessWorker extends BaseWorker {
       serialization: "advanced",
       // silent: options.silent,
       // ...this._options.forkOptions,
+      env: {
+        ...process.env,
+        WORKER_ID: String(this.id), // 👈 inject worker ID here
+      },
     };
 
     return fork(bootstrapPath, [modulePath], forkOptions);
@@ -50,11 +54,11 @@ class ChildProcessWorker extends BaseWorker {
 
   run(task) {
     return new Promise((resolve, reject) => {
-      this.#childProcess.once("message", (message) => {
+      this.#childProcess.on("message", (message) => {
         // console.log("Received message from child process:", message);
         if (message.error) {
           reject(new Error(message.error));
-        } else {
+        } else if (message.type === "test_end") {
           resolve(message.result);
         }
       });

@@ -18,6 +18,10 @@ class WorkerPool {
     throw new Error("Method not implemented.");
   }
 
+  getWorkerById(workerId) {
+    return this._workers[workerId];
+  }
+
   async run(task) {
     // Find an idle worker
     let worker = this._workers.find((w) => !this._busyWorkers.has(w));
@@ -57,7 +61,7 @@ class WorkerPool {
 
 class ChildProcessPool extends WorkerPool {
   spawnWorker() {
-    const worker = new ChildProcessWorker(this._path);
+    const worker = new ChildProcessWorker(this._path, this._workers.length);
     this._workers.push(worker);
     return worker;
   }
@@ -65,7 +69,7 @@ class ChildProcessPool extends WorkerPool {
 
 class ThreadPool extends WorkerPool {
   spawnWorker() {
-    const worker = new ThreadWorker(this._path);
+    const worker = new ThreadWorker(this._path, this._workers.length);
     this._workers.push(worker);
     return worker;
   }

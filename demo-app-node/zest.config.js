@@ -1,6 +1,6 @@
 export default {
   testEnvironment: "node",
   testMatch: ["**/tests/**/*.test.js"],
-  useWorkerThreads: true,
+  useWorkerThreads: false,
   maxWorkers: 5,
 };

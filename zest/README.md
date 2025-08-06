@@ -1,1 +1,0 @@
-`zest` provides a unified CLI entry point for running tests in JavaScript projects. It exposes a simple command (`zest`) that orchestrates test discovery, execution, and reporting, integrating with the zest ecosystem for mocking, matchers, environments, and more. Use `zest` to run your tests from a single, consistent interface.

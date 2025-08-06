@@ -8,8 +8,8 @@ class ThreadWorker extends BaseWorker {
   #thread;
   #messageListeners = new Set();
 
-  constructor(workerModulePath) {
-    super();
+  constructor(workerModulePath, id) {
+    super(id);
     this.#path = workerModulePath;
     this.#thread = this.#createThread();
 

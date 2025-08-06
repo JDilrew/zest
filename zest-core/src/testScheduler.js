@@ -19,6 +19,8 @@ async function scheduleTests(testContexts) {
     const runner = new TestRunner();
     const result = await runner.runTests(tests.files, undefined, tests.config);
 
+    console.log(result);
+
     reportResults(result);
     results.push(result);
   }

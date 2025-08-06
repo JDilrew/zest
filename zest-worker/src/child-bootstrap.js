@@ -8,6 +8,8 @@ const workerModuleUrl = process.argv[2];
 // Use the file URL directly for import()
 const workerModule = await import(workerModuleUrl);
 
+const workerId = Number(process.env.WORKER_ID);
+
 process.on("message", async (msg) => {
   try {
     const fn =
@@ -16,10 +18,15 @@ process.on("message", async (msg) => {
         : typeof workerModule.default === "function" && msg.method === "default"
         ? workerModule.default
         : null;
+
     if (!fn) throw new Error(`Unknown method: ${msg.method}`);
+
     const result = await fn(msg.args);
-    process.send({ result });
+
+    console.log(`Worker ${workerId} finished method: ${msg.method}`);
+    process.send({ id: msg.id, result });
   } catch (error) {
-    process.send({ error: error.message });
+    console.error(`Worker ${workerId} error:`, error.message);
+    process.send({ id: msg.id, error: error.message });
   }
 });

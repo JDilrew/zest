@@ -1,4 +1,5 @@
 import { ChildProcessPool, ThreadPool } from "./workerPool.js";
+import Farm from "./farm.js";
 
 async function getExposedFunctions(path, options) {
   let exposedMethods = options.exposedMethods;
@@ -29,6 +30,7 @@ async function getExposedFunctions(path, options) {
 }
 
 class Worker {
+  #farm;
   #path;
   #options;
   #workerPool;
@@ -45,12 +47,14 @@ class Worker {
       maxWorkers: 3,
     };
 
-    // TODO: MAYBE: only import the one used???
+    // TODO: only import the one used.
     if (this.#options.useThreads) {
       this.#workerPool = new ThreadPool(this.#path, this.#options);
     } else {
       this.#workerPool = new ChildProcessPool(this.#path, this.#options);
     }
+
+    this.#farm = new Farm(this.#workerPool);
   }
 
   async initialize() {
@@ -66,7 +70,8 @@ class Worker {
   }
 
   async #callBoundFunction(method, ...args) {
-    return await this.#workerPool.run({ method, args });
+    return await this.#farm.doWork(method, args);
+    // return await this.#workerPool.run({ method, args });
   }
 
   async terminate() {
