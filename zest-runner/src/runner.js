@@ -21,12 +21,13 @@ async function runTestInternal(config, testFile) {
 
     // Setup runtime and inject environment
     const runtime = new ZestRuntime(config.testRunner, environment, resolver);
-    const run = await runtime.setupTestGlobals();
-
-    // Runtime loads the test file (with mocks applied)
-    await runtime.loadTestFile(testFile);
 
     try {
+      const run = await runtime.setupTestGlobals();
+
+      // Runtime loads the test file (with mocks applied)
+      await runtime.loadTestFile(testFile);
+
       await run();
     } catch (error) {
       throw error;

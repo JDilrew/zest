@@ -69,9 +69,8 @@ class Worker {
     }
   }
 
-  async #callBoundFunction(method, ...args) {
-    return await this.#farm.doWork(method, args);
-    // return await this.#workerPool.run({ method, args });
+  #callBoundFunction(method, ...args) {
+    return this.#farm.doWork(method, ...args);
   }
 
   async terminate() {

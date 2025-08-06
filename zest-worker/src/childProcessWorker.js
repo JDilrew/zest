@@ -53,8 +53,11 @@ class ChildProcessWorker extends BaseWorker {
   }
 
   run(task) {
+    const { onCustomMessage, ...taskWithoutCustomMessage } = task;
+
     return new Promise((resolve, reject) => {
       const results = [];
+
       this.#childProcess.on("message", (message) => {
         if (message.error) {
           reject(new Error(message.error));
@@ -64,7 +67,7 @@ class ChildProcessWorker extends BaseWorker {
           message.type === "test_success" ||
           message.type === "test_failure"
         ) {
-          results.push(message); // optional — you're already getting final result in done
+          onCustomMessage?.(message);
         }
       });
 
@@ -73,7 +76,7 @@ class ChildProcessWorker extends BaseWorker {
         reject(error);
       });
 
-      this.#childProcess.send(task, () => {
+      this.#childProcess.send(taskWithoutCustomMessage, () => {
         // console.log("Task sent to child process:", task);
       });
 

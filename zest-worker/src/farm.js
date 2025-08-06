@@ -7,19 +7,42 @@ class Farm {
     this._isProcessing = false;
   }
 
-  async doWork(method, args) {
-    return new Promise((resolve, reject) => {
+  doWork(method, ...args) {
+    const customMessageListeners = new Set();
+
+    const addCustomMessageListener = (listener) => {
+      customMessageListeners.add(listener);
+      return () => customMessageListeners.delete(listener);
+    };
+
+    const onCustomMessage = (message) => {
+      for (const listener of customMessageListeners) {
+        listener(message);
+      }
+    };
+
+    const promise = new Promise((resolve, reject) => {
       const request = [0, false, method, args];
+
       const task = {
         request,
         onStart: () => {},
-        onEnd: (err, result) => (err ? reject(err) : resolve(result)),
-        onCustomMessage: () => {},
+        onEnd: (err, result) => {
+          customMessageListeners.clear();
+          if (err) reject(err);
+          else resolve(result);
+        },
+        onCustomMessage,
       };
 
       this._taskQueue.enqueue(task);
       this._processQueue();
     });
+
+    // Jest-compatible
+    promise.UNSTABLE_onCustomMessage = addCustomMessageListener;
+
+    return promise;
   }
 
   async _processQueue() {
@@ -36,6 +59,7 @@ class Farm {
         const result = await this._workerPool.run({
           method: task.request[2],
           args: task.request[3],
+          onCustomMessage: task.onCustomMessage,
         });
         task.onEnd(null, result);
       } catch (err) {

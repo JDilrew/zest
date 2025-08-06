@@ -31,8 +31,30 @@ class TestRunner {
 
       let failed = false;
 
+      // Handler to collect test events
+      function messageHandler(msg) {
+        if (msg.type === "test_success") {
+          const [suiteName, testName] = msg.args;
+          matcherResults.push({ suiteName, testName, status: "passed" });
+        } else if (msg.type === "test_failure") {
+          const [suiteName, testName, error] = msg.args;
+          matcherResults.push({
+            suiteName,
+            testName,
+            status: "failed",
+            error: error?.message || error,
+          });
+          failed = true;
+        }
+      }
+
       // Run the test file
-      const result = await worker.runTest(config, file);
+      const promise = worker.runTest(config, file);
+
+      // hook into the emissions, unstably
+      promise.UNSTABLE_onCustomMessage(messageHandler);
+
+      const result = await promise;
 
       // Merge matcherResults into the result (in case the worker.runTest result doesn't include them)
       allResults.push({
