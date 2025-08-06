@@ -24,9 +24,9 @@ process.on("message", async (msg) => {
     const result = await fn(msg.args);
 
     console.log(`Worker ${workerId} finished method: ${msg.method}`);
-    process.send({ id: msg.id, result });
+    process.send({ workerId, result });
   } catch (error) {
     console.error(`Worker ${workerId} error:`, error.message);
-    process.send({ id: msg.id, error: error.message });
+    process.send({ workerId, error: error.message });
   }
 });

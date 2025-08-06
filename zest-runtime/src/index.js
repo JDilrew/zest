@@ -18,6 +18,8 @@ class ZestRuntime {
     const vmContext = this.environment.getVmContext();
 
     const zestJuice = await import("@heritage/zest-juice");
+    zestJuice.resetTestState();
+
     vmContext.globalThis.suite = zestJuice.suite;
     vmContext.globalThis.test = zestJuice.test;
     vmContext.globalThis.beforeAll = zestJuice.beforeAll;

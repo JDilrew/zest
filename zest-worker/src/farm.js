@@ -1,13 +1,3 @@
-// this basically just handles a queue of tasks and in what order you want to pop that stack
-// it ships the work to the worker-pool using worker ids and handles locking on that id
-// attaches additional listeners
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import FifoQueue from "./fifoQueue.js";
 
 class Farm {

@@ -19,7 +19,8 @@ async function scheduleTests(testContexts) {
     const runner = new TestRunner();
     const result = await runner.runTests(tests.files, undefined, tests.config);
 
-    console.log(result);
+    console.warn("Temp res out:");
+    console.log(JSON.stringify(result, null, 2));
 
     reportResults(result);
     results.push(result);

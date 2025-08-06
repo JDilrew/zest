@@ -31,30 +31,8 @@ class TestRunner {
 
       let failed = false;
 
-      // Handler to collect test events
-      function messageHandler(msg) {
-        if (msg.event === "test_success") {
-          const [suiteName, testName] = msg.args;
-          matcherResults.push({ suiteName, testName, status: "passed" });
-        } else if (msg.event === "test_failure") {
-          const [suiteName, testName, error] = msg.args;
-          matcherResults.push({
-            suiteName,
-            testName,
-            status: "failed",
-            error: error?.message || error,
-          });
-          failed = true;
-        }
-      }
-
-      // worker.on("message", messageHandler);
-
       // Run the test file
       const result = await worker.runTest(config, file);
-
-      // Remove the message handler after the test run
-      // worker.off("message", messageHandler);
 
       // Merge matcherResults into the result (in case the worker.runTest result doesn't include them)
       allResults.push({

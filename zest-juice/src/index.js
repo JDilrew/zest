@@ -77,6 +77,19 @@ async function run() {
   emitter.removeAllListeners();
 }
 
+function resetTestState() {
+  rootSuite.name = "";
+  rootSuite.tests = [];
+  rootSuite.suites = [];
+  rootSuite.hooks = {
+    beforeAll: [],
+    afterAll: [],
+    beforeEach: [],
+    afterEach: [],
+  };
+  currentSuite = rootSuite;
+}
+
 export {
   run,
   suite,
@@ -86,4 +99,5 @@ export {
   beforeEach,
   afterEach,
   matchers as expect,
+  resetTestState,
 };

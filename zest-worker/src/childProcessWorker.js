@@ -54,12 +54,17 @@ class ChildProcessWorker extends BaseWorker {
 
   run(task) {
     return new Promise((resolve, reject) => {
+      const results = [];
       this.#childProcess.on("message", (message) => {
-        // console.log("Received message from child process:", message);
         if (message.error) {
           reject(new Error(message.error));
         } else if (message.type === "test_end") {
-          resolve(message.result);
+          resolve(results);
+        } else if (
+          message.type === "test_success" ||
+          message.type === "test_failure"
+        ) {
+          results.push(message); // optional — you're already getting final result in done
         }
       });
 

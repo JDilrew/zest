@@ -28,7 +28,7 @@ class ThreadWorker extends BaseWorker {
     );
 
     return new NodeWorker(bootstrapPath, {
-      workerData: { modulePath: this.#path },
+      workerData: { workerId: this.id, modulePath: this.#path },
     });
   }
 
