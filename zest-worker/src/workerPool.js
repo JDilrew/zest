@@ -46,7 +46,7 @@ class WorkerPool {
 
     this._busyWorkers.add(worker);
     try {
-      return await worker.run(task);
+      return worker.run(task);
     } finally {
       this._busyWorkers.delete(worker);
     }

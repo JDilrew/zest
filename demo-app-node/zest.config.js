@@ -3,4 +3,5 @@ export default {
   testMatch: ["**/tests/**/*.test.js"],
   useWorkerThreads: false,
   maxWorkers: 5,
+  serial: false,
 };

@@ -61,6 +61,8 @@ class ChildProcessWorker extends BaseWorker {
       this.#childProcess.on("message", (message) => {
         if (message.error) {
           reject(new Error(message.error));
+        } else if (message.result?.errorMessage) {
+          reject(new Error(message.result?.errorMessage));
         } else if (message.type === "test_end") {
           resolve(results);
         } else if (

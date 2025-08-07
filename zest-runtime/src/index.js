@@ -107,9 +107,30 @@ class ZestRuntime {
     // If it's a relative path, resolve it relative to the test file
     if (moduleName.startsWith(".") || moduleName.startsWith("/")) {
       const testDir = path.dirname(testFile);
-      const resolvedPath = nodeRequire.resolve(
-        path.resolve(testDir, moduleName)
-      );
+      const resolvedPath = path.resolve(testDir, moduleName);
+
+      // Read and transpile the file if it's not in node_modules
+      if (!resolvedPath.includes("node_modules")) {
+        const src = fs.readFileSync(resolvedPath, "utf8");
+        const transformedSrc = transpileToCommonJS(src, resolvedPath);
+        const vmContext = this.environment.getVmContext();
+        const fn = compileFunction(
+          transformedSrc,
+          this.constructInjectedModuleParameters(),
+          { filename: resolvedPath, parsingContext: vmContext }
+        );
+        const module = { exports: {}, require: vmContext.require };
+        fn(
+          module,
+          module.exports,
+          module.require,
+          path.dirname(resolvedPath),
+          resolvedPath,
+          vmContext.zest
+        );
+        return module.exports;
+      }
+
       return nodeRequire(resolvedPath);
     }
 
@@ -125,25 +146,12 @@ class ZestRuntime {
 
     const vmContext = this.environment.getVmContext();
 
-    // const zestJuice = await import("@heritage/zest-juice");
-    // vmContext.globalThis.suite = zestJuice.suite;
-    // vmContext.globalThis.test = zestJuice.test;
-    // vmContext.globalThis.beforeAll = zestJuice.beforeAll;
-    // vmContext.globalThis.afterAll = zestJuice.afterAll;
-    // vmContext.globalThis.beforeEach = zestJuice.beforeEach;
-    // vmContext.globalThis.afterEach = zestJuice.afterEach;
-    // vmContext.globalThis.expect = zestJuice.expect;
-
     const fn = compileFunction(
       transformedSrc,
       this.constructInjectedModuleParameters(),
       {
         filename: testFile,
         parsingContext: vmContext,
-        // support for dynamic imports, e.g., for await import('some-module'):
-        // importModuleDynamically: async (data) => {
-        //   console.log("Importing module dynamically:", data);
-        // },
       }
     );
 

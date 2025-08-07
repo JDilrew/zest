@@ -4,6 +4,7 @@ import {
   reportContextStart,
   reportResults,
 } from "@heritage/zest-reporters";
+import { loadConfig } from "@heritage/zest-config";
 
 async function scheduleTests(testContexts) {
   let results = [];
@@ -16,11 +17,13 @@ async function scheduleTests(testContexts) {
       reportContextStart(tests.context);
     }
 
-    const runner = new TestRunner();
-    const result = await runner.runTests(tests.files, undefined, tests.config);
+    const config = await loadConfig(tests.config || {});
 
-    console.warn("Temp res out:");
-    console.log(JSON.stringify(result, null, 2));
+    const runner = new TestRunner();
+    const result = await runner.runTests(tests.files, undefined, config);
+
+    // console.warn("Temp res out:");
+    // console.log(JSON.stringify(result, null, 2));
 
     reportResults(result);
     results.push(result);

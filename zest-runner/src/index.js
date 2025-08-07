@@ -9,8 +9,63 @@ class TestRunner {
       : await this.#runTestsInParallel(testFiles, watcher, config);
   }
 
+  // Unified test promise creation
+  #createTestPromise(file, worker, config) {
+    const matcherResults = [];
+    let failed = false;
+
+    function messageHandler(msg) {
+      if (msg.type === "test_success") {
+        const [suiteName, testName] = msg.args;
+        matcherResults.push({ suiteName, testName, status: "passed" });
+      } else if (msg.type === "test_failure") {
+        const [suiteName, testName, error] = msg.args;
+        matcherResults.push({
+          suiteName,
+          testName,
+          status: "failed",
+          error: error?.message || error,
+        });
+        failed = true;
+      }
+    }
+
+    const promise = worker.runTest(config, file);
+    promise.UNSTABLE_onCustomMessage(messageHandler);
+
+    return promise
+      .then((result) => ({
+        file,
+        ...result,
+        matcherResults,
+        success: !failed,
+      }))
+      .catch((error) => {
+        console.error(`Error running test ${file}:`, error);
+        return {
+          file,
+          success: false,
+          error: error?.message || error,
+          matcherResults,
+        };
+      });
+  }
+
   async #runTestsInBand(testFiles, watcher, config) {
-    throw new Error("Running tests in band is not yet implemented.");
+    const root = dirname(fileURLToPath(import.meta.url));
+    const workerPath = pathToFileURL(join(root, "./worker.js")).href;
+    const worker = new Worker(workerPath, {
+      useThreads: config.useWorkerThreads,
+    });
+    await worker.initialize();
+
+    const allResults = [];
+    for (const file of testFiles) {
+      const result = await this.#createTestPromise(file, worker, config);
+      allResults.push(result);
+    }
+    await worker.terminate();
+    return allResults;
   }
 
   async #runTestsInParallel(testFiles, watcher, config) {
@@ -21,56 +76,13 @@ class TestRunner {
     });
     await worker.initialize();
 
-    // Collect all matcher results for summary, and aggregate events in real time
-    const allResults = [];
-
-    // Optionally, you could emit events here for real-time reporting
-    for (const file of testFiles) {
-      // Listen for events from the worker for this test file
-      const matcherResults = [];
-
-      let failed = false;
-
-      // Handler to collect test events
-      function messageHandler(msg) {
-        if (msg.type === "test_success") {
-          const [suiteName, testName] = msg.args;
-          matcherResults.push({ suiteName, testName, status: "passed" });
-        } else if (msg.type === "test_failure") {
-          const [suiteName, testName, error] = msg.args;
-          matcherResults.push({
-            suiteName,
-            testName,
-            status: "failed",
-            error: error?.message || error,
-          });
-          failed = true;
-        }
-      }
-
-      // Run the test file
-      const promise = worker.runTest(config, file);
-
-      // hook into the emissions, unstably
-      promise.UNSTABLE_onCustomMessage(messageHandler);
-
-      const result = await promise;
-
-      // Merge matcherResults into the result (in case the worker.runTest result doesn't include them)
-      allResults.push({
-        file,
-        ...result,
-        matcherResults,
-        success: !failed,
-      });
-
-      // console.log(allResults);
-    }
+    const testPromises = testFiles.map((file) =>
+      this.#createTestPromise(file, worker, config)
+    );
+    const results = await Promise.all(testPromises);
 
     await worker.terminate();
-
-    // Return all results for reporters/cli
-    return allResults;
+    return results;
   }
 }
 
