@@ -1,13 +1,12 @@
 {
-  "name": "@heritage/zest-reporters",
+  "name": "@heritage/zest-console",
   "version": "1.0.0",
   "type": "module",
-  "description": "Zest reporters for test results",
+  "description": "Custom consoles for patching",
   "exports": {
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@heritage/zest-console": "workspace:*",
     "chalk": "^5.4.1"
   }
 }

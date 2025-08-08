@@ -56,15 +56,19 @@ class ChildProcessWorker extends BaseWorker {
     const { onCustomMessage, ...taskWithoutCustomMessage } = task;
 
     return new Promise((resolve, reject) => {
-      const results = [];
+      let result = undefined;
 
       this.#childProcess.on("message", (message) => {
+        if (message.result) {
+          result = message.result;
+        }
+
         if (message.error) {
           reject(new Error(message.error));
         } else if (message.result?.errorMessage) {
           reject(new Error(message.result?.errorMessage));
-        } else if (message.type === "test_end") {
-          resolve(results);
+        } else if (message.type === "task_complete") {
+          resolve(result);
         } else if (
           message.type === "test_success" ||
           message.type === "test_failure"

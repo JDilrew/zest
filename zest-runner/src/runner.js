@@ -1,6 +1,7 @@
 import { JsdomEnvironment, NodeEnvironment } from "@heritage/zest-environment";
 import { ZestResolver } from "@heritage/zest-resolvers";
 import { ZestRuntime } from "@heritage/zest-runtime";
+import { SilentConsole, BufferConsole } from "@heritage/zest-console";
 
 // EXCERPT-FROM-JEST; Keeping the core of "runTest" as a separate function (as "runTestInternal")
 // is key to be able to detect memory leaks. Since all variables are local to
@@ -15,6 +16,17 @@ async function runTestInternal(config, testFile) {
         ? new JsdomEnvironment()
         : new NodeEnvironment();
     await environment.setup();
+
+    // Setup console for monkey patching
+    let testConsole;
+    if (config.silent) {
+      testConsole = new SilentConsole();
+    } else {
+      testConsole = new BufferConsole();
+    }
+
+    // attach it to the environment
+    environment.global.console = testConsole;
 
     // Setup module resolver
     const resolver = new ZestResolver(config.rootDir);
@@ -35,9 +47,13 @@ async function runTestInternal(config, testFile) {
       // Teardown environment before returning error
       await environment.teardown();
       runtime.teardown();
+
+      // TODO: freezeConsole();
     }
 
-    return {};
+    return {
+      console: testConsole.getBuffer(),
+    };
   } catch (error) {
     return {
       success: false,

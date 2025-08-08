@@ -210,6 +210,7 @@ class ZestRuntime {
     vmContext.require = (moduleName) =>
       this.requireModuleOrMock(moduleName, nodeRequire, testFile);
     vmContext.globalThis.require = vmContext.require;
+    vmContext.globalThis.console = this.environment.global.console;
     vmContext.__filename = __filename;
     vmContext.__dirname = __dirname;
 

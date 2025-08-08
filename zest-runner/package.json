@@ -9,6 +9,7 @@
     "./worker": "./src/worker.js"
   },
   "dependencies": {
+    "@heritage/zest-console": "workspace:*",
     "@heritage/zest-environment": "workspace:*",
     "@heritage/zest-juice": "workspace:*",
     "@heritage/zest-resolvers": "workspace:*",

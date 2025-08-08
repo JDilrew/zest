@@ -1,0 +1,3 @@
+class SilentConsole {}
+
+export { SilentConsole };

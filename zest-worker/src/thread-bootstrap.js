@@ -11,16 +11,17 @@ const workerModule = await import(modulePath);
 
 globalThis.__WORKER_ID__ = workerId;
 
-parentPort.on("message", async (msg) => {
+parentPort.on("message", async (message) => {
   try {
     const fn =
-      typeof workerModule[msg.method] === "function"
-        ? workerModule[msg.method]
-        : typeof workerModule.default === "function" && msg.method === "default"
+      typeof workerModule[message.method] === "function"
+        ? workerModule[message.method]
+        : typeof workerModule.default === "function" &&
+          message.method === "default"
         ? workerModule.default
         : null;
-    if (!fn) throw new Error(`Unknown method: ${msg.method}`);
-    const result = await fn(msg.args);
+    if (!fn) throw new Error(`Unknown method: ${message.method}`);
+    const result = await fn(message.args);
     parentPort.postMessage({ workerId, result });
   } catch (error) {
     parentPort.postMessage({ workerId, error: error.message });

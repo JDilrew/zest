@@ -2,7 +2,8 @@ import { TestRunner } from "@heritage/zest-runner";
 import {
   reportGlobalStart,
   reportContextStart,
-  reportResults,
+  reportResult,
+  reportSummary,
 } from "@heritage/zest-reporters";
 import { loadConfig } from "@heritage/zest-config";
 
@@ -12,21 +13,21 @@ async function scheduleTests(testContexts) {
   reportGlobalStart();
 
   for (const tests of testContexts) {
-    //TODO: Config handling, either logging debug mode or specifics for reporting.
     if (testContexts.length > 1) {
       reportContextStart(tests.context);
     }
 
     const config = await loadConfig(tests.config || {});
 
+    const watcher = (result) => {
+      reportResult(result);
+    };
+
     const runner = new TestRunner();
-    const result = await runner.runTests(tests.files, undefined, config);
+    const results = await runner.runTests(tests.files, config, watcher);
 
-    // console.warn("Temp res out:");
-    // console.log(JSON.stringify(result, null, 2));
-
-    reportResults(result);
-    results.push(result);
+    reportSummary(results);
+    results.push(results);
   }
 
   return results;

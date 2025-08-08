@@ -14,9 +14,9 @@ class ThreadWorker extends BaseWorker {
     this.#thread = this.#createThread();
 
     // Forward all messages to registered listeners
-    this.#thread.on("message", (msg) => {
+    this.#thread.on("message", (message) => {
       for (const handler of this.#messageListeners) {
-        handler(msg);
+        handler(message);
       }
     });
   }

@@ -35,6 +35,10 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:zest-config"\
     },\
     {\
+      "name": "@heritage/zest-console",\
+      "reference": "workspace:zest-console"\
+    },\
+    {\
       "name": "@heritage/zest-core",\
       "reference": "workspace:zest-core"\
     },\
@@ -90,6 +94,7 @@ const RAW_RUNTIME_STATE =
     ["@heritage/zest", ["workspace:zest"]],\
     ["@heritage/zest-cli", ["workspace:zest-cli"]],\
     ["@heritage/zest-config", ["workspace:zest-config"]],\
+    ["@heritage/zest-console", ["workspace:zest-console"]],\
     ["@heritage/zest-core", ["workspace:zest-core"]],\
     ["@heritage/zest-environment", ["workspace:zest-environment"]],\
     ["@heritage/zest-finder", ["workspace:zest-finder"]],\
@@ -2208,6 +2213,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "SOFT"\
       }]\
     ]],\
+    ["@heritage/zest-console", [\
+      ["workspace:zest-console", {\
+        "packageLocation": "./zest-console/",\
+        "packageDependencies": [\
+          ["@heritage/zest-console", "workspace:zest-console"],\
+          ["chalk", "npm:5.4.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
     ["@heritage/zest-core", [\
       ["workspace:zest-core", {\
         "packageLocation": "./zest-core/",\
@@ -2272,6 +2287,7 @@ const RAW_RUNTIME_STATE =
       ["workspace:zest-reporters", {\
         "packageLocation": "./zest-reporters/",\
         "packageDependencies": [\
+          ["@heritage/zest-console", "workspace:zest-console"],\
           ["@heritage/zest-reporters", "workspace:zest-reporters"],\
           ["chalk", "npm:5.4.1"]\
         ],\
@@ -2291,6 +2307,7 @@ const RAW_RUNTIME_STATE =
       ["workspace:zest-runner", {\
         "packageLocation": "./zest-runner/",\
         "packageDependencies": [\
+          ["@heritage/zest-console", "workspace:zest-console"],\
           ["@heritage/zest-environment", "workspace:zest-environment"],\
           ["@heritage/zest-juice", "workspace:zest-juice"],\
           ["@heritage/zest-resolvers", "workspace:zest-resolvers"],\

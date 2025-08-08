@@ -10,23 +10,24 @@ const workerModule = await import(workerModuleUrl);
 
 const workerId = Number(process.env.WORKER_ID);
 
-process.on("message", async (msg) => {
+process.on("message", async (message) => {
   try {
     const fn =
-      typeof workerModule[msg.method] === "function"
-        ? workerModule[msg.method]
-        : typeof workerModule.default === "function" && msg.method === "default"
+      typeof workerModule[message.method] === "function"
+        ? workerModule[message.method]
+        : typeof workerModule.default === "function" &&
+          message.method === "default"
         ? workerModule.default
         : null;
 
-    if (!fn) throw new Error(`Unknown method: ${msg.method}`);
+    if (!fn) throw new Error(`Unknown method: ${message.method}`);
 
-    const result = await fn(msg.args);
+    const result = await fn(message.args);
 
-    console.log(`Worker ${workerId} finished method: ${msg.method}`);
-    process.send({ workerId, result });
+    // console.log(`Worker ${workerId} finished method: ${message.method}`);
+    process.send({ workerId, type: "task_complete", result });
   } catch (error) {
     console.error(`Worker ${workerId} error:`, error.message);
-    process.send({ workerId, error: error.message });
+    process.send({ workerId, type: "task_failed", error: error.message });
   }
 });

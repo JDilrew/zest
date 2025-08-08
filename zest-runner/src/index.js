@@ -3,10 +3,10 @@ import { dirname, join } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 
 class TestRunner {
-  async runTests(testFiles, watcher, config) {
+  async runTests(testFiles, config, watcher) {
     return config.serial
-      ? await this.#runTestsInBand(testFiles, watcher, config)
-      : await this.#runTestsInParallel(testFiles, watcher, config);
+      ? await this.#runTestsInBand(testFiles, config, watcher)
+      : await this.#runTestsInParallel(testFiles, config, watcher);
   }
 
   // Unified test promise creation
@@ -14,12 +14,12 @@ class TestRunner {
     const matcherResults = [];
     let failed = false;
 
-    function messageHandler(msg) {
-      if (msg.type === "test_success") {
-        const [suiteName, testName] = msg.args;
+    function messageHandler(message) {
+      if (message.type === "test_success") {
+        const [suiteName, testName] = message.args;
         matcherResults.push({ suiteName, testName, status: "passed" });
-      } else if (msg.type === "test_failure") {
-        const [suiteName, testName, error] = msg.args;
+      } else if (message.type === "test_failure") {
+        const [suiteName, testName, error] = message.args;
         matcherResults.push({
           suiteName,
           testName,
@@ -34,12 +34,14 @@ class TestRunner {
     promise.UNSTABLE_onCustomMessage(messageHandler);
 
     return promise
-      .then((result) => ({
-        file,
-        ...result,
-        matcherResults,
-        success: !failed,
-      }))
+      .then((result) => {
+        return {
+          file,
+          result,
+          matcherResults,
+          success: !failed,
+        };
+      })
       .catch((error) => {
         console.error(`Error running test ${file}:`, error);
         return {
@@ -51,8 +53,9 @@ class TestRunner {
       });
   }
 
-  async #runTestsInBand(testFiles, watcher, config) {
+  async #runTestsInBand(testFiles, config, watcher) {
     const root = dirname(fileURLToPath(import.meta.url));
+
     const workerPath = pathToFileURL(join(root, "./worker.js")).href;
     const worker = new Worker(workerPath, {
       useThreads: config.useWorkerThreads,
@@ -63,25 +66,34 @@ class TestRunner {
     for (const file of testFiles) {
       const result = await this.#createTestPromise(file, worker, config);
       allResults.push(result);
+      watcher(result);
     }
+
     await worker.terminate();
+
     return allResults;
   }
 
-  async #runTestsInParallel(testFiles, watcher, config) {
+  async #runTestsInParallel(testFiles, config, watcher) {
     const root = dirname(fileURLToPath(import.meta.url));
+
     const workerPath = pathToFileURL(join(root, "./worker.js")).href;
     const worker = new Worker(workerPath, {
       useThreads: config.useWorkerThreads,
     });
     await worker.initialize();
 
-    const testPromises = testFiles.map((file) =>
-      this.#createTestPromise(file, worker, config)
-    );
-    const results = await Promise.all(testPromises);
+    const results = [];
 
+    await Promise.all(
+      testFiles.map(async (file) => {
+        const result = await this.#createTestPromise(file, worker, config);
+        results.push(result);
+        watcher(result);
+      })
+    );
     await worker.terminate();
+
     return results;
   }
 }
