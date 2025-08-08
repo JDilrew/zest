@@ -65,7 +65,7 @@ Jest is a modern JavaScript testing framework written in TypeScript. It uses Yar
 
 ## Architecture Highlights
 
-- **Isolation**: Each test file runs in its own sandboxed environment for reliability.
+- **Isolation**: Each test file runs in its own sand-boxed environment for reliability.
 - **Mocking**: Built-in mocking and spying utilities for flexible test setups.
 - **Snapshot Testing**: Captures and compares output for regression testing.
 - **Parallel Execution**: Worker pool enables fast, isolated test runs.

@@ -12,6 +12,7 @@ class ZestRuntime {
     this.environment = environment; // Environment instance (e.g., JsdomEnvironment)
     this.resolver = resolver; // Resolver instance
     this.mocks = new Map(); // Track mocks by module name
+    this.spys = new Map(); // Track spys
   }
 
   async setupTestGlobals() {
@@ -40,6 +41,44 @@ class ZestRuntime {
     this.mocks.set(moduleName, mockImpl);
   }
 
+  spyOn(obj, methodName) {
+    if (!obj || typeof obj[methodName] !== "function") {
+      throw new Error(`Cannot spy on ${methodName} - not a function`);
+    }
+
+    const original = obj[methodName];
+
+    const spyFn = (...args) => {
+      const call = { args, returned: undefined, threw: false };
+      try {
+        call.returned = original.apply(this, args);
+        return call.returned;
+      } catch (err) {
+        call.threw = true;
+        throw err;
+      } finally {
+        spy.calls.push(call);
+      }
+    };
+
+    const spy = spyFn.bind(obj);
+    spy.calls = [];
+    spy.restore = () => {
+      obj[methodName] = original;
+    };
+
+    // Store it for teardown
+    this.spys.set(spy, {
+      obj,
+      methodName,
+      original,
+      spy,
+    });
+
+    obj[methodName] = spy;
+    return spy;
+  }
+
   setupMocks() {
     // For each registered mock, inject into global
     for (const [moduleName, mockImpl] of this.mocks.entries()) {
@@ -54,8 +93,16 @@ class ZestRuntime {
     this.mocks.clear();
   }
 
+  resetSpys() {
+    for (const { obj, methodName, original } of this.spys.values()) {
+      obj[methodName] = original;
+    }
+    this.spys.clear();
+  }
+
   teardown() {
-    // TODO: reset all mocks
+    this.resetMocks();
+    this.resetSpys();
   }
 
   async importWithMocks(testFile) {
@@ -91,7 +138,7 @@ class ZestRuntime {
       "__dirname",
       "__filename",
       "zest",
-      // this._config.injectGlobals ? "jest" : undefined,
+      // this._config.injectGlobals ? "zest" : undefined,
       // ...this._config.sandboxInjectedGlobals,
     ];
   }
@@ -171,6 +218,7 @@ class ZestRuntime {
     vmContext.zest = {
       mock: (moduleName, mockImpl) =>
         runtime.registerMock(moduleName, mockImpl),
+      spyOn: (obj, methodName) => runtime.spyOn(obj, methodName),
     };
     vmContext.globalThis.zest = vmContext.zest;
 

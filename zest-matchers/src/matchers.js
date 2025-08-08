@@ -176,6 +176,46 @@ const matchers = function (received) {
         throw e;
       }
     },
+    toHaveBeenCalledWith(...expectedArgs) {
+      try {
+        if (typeof received !== "function" || !Array.isArray(received.calls)) {
+          throw new Error(
+            "Received value is not a spy function with call tracking"
+          );
+        }
+
+        const matched = received.calls.some((call) => {
+          return (
+            call.args.length === expectedArgs.length &&
+            call.args.every((arg, index) => arg === expectedArgs[index])
+          );
+        });
+
+        if (!matched) {
+          throw new Error(
+            `Expected function to be called with ${JSON.stringify(
+              expectedArgs
+            )}, but it wasn't`
+          );
+        }
+
+        globalThis.__zestResults__.push({
+          matcher: "toHaveBeenCalledWith",
+          status: "passed",
+          testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
+        });
+      } catch (e) {
+        globalThis.__zestResults__.push({
+          matcher: "toHaveBeenCalledWith",
+          status: "failed",
+          error: e.message,
+          testName: globalThis.__zestCurrentTestName__,
+          suiteNames: globalThis.__zestCurrentSuiteNames__,
+        });
+        throw e;
+      }
+    },
   };
 };
 

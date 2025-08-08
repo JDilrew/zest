@@ -10,7 +10,7 @@ The core-functionality of a js testing framework:
 # Usage
 
 1. Run `yarn install` at the root.
-2. Run `test:jsdom` or `test:node`
+2. Run `yarn test:jsdom` or `yarn test:node`
 3. call to the cli with args; test, --silent
 
 ## Stripped back MVP (to learn Jest's architecture)

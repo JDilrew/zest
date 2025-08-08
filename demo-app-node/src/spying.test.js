@@ -1,25 +1,16 @@
-import { add, subtract } from "./example.js";
+import * as example from "./example.js";
 
-test("should pass when un-mocked", () => {
-  const addResult = add(2, 3);
-  expect(addResult).toBe(5); // 2 + 3
-  const subtractResult = subtract(10, 3);
-  expect(subtractResult).toBe(7); // 10 - 3
-});
-
-suite("with mock", () => {
+suite("with spy", () => {
   let addSpy;
 
   beforeEach(() => {
-    // TODO: fix spying
-    // addSpy = zest.spyOn("./example.js", "add");
-    console.log("Before each test called!");
+    addSpy = zest.spyOn(example, "add");
   });
 
-  test("should pass when mocked", () => {
-    const addResult = add(2, 3);
-    expect(addResult).toBe(10); // 2 + 3 + 5 from mock
+  test("should pass when spied", () => {
+    example.add(2, 3);
 
     expect(addSpy).toHaveBeenCalledWith(2, 3);
+    expect(addSpy.calls.length).toBe(1);
   });
 });
