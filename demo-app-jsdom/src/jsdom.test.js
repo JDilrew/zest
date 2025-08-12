@@ -12,7 +12,7 @@ suite("jsdom tests", () => {
     window.eval(appJs); // runs in the jsdom global
   });
 
-  test("should update the counter", () => {
+  test("should update the counter when clicking the button", () => {
     // Simulate clicking the increment button
     const btn = document.getElementById("increment-btn");
     expect(btn).toBeTruthy();
@@ -26,7 +26,7 @@ suite("jsdom tests", () => {
     expect(window.getCounter()).toBe(1);
   });
 
-  test("should increment multiple times", () => {
+  test("should increment the counter when clicking the button multiple times", () => {
     const btn = document.getElementById("increment-btn");
 
     btn.click();

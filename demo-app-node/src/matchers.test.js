@@ -6,7 +6,7 @@ suite("toBe", () => {
   });
 
   test("should fail", () => {
-    expect(subtract(5, 2)).toBe(4); // This will fail
+    expect(subtract(5, 2)).toBe(4);
   });
 });
 
@@ -22,92 +22,77 @@ suite("toEqual", () => {
     expect({ name: "banana", color: "yellow" }).toEqual({
       name: "apple",
       color: "red",
-    }); // This will fail
+    });
   });
 });
 
 suite("toBeTruthy", () => {
   test("should pass", () => {
-    expect(true).toBeTruthy(); // This will pass
+    expect(true).toBeTruthy();
   });
 
   test("should fail", () => {
-    expect(false).toBeTruthy(); // This will fail
+    expect(false).toBeTruthy();
   });
 });
 
 suite("toThrow", () => {
   test("should pass", () => {
     expect(() => {
-      throw new Error("Sour expect!");
-    }).toThrow("Sour expect!");
+      throw new Error("expected error");
+    }).toThrow("expected error");
   });
 
-  test("should fail", () => {
-    expect(() => {}).toThrow("Expected sour expect but got none"); // This will fail
+  test("should fail (no throw)", () => {
+    expect(() => {}).toThrow("expected error");
   });
 
-  test("should fail on dif err", () => {
+  test("should fail (different error)", () => {
     expect(() => {
-      throw new Error("A different error!");
-    }).toThrow("Sour expect!");
+      throw new Error("different error");
+    }).toThrow("expected error");
   });
 });
 
 suite("notToThrow", () => {
   test("should pass", () => {
-    expect(() => {}).notToThrow("Expected no error but got one"); // This will pass
+    expect(() => {}).notToThrow("no error expected");
   });
 
-  test("should fail", () => {
+  test("should fail (threw)", () => {
     expect(() => {
-      throw new Error("Sweet expect!");
-    }).notToThrow("Sweet expect!"); // This will fail
+      throw new Error("unexpected error");
+    }).notToThrow("unexpected error");
   });
 
-  test("should fail on dif error", () => {
+  test("should fail (different error)", () => {
     expect(() => {
-      throw new Error("A different error!");
-    }).notToThrow("Sour expect!");
+      throw new Error("different error");
+    }).notToThrow("expected error");
   });
 });
 
 suite("toHaveProperties", () => {
   test("should pass", () => {
-    const suite = {
-      sweetness: "high",
-      acidity: "medium",
-      aroma: "citrus",
-    };
-
-    expect(suite).toHaveProperties({
-      sweetness: "high",
-      aroma: "citrus",
-    }); // This will pass
+    const fruit = { sweetness: "high", acidity: "medium", aroma: "citrus" };
+    expect(fruit).toHaveProperties({ sweetness: "high", aroma: "citrus" });
   });
 
   test("should fail", () => {
-    const suite = {
-      sweetness: "high",
-      acidity: "medium",
-      aroma: "citrus",
-    };
-
-    expect(suite).toHaveProperties({
-      aroma: "berry",
-    }); // This will fail
+    const fruit = { sweetness: "high", acidity: "medium", aroma: "citrus" };
+    expect(fruit).toHaveProperties({ aroma: "berry" });
   });
 });
 
 suite("multiple expectations", () => {
-  test("should pass all expectations", () => {
+  test("should pass all", () => {
     expect(add(1, 2)).toBe(3);
-    expect(subtract(5, 2)).toEqual(3); // This will pass
+    expect(subtract(5, 2)).toEqual(3);
   });
 
-  test("should exit after one fails", () => {
+  test("should stop after first failure", () => {
     expect(add(1, 1)).toBe(3);
-    expect(add(2, 2)).toEqual(4); // This will fail and exit
-    expect(subtract(5, 5)).toEqual(3); // This will pass
+    expect(add(2, 2)).toEqual(4);
+    expect(subtract(5, 5)).toEqual(3);
   });
 });

@@ -49,23 +49,46 @@ global.afterEach = afterEach;
 
 global.expect = matchers;
 
-// Recursively run a suite
-async function runSuite(suite, emitter) {
+// Recursively run a suite — with path + proper ordering
+async function runSuite(suite, emitter, ancestors = []) {
+  const suitePath = suite.name
+    ? [...ancestors.map((s) => s.name).filter(Boolean), suite.name]
+    : ancestors.map((s) => s.name).filter(Boolean);
+
+  emitter.emit("suite_start", suitePath); // e.g. [] for root, ["depth 1", "depth 2"]
+
+  // Per-suite beforeAll
   for (const hook of suite.hooks.beforeAll) await hook();
-  for (const childSuite of suite.suites) {
-    await runSuite(childSuite, emitter);
-  }
+
+  // 1) Root-level tests FIRST
   for (const test of suite.tests) {
-    for (const hook of suite.hooks.beforeEach) await hook();
+    // beforeEach: outer -> inner
+    for (const s of [...ancestors, suite]) {
+      for (const hook of s.hooks.beforeEach) await hook();
+    }
+
     try {
       await test.fn();
-      emitter.emit("test_success", suite.name, test.name);
+      emitter.emit("test_success", suitePath, test.name);
     } catch (err) {
-      emitter.emit("test_failure", suite.name, test.name, err);
+      emitter.emit("test_failure", suitePath, test.name, err);
     }
-    for (const hook of suite.hooks.afterEach) await hook();
+
+    // afterEach: inner -> outer
+    for (const s of [suite, ...ancestors].reverse()) {
+      for (const hook of s.hooks.afterEach) await hook();
+    }
   }
+
+  // 2) Then child suites
+  for (const childSuite of suite.suites) {
+    await runSuite(childSuite, emitter, [...ancestors, suite]);
+  }
+
+  // Per-suite afterAll
   for (const hook of suite.hooks.afterAll) await hook();
+
+  emitter.emit("suite_end", suitePath);
 }
 
 // Main entry: run the root suite
