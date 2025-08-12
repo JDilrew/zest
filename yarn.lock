@@ -1238,7 +1238,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-mock@workspace:zest-mock":
+"@heritage/zest-mock@workspace:*, @heritage/zest-mock@workspace:zest-mock":
   version: 0.0.0-use.local
   resolution: "@heritage/zest-mock@workspace:zest-mock"
   languageName: unknown
@@ -1278,6 +1278,7 @@ __metadata:
   resolution: "@heritage/zest-runtime@workspace:zest-runtime"
   dependencies:
     "@heritage/zest-juice": "workspace:*"
+    "@heritage/zest-mock": "workspace:*"
     "@heritage/zest-transform": "workspace:*"
   languageName: unknown
   linkType: soft

@@ -5,14 +5,19 @@ import { transpileToCommonJS } from "@heritage/zest-transform";
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
+import { ZestMocker } from "@heritage/zest-mock";
 
 class ZestRuntime {
   constructor(testEngine = "juice", environment, resolver) {
     this.testEngine = testEngine;
-    this.environment = environment; // Environment instance (e.g., JsdomEnvironment)
-    this.resolver = resolver; // Resolver instance
-    this.mocks = new Map(); // Track mocks by module name
-    this.spys = new Map(); // Track spys
+    this.environment = environment;
+    this.resolver = resolver;
+
+    // Module-name mock registry
+    this.mocks = new Map();
+
+    // function/spy mocker
+    this.mocker = new ZestMocker(this.environment?.global ?? globalThis);
   }
 
   async setupTestGlobals() {
@@ -37,8 +42,54 @@ class ZestRuntime {
     };
   }
 
-  registerMock(moduleName, mockImpl) {
-    this.mocks.set(moduleName, mockImpl);
+  _normalizeModuleKey(moduleName, fromFile) {
+    if (moduleName.startsWith(".") || moduleName.startsWith("/")) {
+      const base = fromFile ? path.dirname(fromFile) : process.cwd();
+      return path.resolve(base, moduleName);
+    }
+    // bare specifier: use as-is
+    return moduleName;
+  }
+
+  _wrapMockExports(exportsLike) {
+    // If user passed a function (e.g., default export), wrap it
+    if (typeof exportsLike === "function") {
+      return this.mocker.fn(exportsLike);
+    }
+    // If object, shallow-wrap any function properties as mocks
+    if (exportsLike && typeof exportsLike === "object") {
+      const out = { ...exportsLike };
+      for (const key of Object.keys(out)) {
+        if (typeof out[key] === "function") {
+          out[key] = this.mocker.fn(out[key]);
+        }
+      }
+      return out;
+    }
+    // pass through scalars
+    return exportsLike;
+  }
+
+  registerMock(moduleName, mockImpl, testFile) {
+    const key = this._normalizeModuleKey(moduleName, testFile);
+    const wrapped = this._wrapMockExports(mockImpl);
+    this.mocks.set(key, wrapped);
+    // also keep raw key for exact-string matches if user used a different form
+    this.mocks.set(moduleName, wrapped);
+  }
+
+  setupMocks() {
+    // For each registered mock, inject into global
+    for (const [moduleName, mockImpl] of this.mocks.entries()) {
+      global[moduleName] = mockImpl;
+    }
+  }
+
+  resetMocks() {
+    for (const moduleName of this.mocks.keys()) {
+      delete global[moduleName];
+    }
+    this.mocks.clear();
   }
 
   spyOn(obj, methodName) {
@@ -79,20 +130,6 @@ class ZestRuntime {
     return spy;
   }
 
-  setupMocks() {
-    // For each registered mock, inject into global
-    for (const [moduleName, mockImpl] of this.mocks.entries()) {
-      global[moduleName] = mockImpl;
-    }
-  }
-
-  resetMocks() {
-    for (const moduleName of this.mocks.keys()) {
-      delete global[moduleName];
-    }
-    this.mocks.clear();
-  }
-
   resetSpys() {
     for (const { obj, methodName, original } of this.spys.values()) {
       obj[methodName] = original;
@@ -101,8 +138,10 @@ class ZestRuntime {
   }
 
   teardown() {
-    this.resetMocks();
-    this.resetSpys();
+    this.resetMocks(); // module-name mocks
+
+    this.mocker.restoreAllMocks(); // restore spies
+    this.mocker.resetAllMocks();
   }
 
   async importWithMocks(testFile) {
@@ -215,11 +254,20 @@ class ZestRuntime {
     vmContext.__dirname = __dirname;
 
     // Inject global zest with mock method
-    const runtime = this;
+    const m = this.mocker;
     vmContext.zest = {
-      mock: (moduleName, mockImpl) =>
-        runtime.registerMock(moduleName, mockImpl),
-      spyOn: (obj, methodName) => runtime.spyOn(obj, methodName),
+      // function mocks
+      fn: m.fn.bind(m),
+      isMockFunction: m.isMockFunction.bind(m),
+      clearAllMocks: m.clearAllMocks.bind(m),
+      resetAllMocks: m.resetAllMocks.bind(m),
+      restoreAllMocks: m.restoreAllMocks.bind(m),
+
+      // spying
+      spyOn: m.spyOn.bind(m),
+
+      // module-name registry (unchanged)
+      mock: (moduleName, mockImpl) => this.registerMock(moduleName, mockImpl),
     };
     vmContext.globalThis.zest = vmContext.zest;
 

@@ -2324,6 +2324,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./zest-runtime/",\
         "packageDependencies": [\
           ["@heritage/zest-juice", "workspace:zest-juice"],\
+          ["@heritage/zest-mock", "workspace:zest-mock"],\
           ["@heritage/zest-runtime", "workspace:zest-runtime"],\
           ["@heritage/zest-transform", "workspace:zest-transform"]\
         ],\

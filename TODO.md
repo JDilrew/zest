@@ -2,3 +2,4 @@
 2. timers?
 3. Config needs to be respected more, reporting for debug, silent mode etc.
 4. What does resolvers even do?
+5. stderr and stdout are merged into a stream and sent to the custom consoles for some kind of hijacking?
