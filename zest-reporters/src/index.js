@@ -8,7 +8,7 @@ function reportGlobalStart() {
 }
 
 function reportContextStart(context) {
-  console.log(chalk.bold.inverse.yellow(`${context}\n`));
+  console.log(chalk.bold.inverse.yellow(context));
 }
 
 function reportResult(result) {
@@ -23,7 +23,7 @@ function reportResult(result) {
   const status = success
     ? chalk.green.inverse.bold(" PASS ")
     : chalk.red.inverse.bold(" FAIL ");
-  console.log(status + " " + chalk.dim(file));
+  console.log("\n" + status + " " + chalk.dim(file));
 
   if (!success && errorMessage) {
     console.log("  " + errorMessage);
@@ -52,7 +52,7 @@ function reportResult(result) {
 
       Object.entries(suiteGroups).forEach(([suiteName, results]) => {
         if (suiteName) {
-          console.log(chalk.bold(`\n  > ${suiteName}`));
+          console.log(`  ${suiteName}`);
         }
 
         results.forEach((result) => {
@@ -61,7 +61,7 @@ function reportResult(result) {
           let message = `    ${icon}`;
           if (result.matcher) message += ` ${result.matcher}`;
           if (result.testName) {
-            message += ` ${chalk.cyan(result.testName)}`;
+            message += ` ${chalk.gray(result.testName)}`;
           }
           if (result.status === "failed" && result.error) {
             message += `: ${chalk.red(result.error)}`;

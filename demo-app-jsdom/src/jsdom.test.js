@@ -1,4 +1,17 @@
+import fs from "fs";
+import path from "path";
+
 suite("jsdom tests", () => {
+  beforeEach(() => {
+    // Put markup in the DOM
+    const html = fs.readFileSync(path.resolve(__dirname, "index.html"), "utf8");
+    document.documentElement.innerHTML = html;
+
+    // Now execute the app code INTO the jsdom window
+    const appJs = fs.readFileSync(path.resolve(__dirname, "index.js"), "utf8");
+    window.eval(appJs); // runs in the jsdom global
+  });
+
   test("should update the counter", () => {
     // Simulate clicking the increment button
     const btn = document.getElementById("increment-btn");
@@ -16,6 +29,7 @@ suite("jsdom tests", () => {
   test("should increment multiple times", () => {
     const btn = document.getElementById("increment-btn");
 
+    btn.click();
     btn.click();
     btn.click();
 

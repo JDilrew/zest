@@ -4,6 +4,21 @@
         {
             "type": "pwa-node",
             "request": "launch",
+            "name": "Debug Zest",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": [
+                "test",
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
             "name": "Debug Zest Node",
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
@@ -39,8 +54,7 @@
             "name": "Debug Zest JSDOM",
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
-                "test:jsdom",
-                "${workspaceFolder}/zest/bin/cli.js"
+                "test:jsdom"
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",

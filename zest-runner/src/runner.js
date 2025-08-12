@@ -12,7 +12,7 @@ async function runTestInternal(config, testFile) {
   try {
     // Setup environment
     const environment =
-      config.environment === "jsdom"
+      config.testEnvironment === "jsdom"
         ? new JsdomEnvironment()
         : new NodeEnvironment();
     await environment.setup();

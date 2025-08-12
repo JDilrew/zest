@@ -1305,6 +1305,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@heritage/zest@workspace:zest"
   dependencies:
+    "@babel/core": "npm:^7.24.0"
+    "@babel/preset-env": "npm:^7.24.0"
     "@heritage/zest-cli": "workspace:*"
   bin:
     zest: bin/cli.js
@@ -1562,6 +1564,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "demo-app-jsdom@workspace:demo-app-jsdom"
   dependencies:
+    "@babel/core": "npm:^7.24.0"
+    "@babel/preset-env": "npm:^7.24.0"
     "@heritage/zest": "workspace:*"
     jsdom: "npm:^26.1.0"
   languageName: unknown

@@ -5,6 +5,8 @@
   "description": "A simple test runner for JavaScript projects",
   "bin": "bin/cli.js",
   "dependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
     "@heritage/zest-cli": "workspace:*"
   }
 }

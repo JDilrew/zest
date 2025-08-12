@@ -1,5 +1,2 @@
-1. zest-mock should contain some of the mocking logic for best single responsibility.
-2. timers?
-3. Config needs to be respected more, reporting for debug, silent mode etc.
-4. What does resolvers even do?
-5. stderr and stdout are merged into a stream and sent to the custom consoles for some kind of hijacking?
+1. We need to support actually have multiple workers with their own ids.
+2. Config needs to be respected more, reporting for debug, silent mode etc.

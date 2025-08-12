@@ -1,20 +1,19 @@
 import vm from "vm";
+import { JSDOM } from "jsdom";
 
 class BaseEnvironment {
   constructor() {
     this.global = {};
-    this.context = null;
   }
   async setup() {
     // Setup logic (override in subclasses)
   }
   async teardown() {
     // Teardown logic (override in subclasses)
-    this.context = null;
   }
 }
 
-//TODO: Jest doesn't even do anything in the setup calls, its in the constructors, which do I prefer?
+// Jest performs the setup in the constructor, but I need it async.
 class JsdomEnvironment extends BaseEnvironment {
   async setup() {
     if (!JSDOM) throw new Error("jsdom is not installed");
@@ -24,12 +23,18 @@ class JsdomEnvironment extends BaseEnvironment {
       runScripts: "dangerously",
     });
     this.global = this.dom.window;
-    this.context = vm.createContext(this.global);
+
+    const win = this.dom.window;
+    this.global = win;
+
+    win.window = win;
+    win.self = win;
+    win.global = win;
+    win.globalThis = win;
   }
 
   async teardown() {
     if (this.dom) this.dom.window.close();
-    this.context = null;
   }
 
   getVmContext() {
