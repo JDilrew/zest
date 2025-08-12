@@ -43,21 +43,36 @@ export class ZestMocker {
       get: () => this._ensureState(f),
     });
 
+    Object.defineProperties(f, {
+      calls: { enumerable: true, get: () => this._ensureState(f).calls },
+      results: { enumerable: true, get: () => this._ensureState(f).results },
+      lastCall: { enumerable: true, get: () => this._ensureState(f).lastCall },
+    });
+
+    // API
     f.mockImplementation = (fn) => {
       this._ensureConfig(f).impl = fn;
       return f;
     };
+    f.mockImplementationOnce = (fn) => {
+      this._ensureConfig(f).queue.push(fn);
+      return f;
+    };
     f.mockReturnValue = (value) => f.mockImplementation(() => value);
+    f.mockReturn = (valOrFn) =>
+      typeof valOrFn === "function"
+        ? f.mockImplementation(valOrFn)
+        : f.mockReturnValue(valOrFn);
+    f.getMockImplementation = () => this._ensureConfig(f).impl;
     f.mockClear = () => {
       this._state.set(f, { calls: [], results: [], lastCall: undefined });
       return f;
     };
     f.mockReset = () => {
       f.mockClear();
-      this._config.set(f, { impl: undefined });
+      this._config.set(f, { impl: undefined, queue: [] });
       return f;
     };
-    f.getMockImplementation = () => this._ensureConfig(f).impl;
 
     if (typeof implementation === "function")
       f.mockImplementation(implementation);

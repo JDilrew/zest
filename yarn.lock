@@ -1253,9 +1253,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-resolvers@workspace:*, @heritage/zest-resolvers@workspace:zest-resolvers":
+"@heritage/zest-resolve@workspace:*, @heritage/zest-resolve@workspace:zest-resolve":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-resolvers@workspace:zest-resolvers"
+  resolution: "@heritage/zest-resolve@workspace:zest-resolve"
   languageName: unknown
   linkType: soft
 
@@ -1266,7 +1266,7 @@ __metadata:
     "@heritage/zest-console": "workspace:*"
     "@heritage/zest-environment": "workspace:*"
     "@heritage/zest-juice": "workspace:*"
-    "@heritage/zest-resolvers": "workspace:*"
+    "@heritage/zest-resolve": "workspace:*"
     "@heritage/zest-runtime": "workspace:*"
     "@heritage/zest-worker": "workspace:*"
     chalk: "npm:^5.4.1"
@@ -1279,6 +1279,7 @@ __metadata:
   dependencies:
     "@heritage/zest-juice": "workspace:*"
     "@heritage/zest-mock": "workspace:*"
+    "@heritage/zest-resolve": "workspace:*"
     "@heritage/zest-transform": "workspace:*"
   languageName: unknown
   linkType: soft

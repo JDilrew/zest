@@ -67,8 +67,8 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:zest-reporters"\
     },\
     {\
-      "name": "@heritage/zest-resolvers",\
-      "reference": "workspace:zest-resolvers"\
+      "name": "@heritage/zest-resolve",\
+      "reference": "workspace:zest-resolve"\
     },\
     {\
       "name": "@heritage/zest-runner",\
@@ -102,7 +102,7 @@ const RAW_RUNTIME_STATE =
     ["@heritage/zest-matchers", ["workspace:zest-matchers"]],\
     ["@heritage/zest-mock", ["workspace:zest-mock"]],\
     ["@heritage/zest-reporters", ["workspace:zest-reporters"]],\
-    ["@heritage/zest-resolvers", ["workspace:zest-resolvers"]],\
+    ["@heritage/zest-resolve", ["workspace:zest-resolve"]],\
     ["@heritage/zest-runner", ["workspace:zest-runner"]],\
     ["@heritage/zest-runtime", ["workspace:zest-runtime"]],\
     ["@heritage/zest-transform", ["workspace:zest-transform"]],\
@@ -2294,11 +2294,11 @@ const RAW_RUNTIME_STATE =
         "linkType": "SOFT"\
       }]\
     ]],\
-    ["@heritage/zest-resolvers", [\
-      ["workspace:zest-resolvers", {\
-        "packageLocation": "./zest-resolvers/",\
+    ["@heritage/zest-resolve", [\
+      ["workspace:zest-resolve", {\
+        "packageLocation": "./zest-resolve/",\
         "packageDependencies": [\
-          ["@heritage/zest-resolvers", "workspace:zest-resolvers"]\
+          ["@heritage/zest-resolve", "workspace:zest-resolve"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -2310,7 +2310,7 @@ const RAW_RUNTIME_STATE =
           ["@heritage/zest-console", "workspace:zest-console"],\
           ["@heritage/zest-environment", "workspace:zest-environment"],\
           ["@heritage/zest-juice", "workspace:zest-juice"],\
-          ["@heritage/zest-resolvers", "workspace:zest-resolvers"],\
+          ["@heritage/zest-resolve", "workspace:zest-resolve"],\
           ["@heritage/zest-runner", "workspace:zest-runner"],\
           ["@heritage/zest-runtime", "workspace:zest-runtime"],\
           ["@heritage/zest-worker", "workspace:zest-worker"],\
@@ -2325,6 +2325,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@heritage/zest-juice", "workspace:zest-juice"],\
           ["@heritage/zest-mock", "workspace:zest-mock"],\
+          ["@heritage/zest-resolve", "workspace:zest-resolve"],\
           ["@heritage/zest-runtime", "workspace:zest-runtime"],\
           ["@heritage/zest-transform", "workspace:zest-transform"]\
         ],\

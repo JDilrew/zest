@@ -19,12 +19,12 @@
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Debug Zest Node (mocking.test.js)",
+            "name": "Debug Zest Node (spying.test.js)",
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
                 "test:node",
                 "test",
-                "./src/mocking.test.js"
+                "./src/spying.test.js"
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",

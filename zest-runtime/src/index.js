@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
 import { ZestMocker } from "@heritage/zest-mock";
+import { ZestResolver } from "@heritage/zest-resolve";
 
 class ZestRuntime {
   constructor(testEngine = "juice", environment, resolver) {
@@ -13,10 +14,10 @@ class ZestRuntime {
     this.environment = environment;
     this.resolver = resolver;
 
-    // Module-name mock registry
+    // Manual mock registry (moduleName/bare/normalized → mocked exports)
     this.mocks = new Map();
 
-    // function/spy mocker
+    // Function/spy mocker
     this.mocker = new ZestMocker(this.environment?.global ?? globalThis);
   }
 
@@ -42,192 +43,101 @@ class ZestRuntime {
     };
   }
 
-  _normalizeModuleKey(moduleName, fromFile) {
-    if (moduleName.startsWith(".") || moduleName.startsWith("/")) {
-      const base = fromFile ? path.dirname(fromFile) : process.cwd();
-      return path.resolve(base, moduleName);
-    }
-    // bare specifier: use as-is
-    return moduleName;
-  }
-
+  // Wrap any function fields in a mock so tests can call .mockImplementation/.mockReturnValue
   _wrapMockExports(exportsLike) {
-    // If user passed a function (e.g., default export), wrap it
     if (typeof exportsLike === "function") {
       return this.mocker.fn(exportsLike);
     }
-    // If object, shallow-wrap any function properties as mocks
     if (exportsLike && typeof exportsLike === "object") {
       const out = { ...exportsLike };
-      for (const key of Object.keys(out)) {
-        if (typeof out[key] === "function") {
-          out[key] = this.mocker.fn(out[key]);
+      for (const k of Object.keys(out)) {
+        if (typeof out[k] === "function") {
+          out[k] = this.mocker.fn(out[k]);
         }
       }
       return out;
     }
-    // pass through scalars
     return exportsLike;
   }
 
   registerMock(moduleName, mockImpl, testFile) {
-    const key = this._normalizeModuleKey(moduleName, testFile);
     const wrapped = this._wrapMockExports(mockImpl);
-    this.mocks.set(key, wrapped);
-    // also keep raw key for exact-string matches if user used a different form
+    // store under both normalized and raw so either lookup path hits
+    const norm = this.resolver.normalize(moduleName, testFile ?? process.cwd());
+    this.mocks.set(norm, wrapped);
     this.mocks.set(moduleName, wrapped);
   }
 
-  setupMocks() {
-    // For each registered mock, inject into global
-    for (const [moduleName, mockImpl] of this.mocks.entries()) {
-      global[moduleName] = mockImpl;
-    }
-  }
-
-  resetMocks() {
-    for (const moduleName of this.mocks.keys()) {
-      delete global[moduleName];
-    }
-    this.mocks.clear();
-  }
-
-  spyOn(obj, methodName) {
-    if (!obj || typeof obj[methodName] !== "function") {
-      throw new Error(`Cannot spy on ${methodName} - not a function`);
-    }
-
-    const original = obj[methodName];
-
-    const spyFn = (...args) => {
-      const call = { args, returned: undefined, threw: false };
-      try {
-        call.returned = original.apply(this, args);
-        return call.returned;
-      } catch (err) {
-        call.threw = true;
-        throw err;
-      } finally {
-        spy.calls.push(call);
-      }
-    };
-
-    const spy = spyFn.bind(obj);
-    spy.calls = [];
-    spy.restore = () => {
-      obj[methodName] = original;
-    };
-
-    // Store it for teardown
-    this.spys.set(spy, {
-      obj,
-      methodName,
-      original,
-      spy,
-    });
-
-    obj[methodName] = spy;
-    return spy;
-  }
-
-  resetSpys() {
-    for (const { obj, methodName, original } of this.spys.values()) {
-      obj[methodName] = original;
-    }
-    this.spys.clear();
-  }
-
   teardown() {
-    this.resetMocks(); // module-name mocks
-
-    this.mocker.restoreAllMocks(); // restore spies
+    // Clear manual mock registry
+    this.mocks.clear();
+    // Restore spies and reset all function mocks
+    this.mocker.restoreAllMocks();
     this.mocker.resetAllMocks();
   }
 
-  async importWithMocks(testFile) {
-    this.setupMocks();
-
-    const src = await import(pathToFileURL(testFile).href);
-
-    // Optionally reset mocks after loading
-    // this.resetMocks();
-
-    return src;
-  }
-
-  readFile(filename) {
-    const source = this._cacheFS.get(filename);
-
-    if (!source) {
-      const buffer = this.readFileBuffer(filename);
-      source = buffer.toString("utf8");
-
-      this._cacheFS.set(filename, source);
-    }
-
-    return source;
-  }
-
   constructInjectedModuleParameters() {
-    // inject globals into the module scope, including config based
-    return [
-      "module",
-      "exports",
-      "require",
-      "__dirname",
-      "__filename",
-      "zest",
-      // this._config.injectGlobals ? "zest" : undefined,
-      // ...this._config.sandboxInjectedGlobals,
-    ];
+    // inject globals into the module scope
+    return ["module", "exports", "require", "__dirname", "__filename", "zest"];
   }
 
   requireModuleOrMock(moduleName, nodeRequire, testFile) {
-    // console.log("Resolving module:", moduleName);
+    const basedir = path.dirname(testFile);
 
-    if (this.mocks.has(moduleName)) {
-      // console.log("Using mock for module:", moduleName);
-      return this.mocks.get(moduleName);
+    const {
+      path: resolvedPath,
+      isNodeModule,
+      isCore,
+      isMocked,
+      mockKey,
+    } = this.resolver.resolve(moduleName, {
+      basedir,
+      mocks: this.mocks,
+      // moduleNameMapper: ... // feed from config if/when you add it
+    });
+
+    if (isMocked) {
+      return this.mocks.get(mockKey);
     }
 
-    // If it's a relative path, resolve it relative to the test file
-    if (moduleName.startsWith(".") || moduleName.startsWith("/")) {
-      const testDir = path.dirname(testFile);
-      const resolvedPath = path.resolve(testDir, moduleName);
+    if (isCore) {
+      // core modules go through Node as-is
+      return nodeRequire(moduleName);
+    }
 
-      // Read and transpile the file if it's not in node_modules
-      if (!resolvedPath.includes("node_modules")) {
-        const src = fs.readFileSync(resolvedPath, "utf8");
-        const transformedSrc = transpileToCommonJS(src, resolvedPath);
-        const vmContext = this.environment.getVmContext();
-        const fn = compileFunction(
-          transformedSrc,
-          this.constructInjectedModuleParameters(),
-          { filename: resolvedPath, parsingContext: vmContext }
-        );
-        const module = { exports: {}, require: vmContext.require };
-        fn(
-          module,
-          module.exports,
-          module.require,
-          path.dirname(resolvedPath),
-          resolvedPath,
-          vmContext.zest
-        );
-        return module.exports;
-      }
+    if (!resolvedPath) {
+      // Fallback to Node's resolution to mimic Node behavior on odd cases
+      return nodeRequire(moduleName);
+    }
 
+    if (isNodeModule) {
+      // external deps get loaded by Node
       return nodeRequire(resolvedPath);
     }
 
-    return nodeRequire(moduleName);
+    // Project file: transpile & run inside the VM sandbox
+    const src = fs.readFileSync(resolvedPath, "utf8");
+    const transformedSrc = transpileToCommonJS(src, resolvedPath);
+    const vmContext = this.environment.getVmContext();
+    const fn = compileFunction(
+      transformedSrc,
+      this.constructInjectedModuleParameters(),
+      { filename: resolvedPath, parsingContext: vmContext }
+    );
+    const module = { exports: {}, require: vmContext.require };
+    fn(
+      module,
+      module.exports,
+      module.require,
+      path.dirname(resolvedPath),
+      resolvedPath,
+      vmContext.zest
+    );
+    return module.exports;
   }
 
   async loadTestFile(testFile) {
-    // const src = await this.importWithMocks(testFile);
     const src = await fs.promises.readFile(pathToFileURL(testFile), "utf8");
-    // here you would transpile the `src` if required.
-
     const transformedSrc = transpileToCommonJS(src, testFile);
 
     const vmContext = this.environment.getVmContext();
@@ -253,7 +163,7 @@ class ZestRuntime {
     vmContext.__filename = __filename;
     vmContext.__dirname = __dirname;
 
-    // Inject global zest with mock method
+    // Inject global zest backed by the mocker + resolver-aware module mocks
     const m = this.mocker;
     vmContext.zest = {
       // function mocks
@@ -266,8 +176,9 @@ class ZestRuntime {
       // spying
       spyOn: m.spyOn.bind(m),
 
-      // module-name registry (unchanged)
-      mock: (moduleName, mockImpl) => this.registerMock(moduleName, mockImpl),
+      // module-name registry (resolver consults this.mocks)
+      mock: (moduleName, mockImpl) =>
+        this.registerMock(moduleName, mockImpl, testFile),
     };
     vmContext.globalThis.zest = vmContext.zest;
 

@@ -186,8 +186,8 @@ const matchers = function (received) {
 
         const matched = received.calls.some((call) => {
           return (
-            call.args.length === expectedArgs.length &&
-            call.args.every((arg, index) => arg === expectedArgs[index])
+            call.length === expectedArgs.length &&
+            call.every((arg, index) => arg === expectedArgs[index])
           );
         });
 

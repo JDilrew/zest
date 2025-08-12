@@ -9,6 +9,7 @@
   "dependencies": {
     "@heritage/zest-juice": "workspace:*",
     "@heritage/zest-mock": "workspace:*",
+    "@heritage/zest-resolve": "workspace:*",
     "@heritage/zest-transform": "workspace:*"
   }
 }

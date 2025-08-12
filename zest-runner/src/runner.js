@@ -1,5 +1,5 @@
 import { JsdomEnvironment, NodeEnvironment } from "@heritage/zest-environment";
-import { ZestResolver } from "@heritage/zest-resolvers";
+import { ZestResolver } from "@heritage/zest-resolve";
 import { ZestRuntime } from "@heritage/zest-runtime";
 import { SilentConsole, BufferConsole } from "@heritage/zest-console";
 

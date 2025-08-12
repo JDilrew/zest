@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-resolvers",
+  "name": "@heritage/zest-resolve",
   "version": "1.0.0",
   "type": "module",
   "description": "Module resolvers for Zest",
