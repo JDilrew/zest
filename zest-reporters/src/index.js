@@ -57,25 +57,37 @@ function reportResult(result, config, silent) {
         return acc;
       }, {});
 
-      Object.entries(suiteGroups).forEach(([suiteName, results]) => {
+      const entries = Object.entries(suiteGroups);
+
+      // Split into root (no suite name) and named suites
+      const rootEntry = entries.find(([suiteName]) => !suiteName);
+      const namedEntries = entries.filter(([suiteName]) => !!suiteName);
+
+      const printGroup = ([suiteName, results]) => {
+        let indent = "  ";
         if (suiteName) {
           console.log(`  ${suiteName}`);
+          indent = "    ";
         }
 
         results.forEach((result) => {
           const icon =
             result.status === "passed" ? chalk.green("√") : orange("X");
-          let message = `    ${icon}`;
+          let message = indent + icon;
           if (result.matcher) message += ` ${result.matcher}`;
-          if (result.testName) {
-            message += ` ${chalk.gray(result.testName)}`;
-          }
+          if (result.testName) message += ` ${chalk.gray(result.testName)}`;
           if (result.status === "failed" && result.error) {
             message += ` ${orange(result.error)}`;
           }
           console.log(message);
         });
-      });
+      };
+
+      // 1) root-level first (no suite header)
+      if (rootEntry) printGroup(rootEntry);
+
+      // 2) then all named suites
+      namedEntries.forEach(printGroup);
     });
 
     // let lastSuite = null;

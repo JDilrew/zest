@@ -1,12 +1,12 @@
-test("should pass", () => {
+test("root depth: should pass", () => {
   expect(1 + 2).toBe(3);
 });
 
-test("should fail", () => {
+test("root depth: should fail", () => {
   expect(1 + 2).toBe(4);
 });
 
-suite("singular nesting", () => {
+suite("depth 1 suite", () => {
   test("should pass", () => {
     expect(1 + 2).toBe(3);
   });
@@ -16,7 +16,7 @@ suite("singular nesting", () => {
   });
 });
 
-suite("suite of suite", () => {
+suite("depth 1 suite with nested depth 2 suites", () => {
   test("should pass", () => {
     expect(1 + 2).toBe(3);
   });
@@ -25,7 +25,7 @@ suite("suite of suite", () => {
     expect(1 + 2).toBe(4);
   });
 
-  suite("lime", () => {
+  suite("depth 2 suite: a", () => {
     test("should pass", () => {
       expect(1 + 2).toBe(3);
     });
@@ -35,7 +35,7 @@ suite("suite of suite", () => {
     });
   });
 
-  suite("orange", () => {
+  suite("depth 2 suite: b", () => {
     test("should pass", () => {
       expect(1 + 2).toBe(3);
     });
