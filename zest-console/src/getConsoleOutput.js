@@ -1,5 +1,7 @@
 import chalk from "chalk";
 
+const orange = chalk.hex("#FFA500");
+
 function getConsoleOutput(buffer) {
   const logEntries = buffer.reduce((output, { type, message }) => {
     message = message
@@ -13,8 +15,8 @@ function getConsoleOutput(buffer) {
       message = chalk.yellow(message);
       typeMessage = chalk.yellow(typeMessage);
     } else if (type === "error") {
-      message = chalk.red(message);
-      typeMessage = chalk.red(typeMessage);
+      message = orange(message);
+      typeMessage = orange(typeMessage);
     }
 
     return output + chalk.dim(typeMessage) + "\n" + message.trimEnd() + "\n\n";

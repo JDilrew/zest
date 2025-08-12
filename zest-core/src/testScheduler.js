@@ -7,10 +7,10 @@ import {
 } from "@heritage/zest-reporters";
 import { loadConfig } from "@heritage/zest-config";
 
-async function scheduleTests(testContexts) {
+async function scheduleTests(testContexts, silent) {
   let results = [];
 
-  reportGlobalStart();
+  reportGlobalStart(silent);
 
   for (const tests of testContexts) {
     if (testContexts.length > 1) {
@@ -20,13 +20,13 @@ async function scheduleTests(testContexts) {
     const config = await loadConfig(tests.config || {});
 
     const watcher = (result) => {
-      reportResult(result);
+      reportResult(result, config, silent);
     };
 
     const runner = new TestRunner();
     const results = await runner.runTests(tests.files, config, watcher);
 
-    reportSummary(results);
+    reportSummary(results, config, silent);
     results.push(results);
   }
 

@@ -17,7 +17,7 @@ async function runCLI(argv) {
   const tests = await resolveTestFiles(pathArg, silent, true);
 
   if (command === "test") {
-    await runZest(tests);
+    await runZest(tests, silent);
 
     // reportStart();
     // const runner = new TestRunner();

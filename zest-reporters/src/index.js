@@ -1,17 +1,21 @@
 import chalk from "chalk";
 import { getConsoleOutput } from "@heritage/zest-console";
 
-function reportGlobalStart() {
+const orange = chalk.hex("#FFA500");
+
+function reportGlobalStart(silent) {
   console.log(chalk.bold.yellow("---\n"));
-  console.log(chalk.bold.yellow("🍋 Running tests...\n"));
+  console.log(
+    chalk.bold.yellow(`🍋 Running tests${silent ? " silently" : ""}...\n`)
+  );
   console.log(chalk.bold.yellow("---\n"));
 }
 
 function reportContextStart(context) {
-  console.log(chalk.bold.inverse.yellow(context));
+  console.log(chalk.bold.inverse.yellow(context) + "\n");
 }
 
-function reportResult(result) {
+function reportResult(result, config, silent) {
   const {
     file,
     success,
@@ -22,8 +26,11 @@ function reportResult(result) {
 
   const status = success
     ? chalk.green.inverse.bold(" PASS ")
-    : chalk.red.inverse.bold(" FAIL ");
-  console.log("\n" + status + " " + chalk.dim(file));
+    : orange.inverse.bold(" FAIL ");
+  if (!silent) {
+    console.log("\n");
+  }
+  console.log(status + " " + chalk.dim(file));
 
   if (!success && errorMessage) {
     console.log("  " + errorMessage);
@@ -34,7 +41,7 @@ function reportResult(result) {
   // });
 
   // Print matcher results grouped by testFile
-  if (matcherResults && matcherResults.length > 0) {
+  if (!silent && matcherResults && matcherResults.length > 0) {
     const fileGroups = matcherResults.reduce((acc, result) => {
       const key = result.testFile;
       if (!acc[key]) acc[key] = [];
@@ -57,14 +64,14 @@ function reportResult(result) {
 
         results.forEach((result) => {
           const icon =
-            result.status === "passed" ? chalk.green("✓") : chalk.red("✗");
+            result.status === "passed" ? chalk.green("√") : orange("X");
           let message = `    ${icon}`;
           if (result.matcher) message += ` ${result.matcher}`;
           if (result.testName) {
             message += ` ${chalk.gray(result.testName)}`;
           }
           if (result.status === "failed" && result.error) {
-            message += `: ${chalk.red(result.error)}`;
+            message += ` ${orange(result.error)}`;
           }
           console.log(message);
         });
@@ -99,7 +106,7 @@ function reportResult(result) {
   }
 }
 
-function reportSummary(results) {
+function reportSummary(results, config, silent) {
   // Summary
   const suiteStatus = {};
   const testStatus = {};
@@ -158,7 +165,7 @@ function reportSummary(results) {
     chalk.green.bold(`Passed: ${passedSuites} suites, ${passedTests} tests`)
   );
   console.log(
-    chalk.red.bold(`Failed: ${failedSuites} suites, ${failedTests} tests`)
+    orange.bold(`Failed: ${failedSuites} suites, ${failedTests} tests`)
   );
   console.log(chalk.bold.yellow("\n---\n"));
 }
