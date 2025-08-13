@@ -1,55 +1,35 @@
-test("root depth: should pass", () => {
+test("reports result from the root", () => {
   expect(true).toBe(true);
 });
 
-test("root depth: should fail", () => {
-  expect(true).toBe(false);
-});
-
-suite("depth 1 suite", () => {
-  test("should pass", () => {
+suite("suite 1", () => {
+  test("reports result inside of a suite", () => {
     expect(true).toBe(true);
   });
-
-  test("should fail", () => {
-    expect(true).toBe(false);
-  });
 });
 
-suite("depth 1 suite with nested suites", () => {
+suite("suite 2 with nested suites", () => {
   // beforeEach(() => {
-  //   console.log("before each depth 1");
+  //   console.log("beforeEach at root");
   // });
 
-  test("should pass", () => {
+  test("reports result inside of a suite that also has nesting", () => {
     expect(true).toBe(true);
   });
 
-  test("should fail", () => {
-    expect(true).toBe(false);
-  });
-
-  suite("depth 2 suite: a", () => {
+  suite("nested suite: 1", () => {
     // beforeEach(() => {
-    //   console.log("before each depth 2 - a");
+    //   console.log("beforeEach in nesting");
     // });
 
-    test("should pass", () => {
+    test("reports result inside of a nested suite", () => {
       expect(true).toBe(true);
-    });
-
-    test("should fail", () => {
-      expect(true).toBe(false);
     });
   });
 
-  suite("depth 2 suite: b", () => {
-    test("should pass", () => {
+  suite("nested suite: 2", () => {
+    test("reports result inside of a nested suite", () => {
       expect(true).toBe(true);
-    });
-
-    test("should fail", () => {
-      expect(true).toBe(false);
     });
   });
 });

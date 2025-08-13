@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-suite("jsdom tests", () => {
+suite("dom tests", () => {
   beforeEach(() => {
     // Put markup in the DOM
     const html = fs.readFileSync(path.resolve(__dirname, "index.html"), "utf8");
