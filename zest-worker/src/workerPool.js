@@ -23,21 +23,17 @@ class WorkerPool {
   }
 
   async run(task) {
-    // Find an idle worker
     let worker = this._workers.find((w) => !this._busyWorkers.has(w));
-
-    // If no idle worker and pool not full, spawn a new one
-    if (!worker && this._workers.length < this._maxWorkers) {
+    if (!worker && this._workers.length < this._maxWorkers)
       worker = this.spawnWorker();
-    }
 
-    // If still no worker, wait for one to become available
     if (!worker) {
       await new Promise((resolve) => {
         const interval = setInterval(() => {
-          worker = this._workers.find((w) => !this._busyWorkers.has(w));
-          if (worker) {
+          const w = this._workers.find((x) => !this._busyWorkers.has(x));
+          if (w) {
             clearInterval(interval);
+            worker = w;
             resolve();
           }
         }, 10);
@@ -46,7 +42,9 @@ class WorkerPool {
 
     this._busyWorkers.add(worker);
     try {
-      return worker.run(task);
+      // ⬇⬇⬇ THIS await is the important part
+      const result = await worker.run(task);
+      return result;
     } finally {
       this._busyWorkers.delete(worker);
     }

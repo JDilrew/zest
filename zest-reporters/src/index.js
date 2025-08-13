@@ -79,10 +79,7 @@ function reportResult(result, config, silent) {
     ? chalk.green.inverse.bold(" PASS ")
     : orange.inverse.bold(" FAIL ");
 
-  if (!silent) {
-    console.log("\n");
-  }
-  console.log(status + " " + chalk.dim(file));
+  console.log((!silent ? "\n" : "") + status + " " + chalk.dim(file));
 
   if (!success && errorMessage) {
     console.log("  " + errorMessage);
@@ -117,7 +114,7 @@ function reportResult(result, config, silent) {
 
   // Console output, if any
   if (resultReport?.console) {
-    console.log("\nConsole output:\n");
+    console.log("\n- Console:\n");
     console.log(getConsoleOutput(resultReport.console));
   }
 }

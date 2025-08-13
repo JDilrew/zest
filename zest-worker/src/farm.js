@@ -49,22 +49,24 @@ class Farm {
     if (this._isProcessing) return;
     this._isProcessing = true;
 
+    // Launch everything currently queued without awaiting
     while (!this._taskQueue.isEmpty()) {
       const task = this._taskQueue.dequeue();
+      task.request[1] = true;
+      task.onStart();
 
-      try {
-        // Let the worker pool decide how and when to run the task
-        task.request[1] = true;
-        task.onStart();
-        const result = await this._workerPool.run({
+      this._workerPool
+        .run({
           method: task.request[2],
           args: task.request[3],
           onCustomMessage: task.onCustomMessage,
+        })
+        .then((result) => task.onEnd(null, result))
+        .catch((err) => task.onEnd(err))
+        .finally(() => {
+          // When any task completes, try to dispatch more (in case new items arrived)
+          this._processQueue();
         });
-        task.onEnd(null, result);
-      } catch (err) {
-        task.onEnd(err);
-      }
     }
 
     this._isProcessing = false;
