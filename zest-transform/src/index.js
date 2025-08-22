@@ -7,8 +7,8 @@ import { hoistMockCalls } from "./hoist-plugin.js";
  */
 
 function transpileToCommonJS(input, inputFilePath) {
-  // First pass: ESM to CommonJS
-  const firstPass = transformSync(input, {
+  const transformedInput = transformSync(input, {
+    plugins: [hoistMockCalls],
     presets: [
       [
         "@babel/preset-env",
@@ -21,14 +21,7 @@ function transpileToCommonJS(input, inputFilePath) {
     filename: inputFilePath,
   });
 
-  // Second pass: Hoist mocks above require
-  const secondPass = transformSync(firstPass.code, {
-    plugins: [hoistMockCalls],
-    sourceMaps: "inline",
-    filename: inputFilePath,
-  });
-
-  return secondPass.code;
+  return transformedInput.code;
 }
 
 export { transpileToCommonJS };

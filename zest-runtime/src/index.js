@@ -6,7 +6,6 @@ import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
 import { ZestMocker } from "@heritage/zest-mock";
-import { ZestResolver } from "@heritage/zest-resolve";
 
 class ZestRuntime {
   constructor(testEngine = "juice", environment, resolver) {

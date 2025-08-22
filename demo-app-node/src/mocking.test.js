@@ -1,3 +1,5 @@
+import { add, subtract } from "./example.js";
+
 zest.mock("./example.js", {
   add: (a, b) => {
     return a + b + 5;
@@ -6,8 +8,6 @@ zest.mock("./example.js", {
     return a - b - 5;
   },
 });
-
-import { add, subtract } from "./example.js";
 
 test("mocking replaces original functionality", () => {
   const addResult = add(2, 3);
