@@ -46,7 +46,7 @@ class JsdomEnvironment extends BaseEnvironment {
 }
 
 //TODO: Jest uses a globalProxy for the nodeEnvironment, so the teardown can call delete on
-// the props. This can be used to detect leaks, maybe I will bother later.
+// the props. This can be used to detect leaks... maybe I will bother later.
 class NodeEnvironment extends BaseEnvironment {
   async setup() {
     this.global = Object.create(global);

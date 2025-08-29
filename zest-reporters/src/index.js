@@ -3,7 +3,6 @@ import { getConsoleOutput } from "@heritage/zest-console";
 
 const orange = chalk.hex("#FFA500");
 
-// ---------- utils ----------
 const isNonEmptyString = (val) => typeof val === "string" && val.trim() !== "";
 
 const toPath = (r) => {
@@ -11,10 +10,12 @@ const toPath = (r) => {
   if (Array.isArray(r.suitePath)) {
     return r.suitePath.filter(isNonEmptyString).map((s) => s.trim());
   }
+
   // Some emitters may send suiteName as an array
   if (Array.isArray(r.suiteName)) {
     return r.suiteName.filter(isNonEmptyString).map((s) => s.trim());
   }
+
   // suiteName as a single string (possibly a comma-joined path)
   if (isNonEmptyString(r.suiteName)) {
     return r.suiteName
@@ -22,7 +23,7 @@ const toPath = (r) => {
       .map((s) => s.trim())
       .filter(isNonEmptyString);
   }
-  // No suite info -> root tests
+
   return [];
 };
 
@@ -44,16 +45,15 @@ const printNode = (node, depth, label = null) => {
   // Print a suite header if this is a named node
   if (label) console.log(`${"  ".repeat(depth - 1)}${label}`);
 
-  // 1) Tests at this level (root-first, no header for root)
+  // Tests at this level (root-first, no header for root)
   for (const t of node.tests) printTest(t, depth);
 
-  // 2) Then recurse into children
+  // Then recurse into children
   for (const [name, child] of node.children) {
     printNode(child, depth + 1, name);
   }
 };
 
-// ---------- public API ----------
 function reportGlobalStart(silent) {
   console.log(chalk.bold.yellow("---\n"));
   console.log(
@@ -112,7 +112,6 @@ function reportResult(result, config, silent) {
     });
   }
 
-  // Console output, if any
   if (resultReport?.console) {
     console.log("\n- Console:\n");
     console.log(getConsoleOutput(resultReport.console));
@@ -179,17 +178,21 @@ function reportSummary(results, config, silent) {
   }
 
   console.log(chalk.bold.yellow("\n--- SUMMARY ---\n"));
+
   console.log(
     chalk.bold(
       `Ran: ${suiteSet.size} suites, ${testSet.size} tests, across ${results.length} files`
     )
   );
+
   console.log(
     chalk.green.bold(`Passed: ${passedSuites} suites, ${passedTests} tests`)
   );
+
   console.log(
     orange.bold(`Failed: ${failedSuites} suites, ${failedTests} tests`)
   );
+
   console.log(chalk.bold.yellow("\n---\n"));
 }
 

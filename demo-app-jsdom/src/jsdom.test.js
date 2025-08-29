@@ -7,7 +7,7 @@ suite("dom tests", () => {
     const html = fs.readFileSync(path.resolve(__dirname, "index.html"), "utf8");
     document.documentElement.innerHTML = html;
 
-    // Now execute the app code INTO the jsdom window
+    // Execute the app code INTO the jsdom window
     const appJs = fs.readFileSync(path.resolve(__dirname, "index.js"), "utf8");
     window.eval(appJs); // runs in the jsdom global
   });

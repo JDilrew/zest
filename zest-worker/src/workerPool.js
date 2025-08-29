@@ -42,7 +42,6 @@ class WorkerPool {
 
     this._busyWorkers.add(worker);
     try {
-      // ⬇⬇⬇ THIS await is the important part
       const result = await worker.run(task);
       return result;
     } finally {

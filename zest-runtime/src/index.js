@@ -92,7 +92,6 @@ class ZestRuntime {
     } = this.resolver.resolve(moduleName, {
       basedir,
       mocks: this.mocks,
-      // moduleNameMapper: ... // feed from config if/when you add it
     });
 
     if (isMocked) {

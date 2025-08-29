@@ -5,8 +5,7 @@ async function runZest(testContexts, silent) {
 
   const results = await scheduleTests(testContexts, silent);
 
-  //   console.log("Test run completed.", results);
-  // TODO: report the results
+  return results;
 }
 
 export { runZest };

@@ -12,17 +12,16 @@ class ZestResolver {
       rootDir = process.cwd(),
       extensions = [".js", ".jsx", ".ts", ".tsx", ".json"],
       moduleDirectories = ["node_modules"],
-      moduleNameMapper = [], // Array<[RegExp, string]>
+      moduleNameMapper = [],
     } = options;
 
     this.rootDir = rootDir;
     this.extensions = extensions;
     this.moduleDirectories = moduleDirectories;
     this.moduleNameMapper = moduleNameMapper;
-    this._cache = new Map(); // key -> ResolveResult
+    this._cache = new Map();
   }
 
-  // ---- Back-compat with your old API ----
   resolveTestFile(testFile) {
     return pResolve(this.rootDir, testFile);
   }
@@ -34,19 +33,18 @@ class ZestResolver {
     });
     return res.path || null;
   }
-  // ---------------------------------------
 
   normalize(request, basedir = this.rootDir) {
     if (request.startsWith(".") || request.startsWith("/")) {
       return path.resolve(basedir, request);
     }
-    return request; // bare specifier
+    return request;
   }
 
   resolve(request, opts = {}) {
     const {
       basedir = this.rootDir,
-      mocks = undefined, // Map<string, any> (optional)
+      mocks = undefined,
       moduleNameMapper = this.moduleNameMapper,
       extensions = this.extensions,
       moduleDirectories = this.moduleDirectories,
@@ -63,7 +61,6 @@ class ZestResolver {
     const cached = this._cache.get(cacheKey);
     if (cached) return cached;
 
-    // core module?
     const coreName = request.replace(/^node:/, "");
     if (CORE.has(coreName)) {
       const out = {
@@ -76,7 +73,6 @@ class ZestResolver {
       return out;
     }
 
-    // mock short-circuit
     const normalizedKey = this.normalize(request, basedir);
     let isMocked = false;
     let mockKey;
@@ -85,7 +81,6 @@ class ZestResolver {
       mockKey = mocks.has(normalizedKey) ? normalizedKey : request;
     }
 
-    // moduleNameMapper
     const mapped = this._applyMapper(request, moduleNameMapper, basedir);
     const effective = mapped || request;
 
@@ -115,7 +110,6 @@ class ZestResolver {
     return result;
   }
 
-  // --------- helpers ----------
   _applyMapper(request, mapper, basedir) {
     for (const [re, target] of mapper) {
       const m = request.match(re);
