@@ -24,15 +24,15 @@ jobs:
       - name: Enable Corepack (for Yarn Berry)
         run: corepack enable
 
-      - name: Install deps
+      - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Pack zest
-        run: yarn workspace @heritage/zest pack --out zest.tgz
+      - name: Pack @heritage/zest
+        run: yarn workspace @heritage/zest pack --out ./zest-${{ github.ref_name }}.tgz
 
-      - name: Upload to GitHub Release
+      - name: Upload zest tarball to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: zest.tgz
+          files: zest-${{ github.ref_name }}.tgz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
