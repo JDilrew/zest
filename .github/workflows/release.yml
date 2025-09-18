@@ -27,9 +27,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Pack @heritage/zest
+      - name: Pack zest
         working-directory: zest
         run: yarn pack --out ../zest.tgz
+
+      - name: Show manifest used for packing
+        working-directory: zest
+        run: cat package.json
 
       - name: Show packed package.json
         run: tar -xOf zest.tgz package/package.json | grep '"bin"'
