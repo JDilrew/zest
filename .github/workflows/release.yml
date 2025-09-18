@@ -30,8 +30,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Pack zest
-        working-directory: zest
-        run: yarn pack --out ../zest.tgz
+        run: yarn workspace @heritage/zest pack --out ./zest-v${{ github.ref_name }}.tgz
 
       - name: Show current commit
         run: git rev-parse HEAD
