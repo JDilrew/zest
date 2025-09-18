@@ -1,0 +1,37 @@
+name: Release zest tarball
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Yarn cache
+        uses: actions/setup-node@v4
+        with:
+          cache: "yarn"
+
+      - name: Install deps
+        run: yarn install --immutable
+
+      - name: Pack zest
+        run: yarn workspace zest pack --out zest.tgz
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: zest.tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
