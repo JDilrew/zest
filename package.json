@@ -1,4 +1,5 @@
 {
+  "private":true,
   "name": "zest",
   "workspaces": [
     "demo-app-jsdom",
