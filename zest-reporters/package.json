@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-reporters",
+  "name": "@jdilrew/zest-reporters",
   "version": "1.0.0",
   "type": "module",
   "description": "Zest reporters for test results",
@@ -7,7 +7,10 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@heritage/zest-console": "workspace:*",
+    "@jdilrew/zest-console": "workspace:*",
     "chalk": "^5.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

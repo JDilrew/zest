@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-console",
+  "name": "@jdilrew/zest-console",
   "version": "1.0.0",
   "type": "module",
   "description": "Custom consoles for patching",
@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "chalk": "^5.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

@@ -1,4 +1,4 @@
-import { matchers } from "@heritage/zest-matchers";
+import { matchers } from "@jdilrew/zest-matchers";
 import { EventEmitter } from "./emitter.js";
 
 // Hierarchical test registry

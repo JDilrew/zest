@@ -1,9 +1,12 @@
 {
-  "name": "@heritage/zest-mock",
+  "name": "@jdilrew/zest-mock",
   "version": "1.0.0",
   "type": "module",
   "description": "A mock implementation for Jest tests",
   "exports": {
     ".": "./src/index.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-runtime",
+  "name": "@jdilrew/zest-runtime",
   "version": "1.0.0",
   "type": "module",
   "description": "Module loading, mocking and runtime utilities for Zest",
@@ -7,9 +7,12 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@heritage/zest-juice": "workspace:*",
-    "@heritage/zest-mock": "workspace:*",
-    "@heritage/zest-resolve": "workspace:*",
-    "@heritage/zest-transform": "workspace:*"
+    "@jdilrew/zest-juice": "workspace:*",
+    "@jdilrew/zest-mock": "workspace:*",
+    "@jdilrew/zest-resolve": "workspace:*",
+    "@jdilrew/zest-transform": "workspace:*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

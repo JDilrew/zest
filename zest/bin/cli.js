@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-import "@heritage/zest-cli/bin/zest";
+import "@jdilrew/zest-cli/bin/zest";

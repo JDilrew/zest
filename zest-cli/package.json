@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-cli",
+  "name": "@jdilrew/zest-cli",
   "version": "1.0.0",
   "type": "module",
   "description": "A command-line interface for running tests in JavaScript projects",
@@ -12,8 +12,11 @@
     "./bin/zest": "./bin/zest.js"
   },
   "dependencies": {
-    "@heritage/zest-config": "workspace:*",
-    "@heritage/zest-core": "workspace:*",
-    "@heritage/zest-finder": "workspace:*"
+    "@jdilrew/zest-config": "workspace:*",
+    "@jdilrew/zest-core": "workspace:*",
+    "@jdilrew/zest-finder": "workspace:*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

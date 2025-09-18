@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-worker",
+  "name": "@jdilrew/zest-worker",
   "version": "1.0.0",
   "type": "module",
   "description": "A worker package for handling background tasks in JavaScript projects",
@@ -8,5 +8,8 @@
   },
   "bin": {
     "worker": "bin/cli.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

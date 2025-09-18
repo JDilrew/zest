@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-juice",
+  "name": "@jdilrew/zest-juice",
   "version": "1.0.0",
   "type": "module",
   "description": "The default zest test execution engine",
@@ -7,6 +7,9 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@heritage/zest-matchers": "workspace:*"
+    "@jdilrew/zest-matchers": "workspace:*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

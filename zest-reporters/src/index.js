@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { getConsoleOutput } from "@heritage/zest-console";
+import { getConsoleOutput } from "@jdilrew/zest-console";
 
 const orange = chalk.hex("#FFA500");
 

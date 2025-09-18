@@ -1,9 +1,12 @@
 {
-  "name": "@heritage/zest-resolve",
+  "name": "@jdilrew/zest-resolve",
   "version": "1.0.0",
   "type": "module",
   "description": "Module resolvers for Zest",
   "exports": {
     ".": "./src/index.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

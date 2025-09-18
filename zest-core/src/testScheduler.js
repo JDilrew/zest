@@ -1,11 +1,11 @@
-import { TestRunner } from "@heritage/zest-runner";
+import { TestRunner } from "@jdilrew/zest-runner";
 import {
   reportGlobalStart,
   reportContextStart,
   reportResult,
   reportSummary,
-} from "@heritage/zest-reporters";
-import { loadConfig } from "@heritage/zest-config";
+} from "@jdilrew/zest-reporters";
+import { loadConfig } from "@jdilrew/zest-config";
 
 async function scheduleTests(testContexts, silent) {
   let results = [];

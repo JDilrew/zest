@@ -1172,142 +1172,142 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@heritage/zest-cli@workspace:*, @heritage/zest-cli@workspace:zest-cli":
+"@jdilrew/zest-cli@workspace:*, @jdilrew/zest-cli@workspace:zest-cli":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-cli@workspace:zest-cli"
+  resolution: "@jdilrew/zest-cli@workspace:zest-cli"
   dependencies:
-    "@heritage/zest-config": "workspace:*"
-    "@heritage/zest-core": "workspace:*"
-    "@heritage/zest-finder": "workspace:*"
+    "@jdilrew/zest-config": "workspace:*"
+    "@jdilrew/zest-core": "workspace:*"
+    "@jdilrew/zest-finder": "workspace:*"
   bin:
     zest: bin/zest.js
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-config@workspace:*, @heritage/zest-config@workspace:zest-config":
+"@jdilrew/zest-config@workspace:*, @jdilrew/zest-config@workspace:zest-config":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-config@workspace:zest-config"
+  resolution: "@jdilrew/zest-config@workspace:zest-config"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-console@workspace:*, @heritage/zest-console@workspace:zest-console":
+"@jdilrew/zest-console@workspace:*, @jdilrew/zest-console@workspace:zest-console":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-console@workspace:zest-console"
+  resolution: "@jdilrew/zest-console@workspace:zest-console"
   dependencies:
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-core@workspace:*, @heritage/zest-core@workspace:zest-core":
+"@jdilrew/zest-core@workspace:*, @jdilrew/zest-core@workspace:zest-core":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-core@workspace:zest-core"
+  resolution: "@jdilrew/zest-core@workspace:zest-core"
   dependencies:
-    "@heritage/zest-config": "workspace:*"
-    "@heritage/zest-reporters": "workspace:*"
-    "@heritage/zest-runner": "workspace:*"
+    "@jdilrew/zest-config": "workspace:*"
+    "@jdilrew/zest-reporters": "workspace:*"
+    "@jdilrew/zest-runner": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-environment@workspace:*, @heritage/zest-environment@workspace:zest-environment":
+"@jdilrew/zest-environment@workspace:*, @jdilrew/zest-environment@workspace:zest-environment":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-environment@workspace:zest-environment"
+  resolution: "@jdilrew/zest-environment@workspace:zest-environment"
   dependencies:
     jsdom: "npm:^26.1.0"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-finder@workspace:*, @heritage/zest-finder@workspace:zest-finder":
+"@jdilrew/zest-finder@workspace:*, @jdilrew/zest-finder@workspace:zest-finder":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-finder@workspace:zest-finder"
+  resolution: "@jdilrew/zest-finder@workspace:zest-finder"
   dependencies:
     glob: "npm:^11.0.3"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-juice@workspace:*, @heritage/zest-juice@workspace:zest-juice":
+"@jdilrew/zest-juice@workspace:*, @jdilrew/zest-juice@workspace:zest-juice":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-juice@workspace:zest-juice"
+  resolution: "@jdilrew/zest-juice@workspace:zest-juice"
   dependencies:
-    "@heritage/zest-matchers": "workspace:*"
+    "@jdilrew/zest-matchers": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-matchers@workspace:*, @heritage/zest-matchers@workspace:zest-matchers":
+"@jdilrew/zest-matchers@workspace:*, @jdilrew/zest-matchers@workspace:zest-matchers":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-matchers@workspace:zest-matchers"
+  resolution: "@jdilrew/zest-matchers@workspace:zest-matchers"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-mock@workspace:*, @heritage/zest-mock@workspace:zest-mock":
+"@jdilrew/zest-mock@workspace:*, @jdilrew/zest-mock@workspace:zest-mock":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-mock@workspace:zest-mock"
+  resolution: "@jdilrew/zest-mock@workspace:zest-mock"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-reporters@workspace:*, @heritage/zest-reporters@workspace:zest-reporters":
+"@jdilrew/zest-reporters@workspace:*, @jdilrew/zest-reporters@workspace:zest-reporters":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-reporters@workspace:zest-reporters"
+  resolution: "@jdilrew/zest-reporters@workspace:zest-reporters"
   dependencies:
-    "@heritage/zest-console": "workspace:*"
+    "@jdilrew/zest-console": "workspace:*"
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-resolve@workspace:*, @heritage/zest-resolve@workspace:zest-resolve":
+"@jdilrew/zest-resolve@workspace:*, @jdilrew/zest-resolve@workspace:zest-resolve":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-resolve@workspace:zest-resolve"
+  resolution: "@jdilrew/zest-resolve@workspace:zest-resolve"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-runner@workspace:*, @heritage/zest-runner@workspace:zest-runner":
+"@jdilrew/zest-runner@workspace:*, @jdilrew/zest-runner@workspace:zest-runner":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-runner@workspace:zest-runner"
+  resolution: "@jdilrew/zest-runner@workspace:zest-runner"
   dependencies:
-    "@heritage/zest-console": "workspace:*"
-    "@heritage/zest-environment": "workspace:*"
-    "@heritage/zest-juice": "workspace:*"
-    "@heritage/zest-resolve": "workspace:*"
-    "@heritage/zest-runtime": "workspace:*"
-    "@heritage/zest-worker": "workspace:*"
+    "@jdilrew/zest-console": "workspace:*"
+    "@jdilrew/zest-environment": "workspace:*"
+    "@jdilrew/zest-juice": "workspace:*"
+    "@jdilrew/zest-resolve": "workspace:*"
+    "@jdilrew/zest-runtime": "workspace:*"
+    "@jdilrew/zest-worker": "workspace:*"
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-runtime@workspace:*, @heritage/zest-runtime@workspace:zest-runtime":
+"@jdilrew/zest-runtime@workspace:*, @jdilrew/zest-runtime@workspace:zest-runtime":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-runtime@workspace:zest-runtime"
+  resolution: "@jdilrew/zest-runtime@workspace:zest-runtime"
   dependencies:
-    "@heritage/zest-juice": "workspace:*"
-    "@heritage/zest-mock": "workspace:*"
-    "@heritage/zest-resolve": "workspace:*"
-    "@heritage/zest-transform": "workspace:*"
+    "@jdilrew/zest-juice": "workspace:*"
+    "@jdilrew/zest-mock": "workspace:*"
+    "@jdilrew/zest-resolve": "workspace:*"
+    "@jdilrew/zest-transform": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-transform@workspace:*, @heritage/zest-transform@workspace:zest-transform":
+"@jdilrew/zest-transform@workspace:*, @jdilrew/zest-transform@workspace:zest-transform":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-transform@workspace:zest-transform"
+  resolution: "@jdilrew/zest-transform@workspace:zest-transform"
   dependencies:
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
   languageName: unknown
   linkType: soft
 
-"@heritage/zest-worker@workspace:*, @heritage/zest-worker@workspace:zest-worker":
+"@jdilrew/zest-worker@workspace:*, @jdilrew/zest-worker@workspace:zest-worker":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest-worker@workspace:zest-worker"
+  resolution: "@jdilrew/zest-worker@workspace:zest-worker"
   bin:
     worker: bin/cli.js
   languageName: unknown
   linkType: soft
 
-"@heritage/zest@workspace:*, @heritage/zest@workspace:zest":
+"@jdilrew/zest@workspace:*, @jdilrew/zest@workspace:zest":
   version: 0.0.0-use.local
-  resolution: "@heritage/zest@workspace:zest"
+  resolution: "@jdilrew/zest@workspace:zest"
   dependencies:
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
-    "@heritage/zest-cli": "workspace:*"
+    "@jdilrew/zest-cli": "workspace:*"
   bin:
     zest: bin/cli.js
   languageName: unknown
@@ -1566,7 +1566,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
-    "@heritage/zest": "workspace:*"
+    "@jdilrew/zest": "workspace:*"
     jsdom: "npm:^26.1.0"
   languageName: unknown
   linkType: soft
@@ -1577,7 +1577,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.24.0"
     "@babel/preset-env": "npm:^7.24.0"
-    "@heritage/zest": "workspace:*"
+    "@jdilrew/zest": "workspace:*"
   languageName: unknown
   linkType: soft
 

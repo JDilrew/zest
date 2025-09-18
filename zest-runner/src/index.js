@@ -1,4 +1,4 @@
-import { Worker } from "@heritage/zest-worker";
+import { Worker } from "@jdilrew/zest-worker";
 import { dirname, join } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 

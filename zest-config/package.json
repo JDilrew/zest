@@ -1,9 +1,12 @@
 {
-  "name": "@heritage/zest-config",
+  "name": "@jdilrew/zest-config",
   "version": "1.0.0",
   "type": "module",
   "description": "A configuration management library for Zest",
   "exports": {
     ".": "./src/index.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

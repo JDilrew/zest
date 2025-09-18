@@ -1,7 +1,7 @@
-import { JsdomEnvironment, NodeEnvironment } from "@heritage/zest-environment";
-import { ZestResolver } from "@heritage/zest-resolve";
-import { ZestRuntime } from "@heritage/zest-runtime";
-import { SilentConsole, BufferConsole } from "@heritage/zest-console";
+import { JsdomEnvironment, NodeEnvironment } from "@jdilrew/zest-environment";
+import { ZestResolver } from "@jdilrew/zest-resolve";
+import { ZestRuntime } from "@jdilrew/zest-runtime";
+import { SilentConsole, BufferConsole } from "@jdilrew/zest-console";
 
 // EXCERPT-FROM-JEST; Keeping the core of "runTest" as a separate function (as "runTestInternal")
 // is key to be able to detect memory leaks. Since all variables are local to

@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-transform",
+  "name": "@jdilrew/zest-transform",
   "version": "1.0.0",
   "type": "module",
   "description": "Transform utilities for Zest",
@@ -9,5 +9,8 @@
   "dependencies": {
     "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.24.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

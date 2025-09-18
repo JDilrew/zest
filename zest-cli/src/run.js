@@ -1,6 +1,6 @@
 import { parseArgs } from "./args.js";
-import { resolveTestFiles } from "@heritage/zest-finder";
-import { runZest } from "@heritage/zest-core";
+import { resolveTestFiles } from "@jdilrew/zest-finder";
+import { runZest } from "@jdilrew/zest-core";
 
 async function runCLI(argv) {
   const { command, pathArg, silent } = parseArgs(argv);

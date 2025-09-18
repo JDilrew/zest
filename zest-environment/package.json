@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-environment",
+  "name": "@jdilrew/zest-environment",
   "version": "1.0.0",
   "type": "module",
   "description": "A minimal test environment manager for JavaScript projects",
@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "jsdom": "^26.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

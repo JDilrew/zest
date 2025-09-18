@@ -1,11 +1,11 @@
 // Minimal Jest-like runtime for zest as a class
 import { pathToFileURL } from "url";
 import vm, { compileFunction } from "vm";
-import { transpileToCommonJS } from "@heritage/zest-transform";
+import { transpileToCommonJS } from "@jdilrew/zest-transform";
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
-import { ZestMocker } from "@heritage/zest-mock";
+import { ZestMocker } from "@jdilrew/zest-mock";
 
 class ZestRuntime {
   constructor(testEngine = "juice", environment, resolver) {
@@ -23,7 +23,7 @@ class ZestRuntime {
   async setupTestGlobals() {
     const vmContext = this.environment.getVmContext();
 
-    const zestJuice = await import("@heritage/zest-juice");
+    const zestJuice = await import("@jdilrew/zest-juice");
     zestJuice.resetTestState();
 
     vmContext.globalThis.suite = zestJuice.suite;

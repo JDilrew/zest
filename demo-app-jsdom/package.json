@@ -11,6 +11,6 @@
     "jsdom": "^26.1.0"
   },
   "devDependencies": {
-    "@heritage/zest": "workspace:*"
+    "@jdilrew/zest": "workspace:*"
   }
 }

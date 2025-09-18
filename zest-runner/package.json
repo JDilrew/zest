@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-runner",
+  "name": "@jdilrew/zest-runner",
   "version": "1.0.0",
   "type": "module",
   "description": "Zest test runner",
@@ -9,12 +9,15 @@
     "./worker": "./src/worker.js"
   },
   "dependencies": {
-    "@heritage/zest-console": "workspace:*",
-    "@heritage/zest-environment": "workspace:*",
-    "@heritage/zest-juice": "workspace:*",
-    "@heritage/zest-resolve": "workspace:*",
-    "@heritage/zest-runtime": "workspace:*",
-    "@heritage/zest-worker": "workspace:*",
+    "@jdilrew/zest-console": "workspace:*",
+    "@jdilrew/zest-environment": "workspace:*",
+    "@jdilrew/zest-juice": "workspace:*",
+    "@jdilrew/zest-resolve": "workspace:*",
+    "@jdilrew/zest-runtime": "workspace:*",
+    "@jdilrew/zest-worker": "workspace:*",
     "chalk": "^5.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

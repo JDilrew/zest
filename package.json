@@ -23,7 +23,7 @@
   ],
   "packageManager": "yarn@4.9.2",
   "scripts": {
-    "test": "yarn workspace @heritage/zest zest test ../",
+    "test": "yarn workspace @jdilrew/zest zest test ../",
     "test:jsdom": "yarn workspace demo-app-jsdom test",
     "test:node": "yarn workspace demo-app-node test"
   }

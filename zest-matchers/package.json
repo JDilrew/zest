@@ -1,9 +1,12 @@
 {
-  "name": "@heritage/zest-matchers",
+  "name": "@jdilrew/zest-matchers",
   "version": "1.0.0",
   "type": "module",
   "description": "A collection of matchers for Jest tests",
   "exports": {
     ".": "./src/matchers.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

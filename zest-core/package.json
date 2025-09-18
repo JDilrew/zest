@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest-core",
+  "name": "@jdilrew/zest-core",
   "version": "1.0.0",
   "type": "module",
   "description": "Core functionality for the Zest testing framework",
@@ -7,8 +7,11 @@
     ".": "./src/runZest.js"
   },
   "dependencies": {
-    "@heritage/zest-config": "workspace:*",
-    "@heritage/zest-reporters": "workspace:*",
-    "@heritage/zest-runner": "workspace:*"
+    "@jdilrew/zest-config": "workspace:*",
+    "@jdilrew/zest-reporters": "workspace:*",
+    "@jdilrew/zest-runner": "workspace:*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

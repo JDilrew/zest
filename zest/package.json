@@ -1,5 +1,5 @@
 {
-  "name": "@heritage/zest",
+  "name": "@jdilrew/zest",
   "version": "1.0.0",
   "type": "module",
   "description": "A simple test runner for JavaScript projects",
@@ -9,6 +9,9 @@
   "dependencies": {
     "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.24.0",
-    "@heritage/zest-cli": "workspace:*"
+    "@jdilrew/zest-cli": "workspace:*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
