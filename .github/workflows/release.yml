@@ -33,9 +33,14 @@ jobs:
         working-directory: zest
         run: yarn pack --out ../zest.tgz
 
-      - name: Show manifest used for packing
-        working-directory: zest
-        run: cat package.json
+      - name: Show current commit
+        run: git rev-parse HEAD
+
+      - name: List all package.json files
+        run: find . -name package.json
+
+      - name: Show zest package.json
+        run: cat zest/package.json
 
       - name: Show packed package.json
         run: tar -xOf zest.tgz package/package.json | grep '"bin"'
