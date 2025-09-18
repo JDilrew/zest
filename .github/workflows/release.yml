@@ -28,11 +28,12 @@ jobs:
         run: yarn install --immutable
 
       - name: Pack @heritage/zest
-        run: yarn workspace @heritage/zest pack --out ./zest-${{ github.ref_name }}.tgz
+        working-directory: zest
+        run: yarn pack --out ../zest.tgz
 
       - name: Upload zest tarball to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: zest-${{ github.ref_name }}.tgz
+          files: zest.tgz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
