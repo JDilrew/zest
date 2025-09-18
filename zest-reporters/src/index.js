@@ -62,8 +62,11 @@ function reportGlobalStart(silent) {
   console.log(chalk.bold.yellow("---\n"));
 }
 
-function reportContextStart(context) {
-  console.log(chalk.bold.inverse.yellow(context) + "\n");
+function reportContextStart(context, environment) {
+  console.log(
+    chalk.bold.inverse.yellow(` ${environment} `),
+    chalk.bold.inverse.yellow(` ${context} \n`)
+  );
 }
 
 function reportResult(result, config, silent) {

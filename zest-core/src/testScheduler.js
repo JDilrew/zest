@@ -13,11 +13,9 @@ async function scheduleTests(testContexts, silent) {
   reportGlobalStart(silent);
 
   for (const tests of testContexts) {
-    if (testContexts.length > 1) {
-      reportContextStart(tests.context);
-    }
-
     const config = await loadConfig(tests.config || {});
+
+    reportContextStart(tests.context, config.testEnvironment);
 
     const watcher = (result) => {
       reportResult(result, config, silent);
