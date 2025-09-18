@@ -42,6 +42,9 @@ jobs:
       - name: Show zest package.json
         run: cat zest/package.json
 
+      - name: Show zest/package.json bin field
+        run: grep '"bin"' zest/package.json
+
       - name: Show packed package.json
         run: tar -xOf zest.tgz package/package.json | grep '"bin"'
 
