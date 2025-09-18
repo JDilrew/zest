@@ -28,7 +28,7 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --immutable-cache
 
       - name: Publish workspaces
         run: yarn workspaces foreach -p npm publish --tolerate-republish
