@@ -22,10 +22,11 @@ async function scheduleTests(testContexts, silent) {
     };
 
     const runner = new TestRunner();
-    const results = await runner.runTests(tests.files, config, watcher);
+    const contextResults = await runner.runTests(tests.files, config, watcher);
 
-    reportSummary(results, config, silent);
-    results.push(results);
+    reportSummary(contextResults, config, silent);
+
+    results.push(...contextResults);
   }
 
   return results;

@@ -1,6 +1,6 @@
 {
   "name": "@jdilrew/zest-worker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "A worker package for handling background tasks in JavaScript projects",
   "exports": {

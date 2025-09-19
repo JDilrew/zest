@@ -1,6 +1,6 @@
 {
   "name": "@jdilrew/zest-reporters",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Zest reporters for test results",
   "exports": {
