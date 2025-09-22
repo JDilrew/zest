@@ -1,6 +1,6 @@
 {
   "name": "@jdilrew/zest-finder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "A module for finding test files in JavaScript projects",
   "exports": {

@@ -1,6 +1,6 @@
 {
   "name": "@jdilrew/zest-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "A command-line interface for running tests in JavaScript projects",
   "bin": {

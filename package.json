@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "zest",
+  "packageManager": "yarn@4.9.2",
   "workspaces": [
     "demo-app-jsdom",
     "demo-app-node",
@@ -22,7 +23,6 @@
     "zest-transform",
     "zest-worker"
   ],
-  "packageManager": "yarn@4.9.2",
   "scripts": {
     "test": "yarn workspace @jdilrew/zest zest test ../",
     "test:jsdom": "yarn workspace demo-app-jsdom test",

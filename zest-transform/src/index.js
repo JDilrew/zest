@@ -1,5 +1,8 @@
+import { createRequire } from "module";
 import { transformSync } from "@babel/core";
 import { hoistMockCalls } from "./hoist-plugin.js";
+
+const requireFromHere = createRequire(import.meta.url);
 
 /**
  * Transpile a file from ESM to CommonJS using Babel.
@@ -11,7 +14,7 @@ function transpileToCommonJS(input, inputFilePath) {
     plugins: [hoistMockCalls],
     presets: [
       [
-        "@babel/preset-env",
+        requireFromHere.resolve("@babel/preset-env"),
         {
           modules: "commonjs",
         },

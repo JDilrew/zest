@@ -1,11 +1,9 @@
 {
   "name": "@jdilrew/zest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "A simple test runner for JavaScript projects",
-  "bin": {
-    "zest": "bin/cli.js"
-  },
+  "bin": "bin/cli.js",
   "dependencies": {
     "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.24.0",
